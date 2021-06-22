@@ -170,6 +170,7 @@ class SideMenu extends HTMLElement {
     this.elmStyle.textContent = SideInputCSS
     this.shadow.appendChild(this.elmStyle)
     let mobileDrawerMenu = this.shadow.getElementById('mobileDrawerMenu')
+
     //dragButton.addEventListener('click', () => { this.setDrawer('mobileDrawerMenu', true) })
     mobileDrawerMenu.addEventListener('click', () => { this.setDrawer('mobileDrawerMenu', false, event) })
 
@@ -256,6 +257,10 @@ class SideMenu extends HTMLElement {
     } else {
       console.log(serverData)
     }
+  }
+
+  async urlChangd(classId) {
+    window.location = `/classDetail.html#class=${classId}`
   }
 
 

@@ -8,7 +8,7 @@ let temps = ` <div class="classDivOuter">
         </div>
         <div class="dropdown">
             <div class="dropdown-content">
-                <button class="downlaod" id='sd' onclick='cancelSubscription(event, this.parentElement.parentElement.parentElement.parentElement.lastElementChild.lastElementChild.innerText, this.nextElementSibling.innerText)'>Cancel Subscription</button>
+                <button class="downlaod" onclick='cancelSubscription(event, this.parentElement.parentElement.parentElement.parentElement.lastElementChild.lastElementChild.innerText, this.nextElementSibling.innerText)'>Cancel Subscription</button>
                 <button style='display:none;'>{{PersonStatus}}</button>
             </div>
             <div>
