@@ -5,18 +5,12 @@ let SideInputHTML = `
   <div class='sideCircle'>A</div> 
   <div id='className' onclick='urlChangd(this.nextElementSibling.innerText)'>  {{className}}</div>
   <div style='display: none;'>{{classCode}}</div>
-
 </div>
 </template>
 
 <!----MOBIL CONTENT-->
 <div id="mobileDrawerMenu" class="mobileDrawerMenu">
-    <div class="drawerSide" id="drawerSide">
-      <div><h5><a><ion-icon name="archive-outline"></ion-icon>Your Classes</a></h5></div>
-      <div><h5><a> Class Name</a></h5></div>
-      <div><h5><a> Class Name</a></h5></div>
-      <div><h5><a> Class Name</a></h5></div>
-    </div>
+    <div class="drawerSide" id="drawerSide"> </div>
 </div>
 <!----End of MOBIL CONTENT-->
 
@@ -184,8 +178,10 @@ class SideMenu extends HTMLElement {
   async getPersonClass() {
     let tempClassId = this.shadow.querySelector("#tempClassId")
     let reflec = this.shadow.querySelector("#listClases")
+    let drawerSide = this.shadow.querySelector('#drawerSide')
     let html = ''
     let item = ''
+    let ht = ''
     let serverData = {}
 
     let obj = {
@@ -210,8 +206,12 @@ class SideMenu extends HTMLElement {
           .replaceAll('{{className}}', item.class_name)
           .replaceAll('{{classCode}}', item.class_unique_id)
 
+        ht = ht + template
+          .replaceAll('{{className}}', item.class_name)
+          .replaceAll('{{classCode}}', item.class_unique_id)
         //Asignar datos
         reflec.innerHTML = html
+        drawerSide.innerHTML = '<div><h5><a><ion-icon name="archive-outline"></ion-icon>Your Classes</a></h5></div>' + ht
       }
     } else {
       console.log(serverData)
