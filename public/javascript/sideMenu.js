@@ -3,7 +3,9 @@ let SideInputHTML = `
 <template id='tempClassId'>
 <div class='sideClasses'>
   <div class='sideCircle'>A</div> 
-  <div id='className'>  {{className}}</div>
+  <div id='className' onclick='urlChangd(this.nextElementSibling.innerText)'>  {{className}}</div>
+  <div style='display: none;'>{{classCode}}</div>
+
 </div>
 </template>
 
@@ -172,7 +174,7 @@ class SideMenu extends HTMLElement {
     let dragButton = this.shadow.getElementById('threeDot')
     let mobileDrawerMenu = this.shadow.getElementById('mobileDrawerMenu')
     let className = this.shadow.getElementById('autoEma')
-    dragButton.addEventListener('click', () => { this.setDrawer('mobileDrawerMenu', true) }) 
+    dragButton.addEventListener('click', () => { this.setDrawer('mobileDrawerMenu', true) })
     mobileDrawerMenu.addEventListener('click', () => { this.setDrawer('mobileDrawerMenu', false, event) })
     className.addEventListener('click', () => { this.urlChangd('className') })
 
@@ -206,7 +208,7 @@ class SideMenu extends HTMLElement {
         item = rst[cnt]
         html = html + template
           .replaceAll('{{className}}', item.class_name)
-
+          .replaceAll('{{classCode}}', item.class_unique_id)
 
         //Asignar datos
         reflec.innerHTML = html
