@@ -1,0 +1,238 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
+    <!---CSS--->
+    <link rel="stylesheet" href="./index.css">
+    <!--------JAVASCRIPT--------------->
+    <script src="./javascript/Usracc.js" defer></script>
+    <script src="./javascript/sideMenu.js" defer></script>
+    <script src="./javascript/setDrawer.js" defer></script>
+    <script src="./javascript/createClass.js" defer></script>
+    <script src="./javascript/joinClass.js" defer></script>
+    <script src="./javascript/inbox.js" defer></script>
+    <title>Classes</title>
+</head>
+
+<body>
+    <div class="collectAll">
+        <div class="wrapper">
+            <section class="form signup">
+                <better-button></better-button>
+            </section>
+        </div>
+
+        <div>
+            <div class="middleSection">
+                <section class="form signup" style="height: 500px;overflow: auto;">
+                    <div class="upperInfoMenu">
+                        <header>My Classes.</header>
+                        <div class="dropdown">
+                            <div class="dropdown-content">
+                                <button class="downlaod" onclick="setDrawer('createClass', true)">Create Class</button>
+                                <button class="downlaod" onclick="setDrawer('joinClass', true)">Join Class</button>
+                            </div>
+                            <div>
+                                <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="classDiv">
+                        <!-- AutoMatic -->
+                        <better-sidemenu></better-sidemenu>
+                        <div id="AllClasses"> </div>
+                    </div>
+                </section>
+                <div id="createClass" class="drawer" onclick="setDrawer('createClass', false, event)">
+                    <div class="drawerSide" id="drawerSide">
+                        <!-- Drawer side -->
+                        <div class="wrapper">
+                            <section class="form signup" style="height: 500px;overflow: auto;width: 550px;">
+                                <form>
+                                    <div>
+                                        <header>Create Class</header>
+                                    </div>
+                                    <div class="usrAcc">
+                                        <div class="field input">
+                                            <label>Class Name</label>
+                                            <input type="text" id="formName" placeholder="Class Name" pattern="[^0-9]*"
+                                                onkeyup="checkForm()">
+                                            <div>The numbers are not allowed</div>
+                                        </div>
+                                        <div class="field input">
+                                            <label>Section Name</label>
+                                            <input type="text" id="formSection" placeholder="Section Name"
+                                                pattern="[^0-9]*" onkeyup="checkForm()">
+                                            <div>The numbers are not allowed</div>
+                                        </div>
+                                        <div class="field input">
+                                            <label>Material</label>
+                                            <input type="text" id="formMaterial" placeholder="Material"
+                                                pattern="[^0-9]*" onkeyup="checkForm()">
+                                            <div>The numbers are not allowed</div>
+                                        </div>
+                                        <div class="field input">
+                                            <label>Descripcion</label>
+                                            <input type="text" id="formDesc" placeholder="Descripcion" pattern="[^0-9]*"
+                                                onkeyup="checkForm()">
+                                            <div>The numbers are not allowed</div>
+                                        </div>
+                                        <div class="field button" id="boxButton">
+                                            <input type="submit" id="fromBtn" onclick="createClass(event)"
+                                                disabled="true" name="submit" value="Create Now">
+                                        </div>
+                                        <div id="boxSpinner" class="defDiv elmBoxSpinner">
+                                            <!-- Div - boxSpinner -->
+                                            <div class="defDivFlex elm71">
+                                                <!-- Flex -->
+                                                <div class="defDivFlexChild">
+                                                    <!-- Flex child -->
+                                                    <div class="defDiv elm73">
+                                                        <!-- Div -->
+                                                        <div class="waitSpinner">
+                                                            <!-- Wait spinner -->
+                                                            <svg viewBox="0 0 50 50">
+                                                                <!-- Spinner main -->
+                                                                <circle cx="25" cy="25" r="20" />
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="boxOk" class="defDiv elmBoxOk" style="display: none;">
+                                            <!-- Div - boxOk -->
+                                            <div class="defDivFlex elm78">
+                                                <!-- Flex -->
+                                                <div class="defDivFlexChild">
+                                                    <!-- Flex child -->
+                                                    <div class="defText elm80">
+                                                        <!-- Text -->
+                                                        Class created successfully
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="boxError" class="defDiv elmBoxError">
+                                            <!-- Div - boxError -->
+                                            <div class="defDivFlex elm82">
+                                                <!-- Flex -->
+                                                <div class="defDivFlexChild">
+                                                    <!-- Flex child -->
+                                                    <div class="defText elm84">
+                                                        <!-- Text -->
+                                                        Connection Error
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="joinClass" class="drawer" onclick="setDrawer('joinClass', false, event)">
+                    <div class="drawerSide" id="drawerSide">
+                        <!-- Drawer side -->
+                        <div class="wrapper">
+                            <section class="form signup" style="height: 500px;overflow: auto;width: 550px;">
+                                <form>
+                                    <div id="formSide">
+                                        <div>
+                                            <header>Join Class</header>
+                                        </div>
+                                        <div class="usrAcc">
+                                            <div class="field input">
+                                                <label>Enter Class Code</label>
+                                                <input type="text" id="formClassCode" placeholder="Class Code"
+                                                    pattern="\d*" onkeyup="checkFromCode()">
+                                                <div>The letters are not allowed</div>
+                                            </div>
+                                            <div class="field button" id="boxButton">
+                                                <input type="submit" id="formCodeBtn" onclick="classDetail(event)"
+                                                    disabled="true" name="submit" value="Check Class">
+                                            </div>
+                                            <div id="boxSpinners" class="defDiv elmBoxSpinner">
+                                                <!-- Div - boxSpinner -->
+                                                <div class="defDivFlex elm71">
+                                                    <!-- Flex -->
+                                                    <div class="defDivFlexChild">
+                                                        <!-- Flex child -->
+                                                        <div class="defDiv elm73">
+                                                            <!-- Div -->
+                                                            <div class="waitSpinner">
+                                                                <!-- Wait spinner -->
+                                                                <svg viewBox="0 0 50 50">
+                                                                    <!-- Spinner main -->
+                                                                    <circle cx="25" cy="25" r="20" />
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="boxOks" class="defDiv elmBoxOk" style="display: none;">
+                                                <!-- Div - boxOk -->
+                                                <div class="defDivFlex elm78">
+                                                    <!-- Flex -->
+                                                    <div class="defDivFlexChild">
+                                                        <!-- Flex child -->
+                                                        <div class="defText elm80">
+                                                            <!-- Text -->
+                                                            Class created successfully
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="boxErrors" class="defDiv elmBoxError">
+                                                <!-- Div - boxError -->
+                                                <div class="defDivFlex elm82">
+                                                    <!-- Flex -->
+                                                    <div class="defDivFlexChild">
+                                                        <!-- Flex child -->
+                                                        <div class="defText elm84">
+                                                            <!-- Text -->
+                                                            No class found! please check (Class Code).
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="classInfor"> </div>
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+<style>
+    .wrapper {
+        max-width: 700px;
+    }
+
+    .form header {
+        text-align: center;
+        font-size: 33px;
+    }
+</style>
+
+</html>

@@ -1,0 +1,191 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
+    <!---CSS--->
+    <link rel="stylesheet" href="./index.css">
+    <!--------JAVASCRIPT--------------->
+    <script src="./javascript/Usracc.js" defer></script>
+    <script src="./javascript/setDrawer.js" defer></script>
+    <script src="./javascript/classDetail.js" defer></script>
+    <title>Class</title>
+</head>
+
+<body>
+    <div class="collectAll">
+        <div class="wrapper">
+            <section class="form signup">
+                <better-button></better-button>
+            </section>
+        </div>
+        <div class="middleSection" id="middleSection">
+            <section class="form signup" style="overflow: auto;">
+                <div class="upperInfoMenu" id="upperInfoMenu"> </div>
+
+                <div id="phtMaterial"> </div>
+
+                <div id="createClass" class="drawer" onclick="setDrawer('createClass', false, event)">
+                    <div class="drawerSide" id="drawerSide">
+                        <div class="wrapper">
+                            <section class="form signup" style="height: 500px;overflow: auto;width: 550px;">
+                                <form>
+                                    <div>
+                                        <header>Comment Something</header>
+                                    </div>
+                                    <div class="usrAcc">
+                                        <div class="field input">
+                                            <textarea id="formTaskMsg" placeholder="Put Your Text Here"
+                                                onkeyup="checkTaskForm()" cols="30" rows="10"></textarea>
+                                        </div>
+                                        <div class="field button" id="boxButton">
+                                            <input type="submit" id="formTaskBtn" onclick="sendClassTasks(event)"
+                                                disabled="true" name="submit" value="Post Now">
+                                        </div>
+                                        <div id="boxSpinner1" class="defDiv elmBoxSpinner">
+                                            <!-- Div - boxSpinner -->
+                                            <div class="defDivFlex elm71">
+                                                <!-- Flex -->
+                                                <div class="defDivFlexChild">
+                                                    <!-- Flex child -->
+                                                    <div class="defDiv elm73">
+                                                        <!-- Div -->
+                                                        <div class="waitSpinner">
+                                                            <!-- Wait spinner -->
+                                                            <svg viewBox="0 0 50 50">
+                                                                <!-- Spinner main -->
+                                                                <circle cx="25" cy="25" r="20" />
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="boxOk1" class="defDiv elmBoxOk" style="display: none;">
+                                            <!-- Div - boxOk -->
+                                            <div class="defDivFlex elm78">
+                                                <!-- Flex -->
+                                                <div class="defDivFlexChild">
+                                                    <!-- Flex child -->
+                                                    <div class="defText elm80">
+                                                        <!-- Text -->
+                                                        Message sent successfully
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="boxError1" class="defDiv elmBoxError">
+                                            <!-- Div - boxError -->
+                                            <div class="defDivFlex elm82">
+                                                <!-- Flex -->
+                                                <div class="defDivFlexChild">
+                                                    <!-- Flex child -->
+                                                    <div class="defText elm84">
+                                                        <!-- Text -->
+                                                        Connection Error
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="PersonsDetails" class="drawer" onclick="setDrawer('PersonsDetails', false, event)">
+                    <div class="drawerSide" id="drawerSide">
+                        <div class="wrapper">
+                            <section class="form signup" style="height: 500px;overflow: auto;width: 550px;">
+                                <form>
+                                    <div>
+                                        <header class="Persontitle">Teachers</header>
+                                        <div class="PersonsGrp">
+                                            <img
+                                                src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s40-c-fbw=1/photo.jpg">
+                                            <h5>NAME</h5>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <header class="Persontitle">Class Mate</header>
+                                        <div class="PersonsGrp">
+                                            <img
+                                                src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s40-c-fbw=1/photo.jpg">
+                                            <h5>NAME</h5>
+                                        </div>
+
+                                        <div class="PersonsGrp">
+                                            <img
+                                                src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s40-c-fbw=1/photo.jpg">
+                                            <h5>NAME</h5>
+                                        </div>
+
+
+                                        <div class="PersonsGrp">
+                                            <img
+                                                src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s40-c-fbw=1/photo.jpg">
+                                            <h5>NAME</h5>
+                                        </div>
+
+
+                                        <div class="PersonsGrp">
+                                            <img
+                                                src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s40-c-fbw=1/photo.jpg">
+                                            <h5>NAME</h5>
+                                        </div>
+
+
+                                        <div class="PersonsGrp">
+                                            <img
+                                                src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s40-c-fbw=1/photo.jpg">
+                                            <h5>NAME</h5>
+                                        </div>
+                                    </div>
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <form>
+                    <header class="Persontitle">Tasks</header>
+                </form>
+                <div class="commentLoad" id='commentLoad'> </div>
+            </section>
+        </div>
+    </div>
+</body>
+
+<style>
+    .wrapper {
+        max-width: 700px;
+    }
+
+    .form header {
+        display: flex;
+        align-items: center;
+        font-size: 28px;
+    }
+
+    .form header>a>ion-icon {
+        color: #000;
+        margin-right: 25px;
+        cursor: pointer;
+    }
+
+    .classDivAl {
+        margin-right: auto;
+        width: 1200px;
+        margin-left: auto;
+        margin-top: 35px;
+        height: 300px;
+    }
+</style>
+
+</html>
