@@ -31,6 +31,10 @@ Home Page
 
 ![Photos](public/images/tool/Preview0.JPG)
 
+Options To add Classes
+
+![Photos](public/images/tool/Preview3.JPG)
+
 Class Interface Page
 
 ![Photos](public/images/tool/Preview1.JPG)
@@ -39,9 +43,6 @@ Class Persons List
 
 ![Photos](public/images/tool/Preview2.JPG)
 
-Options To add Classes
-
-![Photos](public/images/tool/Preview3.JPG)
 
 Create Class Template
 
