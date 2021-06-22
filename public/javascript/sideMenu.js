@@ -18,12 +18,11 @@ let SideInputHTML = `
 </div>
 <!----End of MOBIL CONTENT-->
 
-
-<div class="autoEma" id='autoEma'>
 <ion-icon name="reorder-three-outline" id="threeDot"></ion-icon>
-<h5><a><ion-icon name="archive-outline"></ion-icon>All Classes</a></h5>
-<div id='listClases'> </div>
-
+<div class="autoEma" id='autoEma'>
+  <h5><a><ion-icon name="archive-outline"></ion-icon>All Classes</a></h5>
+  <div id='listClases'> </div>
+</div>
 `
 let SideInputCSS = `
 .autoEma {
@@ -63,9 +62,10 @@ let SideInputCSS = `
   #threeDot{
     display: block;
     font-size: 40px;
+    padding: 15px;
   }
-  
-  .autoEma > h5{
+
+  .autoEma {
     display: none;
   }
 }
@@ -169,57 +169,14 @@ class SideMenu extends HTMLElement {
     this.elmStyle = document.createElement('style')
     this.elmStyle.textContent = SideInputCSS
     this.shadow.appendChild(this.elmStyle)
+    let dragButton = this.shadow.getElementById('threeDot')
     let mobileDrawerMenu = this.shadow.getElementById('mobileDrawerMenu')
-
-    //dragButton.addEventListener('click', () => { this.setDrawer('mobileDrawerMenu', true) })
+    let className = this.shadow.getElementById('autoEma')
+    dragButton.addEventListener('click', () => { this.setDrawer('mobileDrawerMenu', true) }) 
     mobileDrawerMenu.addEventListener('click', () => { this.setDrawer('mobileDrawerMenu', false, event) })
+    className.addEventListener('click', () => { this.urlChangd('className') })
 
     this.getPersonClass()
-  }
-
-  async showMenu() {
-    var menuTransition = '0.5s ease'
-    let refcreateBlur = this.shadow.getElementById('createBlur') // Reference to create background blur affect
-    let refcreateEvent = this.shadow.getElementById('createEvent') // Reference to show add template
-    // Stop body to do scroll and add blur affect to background 
-    refcreateBlur.style.display = 'flex'
-
-    // Wait here form animation
-    await this.wait(1)
-
-    // Active animation
-    refcreateBlur.style.transition = 'opacity ' + menuTransition
-    refcreateEvent.style.transition = 'transform ' + menuTransition
-
-    // Show Animation
-    refcreateBlur.style.opacity = 1
-    refcreateEvent.style.transform = 'translateX(0)'
-
-    // Wait here form animation
-    await this.wait(1)
-  }
-
-  async hideMenu(evt) {
-    var menuTransition = '0.5s ease'
-    let refcreateBlur = this.shadow.getElementById('createBlur') // Reference to create background blur affect
-    let refcreateEvent = this.shadow.getElementById('createEvent') // Reference to show add template
-
-    refcreateBlur.style.display = 'block'
-    // Wait here form animation
-    await this.wait(1)
-
-    // Active animation
-    refcreateBlur.style.transition = 'opacity ' + menuTransition
-    refcreateEvent.style.transition = 'transform ' + menuTransition
-
-    // Show Animation
-    refcreateBlur.style.opacity = 0
-    refcreateEvent.style.transform = 'translateY(-110%)'
-
-    // Wait here form animation
-    await this.wait(500)
-    refcreateBlur.style.display = 'none'
-    location.reload()
   }
 
   async getPersonClass() {
@@ -260,7 +217,11 @@ class SideMenu extends HTMLElement {
   }
 
   async urlChangd(classId) {
-    window.location = `/classDetail.html#class=${classId}`
+    // location.href = `/classDetail.html#class=${classId}`
+    let refDrawer = this.shadow.getElementById(classId)
+
+    console.log(refDrawer)
+
   }
 
 
