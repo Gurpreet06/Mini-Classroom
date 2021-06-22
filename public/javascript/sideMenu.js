@@ -90,6 +90,10 @@ let SideInputCSS = `
     color: #3c4043;
 }
 
+#className:hover{
+  text-decoration: underline;
+}
+
 /* Menu */
 .mobileDrawerMenu {
     display: none;
