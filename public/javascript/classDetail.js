@@ -163,9 +163,9 @@ let TasksMsgs = `<div class='taskMsgDetail'>
         </div>
     </div>
 
-    <div class="dropdown" id='delWHO'>
+    <div class="dropdown" id='delWHO{{taskId}}'>
         <div class="dropdown-content">
-            <button class="downlaod">Delete</button>
+            <button class="downlaod" id='DelTaks' onclick='delTasks({{msgId}})'>Delete</button>
         </div>
         <div>
             <ion-icon name="ellipsis-vertical-outline"></ion-icon>
@@ -207,24 +207,45 @@ async function getClassTasks() {
                 .replaceAll('{{TIME}}', item.Time)
                 .replaceAll('{{MESSAGE}}', item.message)
                 .replaceAll('{{personId}}', item.message_sender_id)
+                .replaceAll('{{taskId}}', item.id)
+                .replaceAll('{{msgId}}', item.message_uniqueId)
 
             //Asignar datos
             reflec.innerHTML = html
+        }
+
+        for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
+            item = rst[cnt]
+            if (item.message_sender_id == getCookie('usrId') && getCookie('usrId') != null) {
+                let delWHO = document.querySelector('#delWHO' + item.id)
+                delWHO.style.display = 'flex'
+            } else {
+                let delWHO = document.querySelector('#delWHO' + item.id)
+                delWHO.style.display = 'none'
+            }
         }
     } else {
         console.log(serverData)
     }
 }
-/*
-async function delTasks(classId){
-    let delWHO = document.getElementById('delWHO')
 
-    if(getCookie('usrId') == classId) {
-        delWHO.style.display = 'flex'
-    }else{
-        delWHO.style.display = 'none'
+async function delTasks(classId){
+    
+    console.log(classId)
+
+    let serverData = {}
+
+    let obj = {
+        type: 'getClassTasks',
+        classId: posId
     }
-}*/
+
+    try {
+        serverData = await queryServer('/queryusr', obj)
+    } catch (err) {
+        console.error(err)
+    }
+}
 
 function getCookie(name) {
     var nameEQ = name + "=";
