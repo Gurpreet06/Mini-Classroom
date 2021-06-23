@@ -3,7 +3,7 @@ let SideInputHTML = `
 <template id='tempClassId'>
 <div class='sideClasses'>
   <div class='sideCircle' style='background-color: {{backColors}}'>{{classIntailName}}</div> 
-  <div id='className'>{{className}}</div>
+  <div id='className' onclick='urlChangd(this.nextElementSibling.innerText)'>{{className}}</div>
   <div style='display: none;'>{{classCode}}</div>
 </div>
 </template>
@@ -230,6 +230,7 @@ class SideMenu extends HTMLElement {
       console.log(serverData)
     }
   }
+
 
   wait(time) {
     return new Promise(async (resolve, reject) => {
