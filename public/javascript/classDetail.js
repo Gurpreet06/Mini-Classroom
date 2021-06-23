@@ -174,7 +174,7 @@ let TasksMsgs = `
             <p class="commentText">{{MESSAGE}}</p>
         </div>
         <form autocomplete="off">
-            <div class="field input">
+            <div class="field input" id='form{{msgId}}'>
                 <input type="text" id="formMsg" name="user" placeholder="Reply to {{MsgOwner}}">
                 <ion-icon name="send-outline" class="sendMsgBtn" id='aa' onclick="querySendMsg(event, this.nextElementSibling.innerText)"></ion-icon>
                 <div style='display:none;'>{{msgId}}</div>
@@ -182,16 +182,18 @@ let TasksMsgs = `
         </form>
     </div> 
     
-    <div id='replyTasksHere{{msgId}}'> </div>
+    <div>
+        <section class="form signup" id='replyTasksHere{{msgId}}' style='display: none;'>
+            <form > </form>
+        </section>
+    </div>
 
-    <div class='seeComments' id='{{msgId}}' onclick='queryGetMsg(this.id, this.div)'>See Comments on this tasks..</div>
+    <div class='seeComments' id='a{{msgId}}' style='display:none;' onclick='hideComments(this.id, this.div)'>Hide Comments..</div>
+    <div class='seeComments' id='b{{msgId}}' onclick='queryGetMsg(this.id)'>See Comments on this tasks..</div>
 </div>
 `
 
 let replyTasks = `
-<section class="form signup">
-<form>
-    <header class="Persontitle">Comments.</header>
     <div style="margin-top: 26px;">
         <div class="commentLoads">
             <div class="personId">
@@ -216,18 +218,7 @@ let replyTasks = `
         <div>
             <p class="commentText">{{MESSAGE}}</p>
         </div>
-        <form autocomplete="off">
-            <div class="field input">
-                <input type="text" id="formMsg" name="user" placeholder="Reply to {{MsgOwner}}">
-                <ion-icon name="send-outline" class="sendMsgBtn" id='aa'
-                    onclick="querySendMsg(event, this.nextElementSibling.innerText,this.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.firstElementChild.innerText,this.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.lastElementChild.name)">
-                </ion-icon>
-                <div style='display:none;'>{{msgId}}</div>
-            </div>
-        </form>
     </div>
-</form>
-</section>
 `
 
 async function getClassTasks() {
@@ -372,6 +363,8 @@ async function querySendMsg(evt, msgId) {
 }
 
 async function queryGetMsg(msgId) {
+    let indexofId = msgId.indexOf('b')
+    let posID = msgId.substring(indexofId + 1)
     let html = ''
     let item = ''
     let serverData = {}
@@ -395,7 +388,11 @@ async function queryGetMsg(msgId) {
         for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
             item = rst[cnt]
             let reflec = document.querySelector('#replyTasksHere' + item.message_uniqueId)
-            if (msgId == item.message_uniqueId && item.message_status == 'Reply') {
+            reflec.style.display = 'block'
+            let hideComments = document.querySelector('#a' + item.message_uniqueId)
+            let ShowComments = document.querySelector('#b' + item.message_uniqueId)
+            let FormSend = document.querySelector('#form' + item.message_uniqueId)
+            if (posID == item.message_uniqueId && item.message_status == 'Reply') {
                 html = html + template
                     .replaceAll('{{NAME}}', item.message_sender)
                     .replaceAll('{{TIME}}', item.Time)
@@ -404,10 +401,11 @@ async function queryGetMsg(msgId) {
                     .replaceAll('{{taskId}}', item.id)
                     .replaceAll('{{msgId}}', item.message_uniqueId)
                     .replaceAll('{{MsgOwner}}', item.message_sender)
-
-
+                ShowComments.style.opacity = 0
+                hideComments.style.display = 'block'
+                FormSend.style.display = 'none'
                 //Asignar datos
-                reflec.innerHTML = html
+                reflec.innerHTML = '<header class="Persontitle">Comments.</header>' + html
             }
 
         }
@@ -473,7 +471,3 @@ function getRandomId() {
     let a = parseInt(Math.floor(Math.random() * multiplier) + 1)
     return a
 }
-
-setInterval(() => {
-    queryGetMsg()
-}, 1000);
