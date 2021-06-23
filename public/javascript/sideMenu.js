@@ -181,7 +181,7 @@ class SideMenu extends HTMLElement {
   }
 
   async getPersonClass() {
-    let backColors = ['#174ea6', '#1967d2', '#007b83', '#7627bb', '#185ABC']
+    let backColors = ['#174ea6', '#1967d2', '#007b83', '#7627bb']
     let tempClassId = this.shadow.querySelector("#tempClassId")
     let reflec = this.shadow.querySelector("#listClases")
     let drawerSide = this.shadow.querySelector('#drawerSide')
