@@ -208,9 +208,9 @@ let replyTasks = `
                 </div>
             </div>
 
-            <div class="dropdown" id='delWHO{{taskId}}'>
+            <div class="dropdown">
                 <div class="dropdown-content">
-                    <button class="downlaod" id='DelTaks'>Delete</button>
+                    <button class="downlaod" >Delete</button>
                 </div>
                 <div>
                     <ion-icon name="ellipsis-vertical-outline"></ion-icon>
@@ -390,10 +390,10 @@ async function queryGetMsg(msgId) {
         for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
             item = rst[cnt]
             let reflec = document.querySelector('#replyTasksHere' + item.message_uniqueId)
-            reflec.style.display = 'block'
             let hideComments = document.querySelector('#a' + item.message_uniqueId)
             let ShowComments = document.querySelector('#b' + item.message_uniqueId)
             if (posID == item.message_uniqueId && item.message_status == 'Reply') {
+                reflec.style.display = 'block'
                 html = html + template
                     .replaceAll('{{NAME}}', item.message_sender)
                     .replaceAll('{{TIME}}', item.Time)
