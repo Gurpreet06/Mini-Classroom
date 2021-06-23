@@ -609,7 +609,6 @@ body {
   margin-top: 10px;
 }
 
-
 .PersonsGrp {
   display: flex;
   align-items: center;
@@ -620,11 +619,11 @@ body {
   padding: 13px;
 }
 
-.PersonsGrp>h5 {
+.PersonsGrp > h5 {
   margin-left: 20px;
 }
 
-.PersonsGrp>img {
+.PersonsGrp > img {
   border-radius: 20px;
 }
 
@@ -633,18 +632,26 @@ body {
   border-bottom: 0.0625rem solid #174ea6;
 }
 
-.taskMsgDetail{
+.taskMsgDetail {
   border: 0.0625rem solid #dadce0;
   padding: 20px;
   margin-bottom: 20px;
 }
 
-.classIndo{
+.classIndo {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.classIndo > h5{
+.classIndo > h5 {
   margin-left: 25px;
+}
+
+.sendMsgBtn {
+  padding: 12px;
+  background: black;
+  color: white;
+  border-radius: 2px;
+  cursor: pointer;
 }

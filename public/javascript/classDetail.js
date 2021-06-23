@@ -1,4 +1,23 @@
 window.addEventListener('load', () => { getClassDetails(), getClassTasks() })
+let refFormClassCode = document.URL
+let urlId = refFormClassCode.lastIndexOf('#class')
+let posId = refFormClassCode.substring(urlId + 7)
+var today = new Date();
+var month = new Array();
+month[0] = "January";
+month[1] = "February";
+month[2] = "March";
+month[3] = "April";
+month[4] = "May";
+month[5] = "June";
+month[6] = "July";
+month[7] = "August";
+month[8] = "September";
+month[9] = "October";
+month[10] = "November";
+month[11] = "December";
+var n = month[today.getMonth()];
+var date = today.getDate();
 
 let temps = ` <header>
 <a href="./classes.html">
@@ -27,9 +46,6 @@ let secondTemplate = `
 async function getClassDetails() {
     let reflec = document.querySelector("#upperInfoMenu")
     let reFlec = document.querySelector("#phtMaterial")
-    let refFormClassCode = document.URL
-    let urlId = refFormClassCode.lastIndexOf('#class')
-    let posId = refFormClassCode.substring(urlId + 7)
     let html = ''
     let ht = ''
     let item = ''
@@ -86,25 +102,6 @@ async function checkTaskForm() {
 async function sendClassTasks(evt) {
     evt.preventDefault
     let taskMessage = document.getElementById('formTaskMsg')
-    let refFormClassCode = document.URL
-    let urlId = refFormClassCode.lastIndexOf('#class')
-    let posId = refFormClassCode.substring(urlId + 7)
-    var today = new Date();
-    var month = new Array();
-    month[0] = "January";
-    month[1] = "February";
-    month[2] = "March";
-    month[3] = "April";
-    month[4] = "May";
-    month[5] = "June";
-    month[6] = "July";
-    month[7] = "August";
-    month[8] = "September";
-    month[9] = "October";
-    month[10] = "November";
-    month[11] = "December";
-    var n = month[today.getMonth()];
-    var date = today.getDate();
     let todayDate = `${date + ' ' + n}`
     let serverData = {}
 
@@ -159,7 +156,6 @@ let TasksMsgs = `<div class='taskMsgDetail'>
             <h5>{{NAME}}</h5>
             <p>{{TIME}}</p>
             <iframe  name='{{personId}}' style='display:none;'></iframe>
-            <input type="hidden" name="asd" value='sadasdas'>
         </div>
     </div>
 
@@ -175,13 +171,17 @@ let TasksMsgs = `<div class='taskMsgDetail'>
 <div>
     <p class="commentText">{{MESSAGE}}</p>
 </div>
+<form autocomplete="off">
+<div class="field input">
+    <input type="text" id="formMsg" name="user" placeholder="Reply to {{MsgOwner}}">
+    <ion-icon name="send-outline" class="sendMsgBtn" id='aa' onclick="querySendMsg(event, this.nextElementSibling.innerText,this.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.firstElementChild.innerText,this.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.lastElementChild.name)"></ion-icon>
+    <div style='display:none;'>{{msgId}}</div>
+</div>
+</form>
 </div>`
 
 async function getClassTasks() {
     let reflec = document.querySelector("#commentLoad")
-    let refFormClassCode = document.URL
-    let urlId = refFormClassCode.lastIndexOf('#class')
-    let posId = refFormClassCode.substring(urlId + 7)
     let html = ''
     let item = ''
     let serverData = {}
@@ -209,6 +209,8 @@ async function getClassTasks() {
                 .replaceAll('{{personId}}', item.message_sender_id)
                 .replaceAll('{{taskId}}', item.id)
                 .replaceAll('{{msgId}}', item.message_uniqueId)
+                .replaceAll('{{MsgOwner}}', item.message_sender)
+
 
             //Asignar datos
             reflec.innerHTML = html
@@ -285,6 +287,40 @@ function getCookie(name) {
         if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
+}
+
+async function querySendMsg(evt, msgId, taskNamer, taskIdr) {
+    let refFormIcon = document.getElementById('formMsg')
+    let todayDate = `${date + ' ' + n}`
+    console.log(taskIdr)
+
+    evt.preventDefault(); // Stop page to reload onclick in sumbit button
+    /* let obj = {
+          type: 'replyToTasks',
+          msg: refFormIcon.value,
+          class_Id: posId,
+          task_Id: msgId,
+          Current_Name: taskNamer,
+          Current_Id: taskIdr,
+          Current_Time: todayDate,
+          replyer_Name: getCookie('usrName'),
+          replyer_Id: getCookie('usrId'),
+          message_status: 'Reply'
+      }
+  
+      try {
+          serverData = await queryServer('/query', obj)
+      } catch (err) {
+          console.error(err)
+      }
+  
+  
+      if (serverData.status == 'ok') {
+          console.log('ok')
+          refFormIcon.value = ''
+      } else {
+          console.log(serverData)
+      }*/
 }
 
 async function queryServer(url, obj) {

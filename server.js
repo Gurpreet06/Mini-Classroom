@@ -13,8 +13,8 @@ let publicFolder = './public'
 
 // connect to mysql dataBase
 const Connection = mysql.createConnection({
-    host: '',
-    user: '',
+    host: 'localhost',
+    user: 'root',
     password: '',
     database: 'mini_classroom'
 })
@@ -177,7 +177,7 @@ async function answerUsrdata(request, response) {
     }
 
     else if (data.type == 'addClassTask') {
-        let getData = `INSERT INTO class_meassges(class_Id, message_uniqueId, message_sender_email, message_sender_id, message_sender, 	message,Time) values('${data.classId}', '${data.message_uniqueId}', '${data.message_sender_email}', '${data.message_sender_id}',  '${data.message_sender}', '${data.message}', '${data.Time}')`
+        let getData = `INSERT INTO class_meassges(class_Id, message_uniqueId, message_sender_email, message_sender_id, message_sender, 	message,Time,message_status) values('${data.classId}', '${data.message_uniqueId}', '${data.message_sender_email}', '${data.message_sender_id}',  '${data.message_sender}', '${data.message}', '${data.Time}','Orignal')`
 
         Connection.query(getData, (err, rows) => {
             if (err) {
