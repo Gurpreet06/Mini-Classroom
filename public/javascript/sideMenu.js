@@ -2,8 +2,8 @@
 let SideInputHTML = `
 <template id='tempClassId'>
 <div class='sideClasses'>
-  <div class='sideCircle'>A</div> 
-  <div id='className' onclick='urlChangd(this.nextElementSibling.innerText)'>  {{className}}</div>
+  <div class='sideCircle' style='background-color: {{backColors}}'>{{classIntailName}}</div> 
+  <div id='className'>{{className}}</div>
   <div style='display: none;'>{{classCode}}</div>
 </div>
 </template>
@@ -171,15 +171,14 @@ class SideMenu extends HTMLElement {
     this.shadow.appendChild(this.elmStyle)
     let dragButton = this.shadow.getElementById('threeDot')
     let mobileDrawerMenu = this.shadow.getElementById('mobileDrawerMenu')
-    let className = this.shadow.getElementById('autoEma')
     dragButton.addEventListener('click', () => { this.setDrawer('mobileDrawerMenu', true) })
     mobileDrawerMenu.addEventListener('click', () => { this.setDrawer('mobileDrawerMenu', false, event) })
-    className.addEventListener('click', () => { this.urlChangd('className') })
 
     this.getPersonClass()
   }
 
   async getPersonClass() {
+    let backColors = ['#174ea6', '#1967d2', '#007b83', '#7627bb', '#185ABC']
     let tempClassId = this.shadow.querySelector("#tempClassId")
     let reflec = this.shadow.querySelector("#listClases")
     let drawerSide = this.shadow.querySelector('#drawerSide')
@@ -187,6 +186,7 @@ class SideMenu extends HTMLElement {
     let item = ''
     let ht = ''
     let serverData = {}
+    let colors = ''
 
     let obj = {
       type: 'getPersonClass',
@@ -200,6 +200,12 @@ class SideMenu extends HTMLElement {
       console.error(err)
     }
 
+    for (let a = 0; a < backColors.length; a = a + 1) {
+      const randomIndex = Math.floor(Math.random() * backColors.length);
+      const item = backColors[randomIndex];
+      colors = item
+    }
+
     //Datos desde html
     let template = tempClassId.innerHTML
     if (serverData.status == 'ok') {
@@ -209,6 +215,9 @@ class SideMenu extends HTMLElement {
         html = html + template
           .replaceAll('{{className}}', item.class_name)
           .replaceAll('{{classCode}}', item.class_unique_id)
+          .replaceAll('{{classIntailName}}', item.class_name.charAt(0))
+          .replaceAll('{{backColors}}', colors)
+
 
         ht = ht + template
           .replaceAll('{{className}}', item.class_name)
@@ -221,15 +230,6 @@ class SideMenu extends HTMLElement {
       console.log(serverData)
     }
   }
-
-  async urlChangd(classId) {
-    // location.href = `/classDetail.html#class=${classId}`
-    let refDrawer = this.shadow.getElementById(classId)
-
-    console.log(refDrawer)
-
-  }
-
 
   wait(time) {
     return new Promise(async (resolve, reject) => {

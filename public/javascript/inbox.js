@@ -1,7 +1,7 @@
 window.addEventListener('load', () => { getPersonClass() })
 
 let temps = ` <div class="classDivOuter">
-<div class='classDivAl'>
+<div class='classDivAl' style='background-image: url({{randomUrl}});'>
     <div class="classTitle">
         <div>
          <a><div class="className" onclick="urlChangd(this.parentElement.parentElement.parentElement.nextElementSibling.lastElementChild.innerText)">{{clasName}}</div></a> 
@@ -29,9 +29,11 @@ let temps = ` <div class="classDivOuter">
 
 async function getPersonClass() {
     let reflec = document.querySelector("#AllClasses")
+    let backUrl = ['https://www.gstatic.com/classroom/themes/img_learnlanguage.jpg', 'https://www.gstatic.com/classroom/themes/img_graduation.jpg', 'https://www.gstatic.com/classroom/themes/img_read.jpg', 'https://www.gstatic.com/classroom/themes/Writing.jpg', 'https://www.gstatic.com/classroom/themes/Physics.jpg']
     let html = ''
     let item = ''
     let serverData = {}
+    let backUrls = ''
 
 
     let obj = {
@@ -44,6 +46,12 @@ async function getPersonClass() {
         serverData = await queryServer('/queryusr', obj)
     } catch (err) {
         console.error(err)
+    }
+
+    for (let a = 0; a < backUrl.length; a = a + 1) {
+        const randomIndex = Math.floor(Math.random() * backUrl.length);
+        const item = backUrl[randomIndex];
+        backUrls = item
     }
 
     //Datos desde html
@@ -59,6 +67,7 @@ async function getPersonClass() {
                     .replaceAll('{{classDesc}}', item.class_Desc)
                     .replaceAll('{{classCode}}', item.class_unique_id)
                     .replaceAll('{{PersonStatus}}', item.person_status)
+                    .replaceAll('{{randomUrl}}', backUrls)
 
                 //Asignar datos
                 reflec.innerHTML = html
@@ -146,7 +155,7 @@ async function wait(time) {
         setTimeout(() => { resolve() }, time)
     })
 }
-
+/*
 setInterval(() => {
     getPersonClass()
-}, 1000);
+}, 1000);*/
