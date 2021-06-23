@@ -130,7 +130,7 @@ async function sendClassTasks(evt) {
         console.error(err)
     }
 
-    await wait(1500)
+    await wait(2000)
 
     await hideElement('boxSpinner1')
 

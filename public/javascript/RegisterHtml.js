@@ -111,7 +111,9 @@ async function querySignUp(evt) {
     }
 
     await wait(1000)
-    fotobtn.click()
+    if (refFormImage.value != '') {
+        fotobtn.click()
+    }
 
     await hideElement('boxSpinner')
 

@@ -5,10 +5,10 @@ async function checkForm() {
     let refFormDesc = document.getElementById('formDesc')
     let refFormButton = document.getElementById('fromBtn')
 
-    let validName = refFormName.checkValidity()
-    let validSection = refFormSection.checkValidity()
-    let validMaterial = refFormMaterial.checkValidity()
-    let validDesc = refFormDesc.checkValidity()
+    let validName = true
+    let validSection = true
+    let validMaterial = true
+    let validDesc = true
 
 
     if (refFormName.value == '') validName = false
