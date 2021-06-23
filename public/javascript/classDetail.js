@@ -229,21 +229,50 @@ async function getClassTasks() {
     }
 }
 
-async function delTasks(classId){
-    
-    console.log(classId)
-
+async function delTasks(classId) {
+    let refFormClassCode = document.URL
+    let urlId = refFormClassCode.lastIndexOf('#class')
+    let posId = refFormClassCode.substring(urlId + 7)
     let serverData = {}
+    let item = ''
+
 
     let obj = {
         type: 'getClassTasks',
-        classId: posId
+        classId: posId,
     }
 
     try {
         serverData = await queryServer('/queryusr', obj)
     } catch (err) {
         console.error(err)
+    }
+    let rst = serverData.result
+    if (serverData.status == 'ok') {
+        for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
+            item = rst[cnt]
+            let obj = {
+                type: 'delTasks',
+                msgId: classId
+            }
+
+            if (item.message_sender_id == getCookie('usrId') && getCookie('usrId') != null) {
+                try {
+                    serverData = await queryServer('/queryusr', obj)
+                } catch (err) {
+                    console.error(err)
+                }
+
+                if (serverData.status == 'ok') {
+                    location.reload()
+                }
+            } else {
+                let delWHO = document.querySelector('#delWHO' + item.id)
+                delWHO.style.display = 'none'
+            }
+        }
+    } else {
+        console.log(serverData)
     }
 }
 
