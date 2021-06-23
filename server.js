@@ -214,6 +214,33 @@ async function answerUsrdata(request, response) {
             }
         })
     }
+
+
+    else if (data.type == 'replyToTasks') {
+        let getData = `INSERT INTO class_meassges(class_Id, message_uniqueId, message_sender_email, message_sender_id, message_sender, 	message,Time,message_status) values('${data.class_Id}', '${data.task_Id}', '${data.replyer_Email}', '${data.replyer_Id}',  '${data.replyer_Name}', '${data.msg}', '${data.Current_Time}','Reply')`
+
+        Connection.query(getData, (err, rows) => {
+            if (err) {
+                response.json({ status: 'ko', result: 'Database error' })
+                console.log(err)
+            } else {
+                response.json({ status: 'ok', result: rows })
+            }
+        })
+    }
+
+    else if (data.type == 'getReplyMsg') {
+        let getData = `SELECT * FROM class_meassges where class_Id = '${data.classId}' AND message_status = 'Reply`
+
+        Connection.query(getData, (err, rows) => {
+            if (err) {
+                response.json({ status: 'ko', result: 'Database error' })
+                console.log(err)
+            } else {
+                response.json({ status: 'ok', result: rows })
+            }
+        })
+    }
 }
 
 // Authentication section

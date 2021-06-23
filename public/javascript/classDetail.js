@@ -176,7 +176,7 @@ let TasksMsgs = `
         <form autocomplete="off">
             <div class="field input">
                 <input type="text" id="formMsg" name="user" placeholder="Reply to {{MsgOwner}}">
-                <ion-icon name="send-outline" class="sendMsgBtn" id='aa' onclick="querySendMsg(event, this.nextElementSibling.innerText,this.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.firstElementChild.innerText,this.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.lastElementChild.name)"></ion-icon>
+                <ion-icon name="send-outline" class="sendMsgBtn" id='aa' onclick="querySendMsg(event, this.nextElementSibling.innerText)"></ion-icon>
                 <div style='display:none;'>{{msgId}}</div>
             </div>
         </form>
@@ -337,38 +337,66 @@ function getCookie(name) {
     return null;
 }
 
-async function querySendMsg(evt, msgId, taskNamer, taskIdr) {
+async function querySendMsg(evt, msgId) {
     let refFormIcon = document.getElementById('formMsg')
     let todayDate = `${date + ' ' + n}`
-    console.log(taskIdr)
 
     evt.preventDefault(); // Stop page to reload onclick in sumbit button
-    /* let obj = {
-          type: 'replyToTasks',
-          msg: refFormIcon.value,
-          class_Id: posId,
-          task_Id: msgId,
-          Current_Name: taskNamer,
-          Current_Id: taskIdr,
-          Current_Time: todayDate,
-          replyer_Name: getCookie('usrName'),
-          replyer_Id: getCookie('usrId'),
-          message_status: 'Reply'
-      }
-  
-      try {
-          serverData = await queryServer('/query', obj)
-      } catch (err) {
-          console.error(err)
-      }
-  
-  
-      if (serverData.status == 'ok') {
-          console.log('ok')
-          refFormIcon.value = ''
-      } else {
-          console.log(serverData)
-      }*/
+    let obj = {
+        type: 'replyToTasks',
+        msg: refFormIcon.value,
+        class_Id: posId,
+        task_Id: msgId,
+        Current_Time: todayDate,
+        replyer_Name: getCookie('usrName'),
+        replyer_Email: getCookie('identiy'),
+        replyer_Id: getCookie('usrId')
+    }
+
+    try {
+        serverData = await queryServer('/queryusr', obj)
+    } catch (err) {
+        console.error(err)
+    }
+
+    if (serverData.status == 'ok') {
+        refFormIcon.value = ''
+        location.reload()
+    } else {
+        console.log(serverData)
+    }
+}
+
+async function queryGetMsg() {
+    let replytasks = document.getElementById('replytasks')
+
+    let html = ''
+    let item = ''
+    let serverData = {}
+
+    let obj = {
+        type: 'getReplyMsg',
+        classId: posId
+    }
+
+    try {
+        serverData = await queryServer('/queryusr', obj)
+    } catch (err) {
+        console.error(err)
+    }
+
+    //Datos desde html
+    let template = TasksMsgs
+    
+    if (serverData.status == 'ok') {
+        let rst = serverData.result
+        for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
+            item = rst[cnt]
+        
+        }
+    } else {
+        console.log(serverData)
+    }
 }
 
 async function queryServer(url, obj) {
@@ -428,3 +456,7 @@ function getRandomId() {
     let a = parseInt(Math.floor(Math.random() * multiplier) + 1)
     return a
 }
+
+setInterval(() => {
+    queryGetMsg()
+}, 1000);
