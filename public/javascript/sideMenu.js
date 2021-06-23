@@ -175,6 +175,9 @@ class SideMenu extends HTMLElement {
     mobileDrawerMenu.addEventListener('click', () => { this.setDrawer('mobileDrawerMenu', false, event) })
 
     this.getPersonClass()
+    setTimeout(() => {
+      this.getPersonClass()
+    }, 100);
   }
 
   async getPersonClass() {

@@ -1,4 +1,4 @@
-window.addEventListener('load', () => { getPersonClass(), urlBackgrd() })
+window.addEventListener('load', () => { getPersonClass() })
 
 let temps = ` <div class="classDivOuter">
 <div class='classDivAl'  id='randomUrlchng'>
@@ -77,7 +77,7 @@ async function getPersonClass() {
 function urlBackgrd() {
     let backUrl = ['https://www.gstatic.com/classroom/themes/img_learnlanguage.jpg', 'https://www.gstatic.com/classroom/themes/img_graduation.jpg', 'https://www.gstatic.com/classroom/themes/img_read.jpg', 'https://www.gstatic.com/classroom/themes/Writing.jpg', 'https://www.gstatic.com/classroom/themes/Physics.jpg']
     let backUrls = ''
-    let classDivAl = document.querySelector('#randomUrlchng')
+    let classDivAl = document.querySelectorAll('#randomUrlchng')
 
     for (let a = 0; a < backUrl.length; a = a + 1) {
         const randomIndex = Math.floor(Math.random() * backUrl.length);
@@ -85,8 +85,11 @@ function urlBackgrd() {
         backUrls = item
     }
 
-    console.log(classDivAl)
-    //style='background-image: url({{randomUrl}});'
+    for (let cnt = 0; cnt < classDivAl.length; cnt = cnt + 1) {
+        classDivAl[cnt].style.background = `url(${backUrls})`
+        classDivAl[cnt].style.backgroundRepeat = `no-repeat`
+        classDivAl[cnt].style.backgroundSize = `cover`
+    }
 }
 
 function getCookie(name) {
@@ -161,7 +164,10 @@ async function wait(time) {
         setTimeout(() => { resolve() }, time)
     })
 }
+setTimeout(() => {
+    getPersonClass()
+}, 100);
 
 setInterval(() => {
-    getPersonClass()
-}, 1000);
+    urlBackgrd()
+}, 10000);
