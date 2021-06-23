@@ -173,20 +173,22 @@ let TasksMsgs = `
         <div>
             <p class="commentText">{{MESSAGE}}</p>
         </div>
+            
+            <div>
+            <section class="form signup" id='replyTasksHere{{msgId}}' style='display: none;'>
+                <form > </form>
+            </section>
+        </div>
+
+
         <form autocomplete="off">
-            <div class="field input" id='form{{msgId}}'>
+            <div class="field input">
                 <input type="text" id="formMsg" name="user" placeholder="Reply to {{MsgOwner}}">
                 <ion-icon name="send-outline" class="sendMsgBtn" id='aa' onclick="querySendMsg(event, this.nextElementSibling.innerText)"></ion-icon>
                 <div style='display:none;'>{{msgId}}</div>
             </div>
         </form>
     </div> 
-    
-    <div>
-        <section class="form signup" id='replyTasksHere{{msgId}}' style='display: none;'>
-            <form > </form>
-        </section>
-    </div>
 
     <div class='seeComments' id='a{{msgId}}' style='display:none;' onclick='hideComments(this.id, this.div)'>Hide Comments..</div>
     <div class='seeComments' id='b{{msgId}}' onclick='queryGetMsg(this.id)'>See Comments on this tasks..</div>
@@ -391,7 +393,6 @@ async function queryGetMsg(msgId) {
             reflec.style.display = 'block'
             let hideComments = document.querySelector('#a' + item.message_uniqueId)
             let ShowComments = document.querySelector('#b' + item.message_uniqueId)
-            let FormSend = document.querySelector('#form' + item.message_uniqueId)
             if (posID == item.message_uniqueId && item.message_status == 'Reply') {
                 html = html + template
                     .replaceAll('{{NAME}}', item.message_sender)
@@ -403,7 +404,6 @@ async function queryGetMsg(msgId) {
                     .replaceAll('{{MsgOwner}}', item.message_sender)
                 ShowComments.style.opacity = 0
                 hideComments.style.display = 'block'
-                FormSend.style.display = 'none'
                 //Asignar datos
                 reflec.innerHTML = '<header class="Persontitle">Comments.</header>' + html
             }
