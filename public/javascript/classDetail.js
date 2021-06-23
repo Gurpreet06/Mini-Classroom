@@ -181,7 +181,10 @@ let TasksMsgs = `
             </div>
         </form>
     </div> 
-    <div id='replyTasksHere'> </div>
+    
+    <div id='replyTasksHere{{msgId}}'> </div>
+
+    <div class='seeComments' id='{{msgId}}' onclick='queryGetMsg(this.id, this.div)'>See Comments on this tasks..</div>
 </div>
 `
 
@@ -203,7 +206,7 @@ let replyTasks = `
 
             <div class="dropdown" id='delWHO{{taskId}}'>
                 <div class="dropdown-content">
-                    <button class="downlaod" id='DelTaks' onclick='delTasks("{{msgId}}")'>Delete</button>
+                    <button class="downlaod" id='DelTaks'>Delete</button>
                 </div>
                 <div>
                     <ion-icon name="ellipsis-vertical-outline"></ion-icon>
@@ -249,18 +252,20 @@ async function getClassTasks() {
         let rst = serverData.result
         for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
             item = rst[cnt]
-            html = html + template
-                .replaceAll('{{NAME}}', item.message_sender)
-                .replaceAll('{{TIME}}', item.Time)
-                .replaceAll('{{MESSAGE}}', item.message)
-                .replaceAll('{{personId}}', item.message_sender_id)
-                .replaceAll('{{taskId}}', item.id)
-                .replaceAll('{{msgId}}', item.message_uniqueId)
-                .replaceAll('{{MsgOwner}}', item.message_sender)
+            if (item.message_status == 'Orignal') {
+                html = html + template
+                    .replaceAll('{{NAME}}', item.message_sender)
+                    .replaceAll('{{TIME}}', item.Time)
+                    .replaceAll('{{MESSAGE}}', item.message)
+                    .replaceAll('{{personId}}', item.message_sender_id)
+                    .replaceAll('{{taskId}}', item.id)
+                    .replaceAll('{{msgId}}', item.message_uniqueId)
+                    .replaceAll('{{MsgOwner}}', item.message_sender)
 
 
-            //Asignar datos
-            reflec.innerHTML = html
+                //Asignar datos
+                reflec.innerHTML = html
+            }
         }
 
         for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
@@ -366,7 +371,7 @@ async function querySendMsg(evt, msgId) {
     }
 }
 
-async function queryGetMsg() {
+async function queryGetMsg(msgId) {
     let html = ''
     let item = ''
     let serverData = {}
@@ -389,7 +394,22 @@ async function queryGetMsg() {
         let rst = serverData.result
         for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
             item = rst[cnt]
-            
+            let reflec = document.querySelector('#replyTasksHere' + item.message_uniqueId)
+            if (msgId == item.message_uniqueId && item.message_status == 'Reply') {
+                html = html + template
+                    .replaceAll('{{NAME}}', item.message_sender)
+                    .replaceAll('{{TIME}}', item.Time)
+                    .replaceAll('{{MESSAGE}}', item.message)
+                    .replaceAll('{{personId}}', item.message_sender_id)
+                    .replaceAll('{{taskId}}', item.id)
+                    .replaceAll('{{msgId}}', item.message_uniqueId)
+                    .replaceAll('{{MsgOwner}}', item.message_sender)
+
+
+                //Asignar datos
+                reflec.innerHTML = html
+            }
+
         }
     } else {
         console.log(serverData)

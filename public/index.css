@@ -655,3 +655,16 @@ body {
   border-radius: 2px;
   cursor: pointer;
 }
+
+.seeComments {
+  color: #5f6368;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.25px;
+  line-height: 36px;
+}
+
+.seeComments:hover {
+  text-decoration: underline;
+}
