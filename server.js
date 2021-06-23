@@ -13,7 +13,7 @@ let publicFolder = './public'
 
 // connect to mysql dataBase
 const Connection = mysql.createConnection({
-    host: 'localhost',
+    host: '',
     user: '',
     password: '',
     database: 'mini_classroom'
@@ -244,7 +244,7 @@ app.post('/login.html', (req, res) => {
 // Upload Servicios
 app.use(upload())
 
-// Upload foto when registering
+// Upload foto while registering
 app.post('/index.html', function (req, res) {
     console.log(req.files); // the uploaded file object
     let sampleFile; // Input Name
