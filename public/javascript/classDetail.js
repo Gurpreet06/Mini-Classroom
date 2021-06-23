@@ -180,11 +180,10 @@ let TasksMsgs = `
                 <div style='display:none;'>{{msgId}}</div>
             </div>
         </form>
-    </div>
-
-    <div id='replytasks'> </div>
-    
-</div>`
+    </div> 
+    <div id='replyTasksHere'> </div>
+</div>
+`
 
 let replyTasks = `
 <section class="form signup">
@@ -368,8 +367,6 @@ async function querySendMsg(evt, msgId) {
 }
 
 async function queryGetMsg() {
-    let replytasks = document.getElementById('replytasks')
-
     let html = ''
     let item = ''
     let serverData = {}
@@ -386,13 +383,13 @@ async function queryGetMsg() {
     }
 
     //Datos desde html
-    let template = TasksMsgs
-    
+    let template = replyTasks
+
     if (serverData.status == 'ok') {
         let rst = serverData.result
         for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
             item = rst[cnt]
-        
+            
         }
     } else {
         console.log(serverData)
