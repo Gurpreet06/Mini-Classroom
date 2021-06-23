@@ -147,38 +147,86 @@ async function sendClassTasks(evt) {
 }
 
 
-let TasksMsgs = `<div class='taskMsgDetail'>
-<div class="commentLoads">
-    <div class="personId">
-        <img
-            src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s40-c-fbw=1/photo.jpg">
-        <div class="personName">
-            <h5>{{NAME}}</h5>
-            <p>{{TIME}}</p>
-            <iframe  name='{{personId}}' style='display:none;'></iframe>
-        </div>
-    </div>
+let TasksMsgs = `
+<div class='taskMsgDetail'>
+    <div>
+        <div class="commentLoads">
+            <div class="personId">
+                <img
+                    src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s40-c-fbw=1/photo.jpg">
+                <div class="personName">
+                    <h5>{{NAME}}</h5>
+                    <p>{{TIME}}</p>
+                    <iframe  name='{{personId}}' style='display:none;'></iframe>
+                </div>
+            </div>
 
-    <div class="dropdown" id='delWHO{{taskId}}'>
-        <div class="dropdown-content">
-            <button class="downlaod" id='DelTaks' onclick='delTasks({{msgId}})'>Delete</button>
+            <div class="dropdown" id='delWHO{{taskId}}'>
+                <div class="dropdown-content">
+                    <button class="downlaod" id='DelTaks' onclick='delTasks({{msgId}})'>Delete</button>
+                </div>
+                <div>
+                    <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                </div>
+            </div>
         </div>
         <div>
-            <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+            <p class="commentText">{{MESSAGE}}</p>
         </div>
+        <form autocomplete="off">
+            <div class="field input">
+                <input type="text" id="formMsg" name="user" placeholder="Reply to {{MsgOwner}}">
+                <ion-icon name="send-outline" class="sendMsgBtn" id='aa' onclick="querySendMsg(event, this.nextElementSibling.innerText,this.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.firstElementChild.innerText,this.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.lastElementChild.name)"></ion-icon>
+                <div style='display:none;'>{{msgId}}</div>
+            </div>
+        </form>
     </div>
-</div>
-<div>
-    <p class="commentText">{{MESSAGE}}</p>
-</div>
-<form autocomplete="off">
-<div class="field input">
-    <input type="text" id="formMsg" name="user" placeholder="Reply to {{MsgOwner}}">
-    <ion-icon name="send-outline" class="sendMsgBtn" id='aa' onclick="querySendMsg(event, this.nextElementSibling.innerText,this.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.firstElementChild.innerText,this.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.lastElementChild.name)"></ion-icon>
-    <div style='display:none;'>{{msgId}}</div>
-</div>
-</form>
+
+    <div id='replytasks'> </div>
+    
 </div>`
+
+let replyTasks = `
+<section class="form signup">
+<form>
+    <header class="Persontitle">Comments.</header>
+    <div style="margin-top: 26px;">
+        <div class="commentLoads">
+            <div class="personId">
+                <img
+                    src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s40-c-fbw=1/photo.jpg">
+                <div class="personName">
+                    <h5>{{NAME}}</h5>
+                    <p>{{TIME}}</p>
+                    <iframe name='{{personId}}' style='display:none;'></iframe>
+                </div>
+            </div>
+
+            <div class="dropdown" id='delWHO{{taskId}}'>
+                <div class="dropdown-content">
+                    <button class="downlaod" id='DelTaks' onclick='delTasks("{{msgId}}")'>Delete</button>
+                </div>
+                <div>
+                    <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p class="commentText">{{MESSAGE}}</p>
+        </div>
+        <form autocomplete="off">
+            <div class="field input">
+                <input type="text" id="formMsg" name="user" placeholder="Reply to {{MsgOwner}}">
+                <ion-icon name="send-outline" class="sendMsgBtn" id='aa'
+                    onclick="querySendMsg(event, this.nextElementSibling.innerText,this.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.firstElementChild.innerText,this.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.lastElementChild.name)">
+                </ion-icon>
+                <div style='display:none;'>{{msgId}}</div>
+            </div>
+        </form>
+    </div>
+</form>
+</section>
+`
 
 async function getClassTasks() {
     let reflec = document.querySelector("#commentLoad")
