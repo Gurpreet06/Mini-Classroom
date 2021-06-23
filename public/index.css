@@ -638,3 +638,13 @@ body {
   padding: 20px;
   margin-bottom: 20px;
 }
+
+.classIndo{
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.classIndo > h5{
+  margin-left: 25px;
+}

@@ -41,7 +41,7 @@ Class Interface Page
 
 Class Persons List
 
-![Photos](public/images/tool/Preview2.JPG)
+![Photos](public/images/tool/Previews2.JPG)
 
 
 Create Class Template

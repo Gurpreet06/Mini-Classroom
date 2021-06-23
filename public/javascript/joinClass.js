@@ -3,20 +3,20 @@ let classInfo = `
 <header>Class Information</header>
 </div>
 <div class="usrAcc">
-<div>
+<div class='classIndo'>
     <p>Class Name:
     <h5 id='className'>{{name}}</h5>
     </p>
 </div>
-<div>
+<div class='classIndo'>
     <p>Class Material: </p>
     <h5 id='classMat'>{{Material}}</h5>
 </div>
-<div>
+<div class='classIndo'>
     <p>Class Section: </p>
     <h5 id='classSec'>{{Section}}</h5>
 </div>
-<div>
+<div class='classIndo'>
     <p>Class Descripcion: </p>
     <h5 id='classDesc'>{{Descripcion}}</h5>
 </div>
@@ -134,11 +134,10 @@ async function classDetail(evt) {
                 .replaceAll('{{Section}}', item.class_Section)
                 .replaceAll('{{Descripcion}}', item.class_Desc)
                 .replaceAll('{{classTeacher}}', item.class_Teacher)
-
-
-            //Asignar datos
-            classInfor.innerHTML = html
         }
+
+        //Asignar datos
+        classInfor.innerHTML = html
         formSide.style.transition = 'all 0.3s ease;'
         formSide.style.transform = 'translate3d(-530px, 0, 0)'
         formSide.style.display = 'none'
