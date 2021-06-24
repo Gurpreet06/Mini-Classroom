@@ -191,7 +191,7 @@ let TasksMsgs = `
     </div> 
 
     <div class='seeComments' id='a{{msgId}}' style='display:none;'>Hide Comments..</div>
-    <div class='seeComments' id='b{{msgId}}' onclick='queryGetMsg(this.id)'>See Comments on this tasks..</div>
+    <div class='seeComments' id='b{{msgId}}' onclick='queryGetMsg(this.id), checkUsrDelBtn()'>See Comments on this tasks..</div>
 </div>
 `
 
@@ -208,9 +208,9 @@ let replyTasks = `
                 </div>
             </div>
 
-            <div class="dropdown">
+            <div class="dropdown" id='delReplyTasks{{taskId}}'>
                 <div class="dropdown-content">
-                    <button class="downlaod" >Delete</button>
+                    <button class="downlaod" onclick='delReplyTasks({{msgId}})'>Delete</button>
                 </div>
                 <div>
                     <ion-icon name="ellipsis-vertical-outline"></ion-icon>
@@ -390,8 +390,8 @@ async function queryGetMsg(msgId) {
         for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
             item = rst[cnt]
             let reflec = document.querySelector('#replyTasksHere' + item.message_uniqueId)
-            let hideComments = document.querySelector('#a' + item.message_uniqueId)
             let ShowComments = document.querySelector('#b' + item.message_uniqueId)
+            let hideComments = document.querySelector('#a' + item.message_uniqueId)
             if (posID == item.message_uniqueId && item.message_status == 'Reply') {
                 reflec.style.display = 'block'
                 html = html + template
@@ -412,6 +412,104 @@ async function queryGetMsg(msgId) {
                     ShowComments.style.opacity = 1
                     hideComments.style.display = 'none'
                 })
+            }
+        }
+    } else {
+        console.log(serverData)
+    }
+}
+
+async function checkUsrDelBtn() {
+    let item = ''
+    let serverData = {}
+
+    let obj = {
+        type: 'checkUsrDelBtn',
+        classId: posId
+    }
+
+    try {
+        serverData = await queryServer('/queryusr', obj)
+    } catch (err) {
+        console.error(err)
+    }
+
+    if (serverData.status == 'ok') {
+        let results = serverData.result
+        for (let cnt = 0; cnt < results.length; cnt = cnt + 1) {
+            item = results[cnt]
+            let delReplys = document.querySelector('#delReplyTasks' + item.id)
+            console.log(delReplys)
+            /* if (item.message_sender_id == getCookie('usrId') && getCookie('usrId') != null && item.message_status == 'Reply') {
+                 let delReplys = document.querySelector('#delReplys' + item.id)
+                 delReplys.style.display = 'flex'
+             } else {
+                 let delReplys = document.querySelector('#delReplys' + item.id)
+                 delReplys.style.display = 'none'
+             }*/
+            }
+       
+    } else {
+        console.log(serverData)
+    }
+}
+
+/*
+    let results = serverData.result
+                    for (let cnt = 0; cnt < results.length; cnt = cnt + 1) {
+                        item = results[cnt]
+                        let delReplys = document.querySelector('#delReplyTasks' + item.id)
+                        console.log(delReplys)
+                        /* if (item.message_sender_id == getCookie('usrId') && getCookie('usrId') != null && item.message_status == 'Reply') {
+                             let delReplys = document.querySelector('#delReplys' + item.id)
+                             delReplys.style.display = 'flex'
+                         } else {
+                             let delReplys = document.querySelector('#delReplys' + item.id)
+                             delReplys.style.display = 'none'
+                         }
+                        }
+*/
+
+async function delReplyTasks(replymsgId) {
+    let refFormClassCode = document.URL
+    let urlId = refFormClassCode.lastIndexOf('#class')
+    let posId = refFormClassCode.substring(urlId + 7)
+    let serverData = {}
+    let item = ''
+
+
+    let obj = {
+        type: 'getClassTasks',
+        classId: posId,
+    }
+
+    try {
+        serverData = await queryServer('/queryusr', obj)
+    } catch (err) {
+        console.error(err)
+    }
+    let rst = serverData.result
+    if (serverData.status == 'ok') {
+        for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
+            item = rst[cnt]
+            let obj = {
+                type: 'delTasks',
+                msgId: replymsgId
+            }
+
+            if (item.message_sender_id == getCookie('usrId') && getCookie('usrId') != null) {
+                try {
+                    serverData = await queryServer('/queryusr', obj)
+                } catch (err) {
+                    console.error(err)
+                }
+
+                if (serverData.status == 'ok') {
+                    location.reload()
+                }
+            } else {
+                let delWHO = document.querySelector('#delReplys' + item.id)
+                delWHO.style.display = 'none'
             }
         }
     } else {
