@@ -29,7 +29,7 @@ npm run supervisor
 
 Home Page
 
-![Photos](public/images/tool/Preview0.JPG)
+![Photos](public/images/tool/Previews0.JPG)
 
 Options To add Classes
 
