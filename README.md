@@ -37,7 +37,7 @@ Options To add Classes
 
 Class Interface Page
 
-![Photos](public/images/tool/Preview1.JPG)
+![Photos](public/images/tool/Previews1.JPG)
 
 Class Persons List
 
