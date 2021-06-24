@@ -190,7 +190,7 @@ let TasksMsgs = `
         </form>
     </div> 
 
-    <div class='seeComments' id='a{{msgId}}' style='display:none;' onclick='hideComments(this.id, this.div)'>Hide Comments..</div>
+    <div class='seeComments' id='a{{msgId}}' style='display:none;'>Hide Comments..</div>
     <div class='seeComments' id='b{{msgId}}' onclick='queryGetMsg(this.id)'>See Comments on this tasks..</div>
 </div>
 `
@@ -406,8 +406,13 @@ async function queryGetMsg(msgId) {
                 hideComments.style.display = 'block'
                 //Asignar datos
                 reflec.innerHTML = '<header class="Persontitle">Comments.</header>' + html
+                hideComments.addEventListener('click', () => {
+                    reflec.style.display = 'none'
+                    ShowComments.style.display = 'block'
+                    ShowComments.style.opacity = 1
+                    hideComments.style.display = 'none'
+                })
             }
-
         }
     } else {
         console.log(serverData)
