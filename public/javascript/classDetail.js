@@ -40,6 +40,7 @@ let secondTemplate = `
 <header>{{ClassName}}.</header>
 <div>Material: {{Material}}</div>
 <div>Class Code: {{classCode}}</div>
+<div>Teacher Name: {{TeacherName}}</div>
 </div>
 `
 
@@ -75,6 +76,7 @@ async function getClassDetails() {
             .replaceAll('{{ClassName}}', item.class_name)
             .replaceAll('{{Material}}', item.class_material)
             .replaceAll('{{classCode}}', item.class_unique_id)
+            .replaceAll('{{TeacherName}}', item.class_Teacher)
         //Asignar datos
         reflec.innerHTML = html
         reFlec.innerHTML = ht
@@ -100,7 +102,7 @@ async function checkTaskForm() {
 }
 
 async function sendClassTasks(evt) {
-    evt.preventDefault
+    evt.preventDefault()
     let taskMessage = document.getElementById('formTaskMsg')
     let todayDate = `${date + ' ' + n}`
     let serverData = {}
@@ -121,6 +123,7 @@ async function sendClassTasks(evt) {
     await hideElement('formTaskBtn')
     await showElement('boxSpinner1')
 
+    await wait(1000)
     try {
         serverData = await queryServer('/queryusr', obj)
     } catch (err) {
@@ -132,8 +135,9 @@ async function sendClassTasks(evt) {
     await hideElement('boxSpinner1')
 
     if (serverData.status == 'ok') {
+        taskMessage.value = ''
         await showElement('boxOk1')
-        await wait(2000)
+        await wait(1500)
         await hideElement('boxOk1')
         location.reload()
     } else {
@@ -456,7 +460,7 @@ async function queryGetMsg(msgId) {
             }
 
 
-            if (posID != item.message_uniqueId && item.message_status != 'Reply') {
+            if (posID == item.message_uniqueId && item.message_status != 'Reply') {
                 let reflecs = document.querySelector('#replyTasksHere' + posID)
                 let ShowComment = document.querySelector('#b' + posID)
                 let hideComment = document.querySelector('#a' + posID)
