@@ -184,14 +184,14 @@ let TasksMsgs = `
         <form autocomplete="off">
             <div class="field input">
                 <input type="text" id="formMsg" name="user" placeholder="Reply to {{MsgOwner}}">
-                <ion-icon name="send-outline" class="sendMsgBtn" id='aa' onclick="querySendMsg(event, this.nextElementSibling.innerText)"></ion-icon>
+                <ion-icon name="send-outline" class="sendMsgBtn" onclick="querySendMsg(event, this.nextElementSibling.innerText, this.parentElement.firstElementChild.value)"></ion-icon>
                 <div style='display:none;'>{{msgId}}</div>
             </div>
         </form>
     </div> 
 
     <div class='seeComments' id='a{{msgId}}' style='display:none;'>Hide Comments..</div>
-    <div class='seeComments' id='b{{msgId}}' onclick='queryGetMsg(this.id), checkUsrDelBtn()'>See Comments on this tasks..</div>
+    <div class='seeComments' id='b{{msgId}}' onclick='queryGetMsg(this.id)'>See Comments on this tasks..</div>
 </div>
 `
 
@@ -210,7 +210,7 @@ let replyTasks = `
 
             <div class="dropdown" id='delReplyTasks{{taskId}}'>
                 <div class="dropdown-content">
-                    <button class="downlaod" onclick='delReplyTasks({{msgId}})'>Delete</button>
+                    <button class="downlaod" onclick='delReplyTa({{taskId}})'>Delete</button>
                 </div>
                 <div>
                     <ion-icon name="ellipsis-vertical-outline"></ion-icon>
@@ -277,9 +277,6 @@ async function getClassTasks() {
 }
 
 async function delTasks(classId) {
-    let refFormClassCode = document.URL
-    let urlId = refFormClassCode.lastIndexOf('#class')
-    let posId = refFormClassCode.substring(urlId + 7)
     let serverData = {}
     let item = ''
 
@@ -323,6 +320,50 @@ async function delTasks(classId) {
     }
 }
 
+async function delReplyTa(classId) {
+    let serverData = {}
+    let item = ''
+
+
+    console.log(classId)
+
+    let obj = {
+        type: 'getClassTasks',
+        classId: posId,
+    }
+
+    try {
+        serverData = await queryServer('/queryusr', obj)
+    } catch (err) {
+        console.error(err)
+    }
+    let rst = serverData.result
+    if (serverData.status == 'ok') {
+        for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
+            item = rst[cnt]
+            let obj = {
+                type: 'delReplyTasks',
+                msgId: classId
+            }
+
+            if (item.message_sender_id == getCookie('usrId') && getCookie('usrId') != null) {
+                try {
+                    serverData = await queryServer('/queryusr', obj)
+                } catch (err) {
+                    console.error(err)
+                }
+
+                if (serverData.status == 'ok') {
+                    location.reload()
+                }
+            }
+        }
+    } else {
+        console.log(serverData)
+    }
+}
+
+
 function getCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
@@ -334,14 +375,14 @@ function getCookie(name) {
     return null;
 }
 
-async function querySendMsg(evt, msgId) {
-    let refFormIcon = document.getElementById('formMsg')
+async function querySendMsg(evt, msgId, msg) {
+    let refFormIcon = msg
     let todayDate = `${date + ' ' + n}`
 
     evt.preventDefault(); // Stop page to reload onclick in sumbit button
     let obj = {
         type: 'replyToTasks',
-        msg: refFormIcon.value,
+        msg: refFormIcon,
         class_Id: posId,
         task_Id: msgId,
         Current_Time: todayDate,
@@ -414,41 +455,6 @@ async function queryGetMsg(msgId) {
                 })
             }
         }
-    } else {
-        console.log(serverData)
-    }
-}
-
-async function checkUsrDelBtn() {
-    let item = ''
-    let serverData = {}
-
-    let obj = {
-        type: 'checkUsrDelBtn',
-        classId: posId
-    }
-
-    try {
-        serverData = await queryServer('/queryusr', obj)
-    } catch (err) {
-        console.error(err)
-    }
-
-    if (serverData.status == 'ok') {
-        let results = serverData.result
-        for (let cnt = 0; cnt < results.length; cnt = cnt + 1) {
-            item = results[cnt]
-            let delReplys = document.querySelector('#delReplyTasks' + item.id)
-            console.log(delReplys)
-            /* if (item.message_sender_id == getCookie('usrId') && getCookie('usrId') != null && item.message_status == 'Reply') {
-                 let delReplys = document.querySelector('#delReplys' + item.id)
-                 delReplys.style.display = 'flex'
-             } else {
-                 let delReplys = document.querySelector('#delReplys' + item.id)
-                 delReplys.style.display = 'none'
-             }*/
-            }
-       
     } else {
         console.log(serverData)
     }
