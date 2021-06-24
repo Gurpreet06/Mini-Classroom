@@ -230,7 +230,7 @@ async function answerUsrdata(request, response) {
     }
 
     else if (data.type == 'getReplyMsg') {
-        let getData = `SELECT * FROM class_meassges where class_Id = '${data.classId}' AND message_status = 'Reply'`
+        let getData = `SELECT * FROM class_meassges where class_Id = '${data.classId}'`
 
         Connection.query(getData, (err, rows) => {
             if (err) {

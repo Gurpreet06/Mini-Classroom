@@ -454,6 +454,24 @@ async function queryGetMsg(msgId) {
                     hideComments.style.display = 'none'
                 })
             }
+
+
+            if (posID != item.message_uniqueId && item.message_status != 'Reply') {
+                let reflecs = document.querySelector('#replyTasksHere' + posID)
+                let ShowComment = document.querySelector('#b' + posID)
+                let hideComment = document.querySelector('#a' + posID)
+                reflecs.style.display = 'flex'
+                reflecs.style.flexDirection = 'column'
+                reflecs.innerHTML = '<header class="Persontitle">No Comments Founds.</header> <br> <div class="seeComments">Be first to Comments here..</div>'
+                ShowComment.style.opacity = 0
+                hideComment.style.display = 'block'
+                hideComment.addEventListener('click', () => {
+                    reflecs.style.display = 'none'
+                    ShowComment.style.display = 'block'
+                    ShowComment.style.opacity = 1
+                    hideComment.style.display = 'none'
+                })
+            }
         }
     } else {
         console.log(serverData)
