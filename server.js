@@ -13,8 +13,8 @@ let publicFolder = './public'
 
 // connect to mysql dataBase
 const Connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
+    host: '',
+    user: '',
     password: '',
     database: 'mini_classroom'
 })
