@@ -459,6 +459,22 @@ async function queryGetMsg(msgId) {
                 })
             }
 
+            setInterval(() => {
+                let results = serverData.result
+                for (let cnt = 0; cnt < results.length; cnt = cnt + 1) {
+                    item = results[cnt]
+                    if (item.message_status == 'Reply') {
+                        if (item.message_sender_id == getCookie('usrId') && getCookie('usrId') != null && item.message_status == 'Reply') {
+                            let delReplyTas = document.querySelector('#delReplyTasks' + item.id)
+                            delReplyTas.style.display = 'block'
+                        } else {
+                            let delReplyTas = document.querySelector('#delReplyTasks' + item.id)
+                            delReplyTas.style.display = 'none'
+                        }
+                    }
+                }
+            }, 10);
+
 
             if (posID == item.message_uniqueId && item.message_status != 'Reply') {
                 let reflecs = document.querySelector('#replyTasksHere' + posID)
