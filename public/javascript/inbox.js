@@ -166,7 +166,7 @@ async function wait(time) {
 }
 setTimeout(() => {
     getPersonClass()
-}, 10);
+}, 100);
 
 setInterval(() => {
     urlBackgrd()
