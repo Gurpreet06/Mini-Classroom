@@ -482,7 +482,7 @@ async function queryGetMsg(msgId) {
                 let hideComment = document.querySelector('#a' + posID)
                 reflecs.style.display = 'flex'
                 reflecs.style.flexDirection = 'column'
-                reflecs.innerHTML = '<header class="Persontitle">No Comments Founds.</header> <br> <div class="seeComments">Be first to Comments here..</div>'
+                reflecs.innerHTML = '<header class="Persontitle">No Comments Founds.</header> <br> <div class="seeComments">Be first to Comment here..</div>'
                 ShowComment.style.opacity = 0
                 hideComment.style.display = 'block'
                 hideComment.addEventListener('click', () => {
