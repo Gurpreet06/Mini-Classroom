@@ -294,6 +294,10 @@ async function getClassTasks() {
     }
 }
 
+setInterval(() => {
+    getClassTasks()
+}, 100);
+
 async function delTasks(classId) {
     let serverData = {}
     let item = ''
