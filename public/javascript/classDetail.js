@@ -31,7 +31,8 @@ let temps = ` <header>
 <div>
     <div class="dropdown">
         <div class="dropdown-content">
-            <button class="downlaod" onclick="setDrawer('createClass', true)">Create Task</button>
+            <button class="downlaod" onclick="setDrawer('createClass', true)">Add a message</button>
+            <button class="downlaod">Create Task</button>
         </div>
     <div>
     <ion-icon name="add-outline" class="menuBtn" style="font-size: 19px;"></ion-icon>
