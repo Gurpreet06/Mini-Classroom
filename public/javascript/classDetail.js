@@ -271,7 +271,7 @@ async function getClassTasks() {
                 reflec.innerHTML = html
             }
         }
-        if(serverData.result.length == 0){
+        if (serverData.result.length == 0) {
             reflec.innerHTML = `
             <div class="noTaskFounds">
                 <img src="./images/webImages/NoData.svg" width="10%">
