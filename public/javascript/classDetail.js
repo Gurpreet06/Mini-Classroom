@@ -94,14 +94,17 @@ async function getClassDetails() {
 
 async function checkTaskForm() {
     let taskMessage = document.getElementById('formTaskMsg')
+    let formNameTask = document.getElementById('formNameTask')
     let refFormButton = document.getElementById('formTaskBtn')
 
     let validMsg = true
+    let validName = true
 
 
     if (taskMessage.value == '') validMsg = false
+    if (formNameTask.value == '') validName = false
 
-    if (validMsg) {
+    if (validMsg && validName) {
         refFormButton.removeAttribute('disabled')
     } else {
         refFormButton.setAttribute('disabled', 'true')
@@ -111,6 +114,7 @@ async function checkTaskForm() {
 async function sendClassTasks(evt) {
     evt.preventDefault()
     let taskMessage = document.getElementById('formTaskMsg')
+    let formNameTask = document.getElementById('formNameTask')
     let todayDate = `${date + ' ' + n}`
     let serverData = {}
 
@@ -123,6 +127,7 @@ async function sendClassTasks(evt) {
         message_sender_email: getCookie('identiy'),
         message_sender_id: getCookie('usrId'),
         message: taskMessage.value,
+        Assign_Name: formNameTask.value,
         Time: todayDate
     }
 
@@ -166,8 +171,8 @@ let TasksMsgs = `
             <img
                 src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s40-c-fbw=1/photo.jpg">
             <div class="personName">
-                <h5>{{NAME}}</h5>
-                <p>{{TIME}}</p>
+            <header class="Persontitle" style='border: none;'>{{TaskNAME}}</header>
+                <h5 style='color: black;font-weight: 500;'>{{NAME}} <br> {{TIME}}</h5>
                 <iframe name='{{personId}}' style='display:none;'></iframe>
             </div>
         </div>
@@ -271,6 +276,7 @@ async function getClassTasks() {
                 if (item.message_status == 'AssignMent') {
                     html = html + template
                         .replaceAll('{{NAME}}', item.message_sender)
+                        .replaceAll('{{TaskNAME}}', item.Assign_Name)
                         .replaceAll('{{TIME}}', item.Time)
                         .replaceAll('{{MESSAGE}}', item.message)
                         .replaceAll('{{personId}}', item.message_sender_id)
@@ -281,6 +287,7 @@ async function getClassTasks() {
                 } else {
                     html = html + template
                         .replaceAll('{{NAME}}', item.message_sender)
+                        .replaceAll('{{TaskNAME}}', item.Assign_Name)
                         .replaceAll('{{TIME}}', item.Time)
                         .replaceAll('{{MESSAGE}}', item.message)
                         .replaceAll('{{personId}}', item.message_sender_id)
@@ -649,7 +656,11 @@ let createMessage = `
                                     <div>
                                         <header>Comment Something</header>
                                     </div>
-                                    <div class="usrAcc">
+                                        <div class="usrAcc">
+                                            <div class="field input" style='flex-direction: column;align-items: baseline;'>
+                                            <label>Task Name</label>
+                                            <input type="text" id="formNameTask" placeholder="Task Name" onkeyup="checkTaskForm()">
+                                        </div>
                                         <div class="field input" style="flex-direction: column;align-items: initial;">
                                             <textarea id="formTaskMsg" placeholder="Put Your Text Here"
                                                 onkeyup="checkTaskForm()" cols="30" rows="10" style='height: 100px;'></textarea>

@@ -219,7 +219,7 @@ async function answerUsrdata(request, response) {
     }
 
     else if (data.type == 'addClassTask') {
-        let getData = `INSERT INTO class_meassges(Assign_Name,class_Id, message_uniqueId, message_sender_email, message_sender_id, message_sender, 	message,deadline_Time,Time,message_status) values('','${data.classId}', '${data.message_uniqueId}', '${data.message_sender_email}', '${data.message_sender_id}',  '${data.message_sender}', '${data.message}', '', '${data.Time}','Orignal')`
+        let getData = `INSERT INTO class_meassges(Assign_Name,class_Id, message_uniqueId, message_sender_email, message_sender_id, message_sender, 	message,deadline_Time,Time,message_status) values('${data.Assign_Name}','${data.classId}', '${data.message_uniqueId}', '${data.message_sender_email}', '${data.message_sender_id}',  '${data.message_sender}', '${data.message}', '', '${data.Time}','Orignal')`
 
         Connection.query(getData, (err, rows) => {
             if (err) {

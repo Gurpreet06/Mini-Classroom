@@ -1,7 +1,7 @@
-window.addEventListener('load', () => { getTaskDetail() })
-let refFormClassCode = document.URL
-let urlId = refFormClassCode.lastIndexOf('#class')
-let posId = refFormClassCode.substring(urlId + 7)
+window.addEventListener('load', () => { getTaskDetail(), personCheck() })
+let refCode = document.URL
+let urlIds = refCode.lastIndexOf('#class')
+let posIds = refCode.substring(urlIds + 7)
 
 let tempTask = `    <div id="middleSection">
 <section class="form signup" style="overflow: auto;">
@@ -24,7 +24,7 @@ let tempTask = `    <div id="middleSection">
                             </div>
                         </div>
 
-                        <div class="dropdown" id='delWHO{{taskId}}'>
+                        <div class="dropdown" id='delteTask'>
                             <div class="dropdown-content">
                                 <button class="downlaod" id='DelTaks'
                                     onclick='delTasks({{msgId}})'>Delete</button>
@@ -57,6 +57,7 @@ let tempTask = `    <div id="middleSection">
                             onclick="querySendMsg(event, this.nextElementSibling.innerText, this.parentElement.firstElementChild.value)">
                         </ion-icon>
                         <div style='display:none;'>{{msgId}}</div>
+                        <div style='display:none;' id='classid'>{{classId}}</div>
                     </div>
                 </form>
             </div>
@@ -72,7 +73,7 @@ let tempTask = `    <div id="middleSection">
 
 </section>
 </div>
-<div class="wrapper" style="max-width: 400px;margin-top: 14px;">
+<div class="wrapper" style="max-width: 400px;margin-top: 14px;" id='workList'>
 <section class="form signup">
     <form>
         <header class="Persontitle">Add your Work</header>
@@ -83,7 +84,7 @@ let tempTask = `    <div id="middleSection">
             <input type="submit" id="yourWorkUplod" name="submit" value="Upload Now">
         </section>
     </form>
-    <form action="/download" method="get" enctype="multipart/form-data" class="workList">
+    <form action="/download" method="get" enctype="multipart/form-data" class="workList" >
         <header class="Persontitle">Your Work</header>
         <div class="listFiles">
             <div class="dropdown">
@@ -107,13 +108,14 @@ let tempTask = `    <div id="middleSection">
 
 async function getTaskDetail() {
     let reflec = document.querySelector("#taskManager")
+    let delteTask = document.querySelector('#delteTask')
     let html = ''
     let item = ''
     let serverData = {}
 
     let obj = {
         type: 'getDatailClass',
-        msgId: posId
+        msgId: posIds
     }
 
     try {
@@ -139,9 +141,12 @@ async function getTaskDetail() {
                         .replaceAll('{{msgId}}', item.message_uniqueId)
                         .replaceAll('{{MsgOwner}}', item.message_sender)
                         .replaceAll('{{Deadline: dead}}', 'Deadline: ' + item.deadline_Time)
+                        .replaceAll('{{classId}}', item.class_Id)
                 } else {
                     html = html + template
                         .replaceAll('{{NAME}}', item.message_sender)
+                        .replaceAll('{{TeacherName}}', item.message_sender)
+                        .replaceAll('{{TaskNAME}}', item.Assign_Name)
                         .replaceAll('{{TIME}}', item.Time)
                         .replaceAll('{{MESSAGE}}', item.message)
                         .replaceAll('{{personId}}', item.message_sender_id)
@@ -149,27 +154,49 @@ async function getTaskDetail() {
                         .replaceAll('{{msgId}}', item.message_uniqueId)
                         .replaceAll('{{MsgOwner}}', item.message_sender)
                         .replaceAll('{{Deadline: dead}}', '')
+                        .replaceAll('{{classId}}', item.class_Id)
                 }
                 //Asignar datos
                 reflec.innerHTML = html
             }
-        }
 
-        console.log(serverData)
-        if (serverData.result.length == 0) {
-            reflec.innerHTML = `
-            <div class="noTaskFounds">
-                <img src="./images/webImages/NoData.svg" width="10%">
-                <header class="Persontitle">No Task Founds.</header>
-            </div>`
+            if(item.message_status == 'Orignal' || item.message_status == 'Reply'){
+                let workList = document.querySelector('#workList')
+                workList.style.display = 'none'
+            }else{
+                let workList = document.querySelector('#workList')
+                workList.style.display = 'flex'
+            }
         }
-
     } else {
         console.log(serverData)
     }
 }
 
-async function locationSend(){
+async function personCheck() {
+    let delteTask = document.querySelector('#delteTask')
+    let serverData = {}
+
+    let obj = {
+        type: 'getClassList',
+        classCode: '',
+    }
+
+    try {
+        serverData = await queryServer('/queryusr', obj)
+    } catch (err) {
+        console.error(err)
+    }
+
+
+    if (serverData.status == 'ok') {
+        let rst = serverData.result
+    } else {
+        console.log(serverData)
+    }
+}
+
+async function locationSend() {
     history.back()
 }
 
@@ -198,3 +225,7 @@ async function queryServer(url, obj) {
         req.send(JSON.stringify(obj))
     })
 }
+
+setInterval(() => {
+    getTaskDetail()
+}, 1500);
