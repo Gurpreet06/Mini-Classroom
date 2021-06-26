@@ -246,7 +246,7 @@ async function answerUsrdata(request, response) {
 
 
     else if (data.type == 'replyToTasks') {
-        let getData = `INSERT INTO class_meassges(class_Id, message_uniqueId, message_sender_email, message_sender_id, message_sender, 	message,Time,message_status) values('${data.class_Id}', '${data.task_Id}', '${data.replyer_Email}', '${data.replyer_Id}',  '${data.replyer_Name}', '${data.msg}', '${data.Current_Time}','Reply')`
+        let getData = `INSERT INTO class_meassges(class_Id, message_uniqueId, message_sender_email, message_sender_id, message_sender, 	message,deadline_Time,Time,message_status) values('${data.class_Id}', '${data.task_Id}', '${data.replyer_Email}', '${data.replyer_Id}',  '${data.replyer_Name}', '${data.msg}','', '${data.Current_Time}','Reply')`
 
         Connection.query(getData, (err, rows) => {
             if (err) {
