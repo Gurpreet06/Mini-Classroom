@@ -228,13 +228,13 @@ async function getTaskDetail() {
                     }
                 }
             }, 10);
-     
+
         }
     } else {
         console.log(serverData)
     }
 }
-async function querySendMsg(evt, msgId, msg,classid) {
+async function querySendMsg(evt, msgId, msg, classid) {
     let refFormIcon = msg
     let todayDate = `${date + ' ' + n}`
 
@@ -308,7 +308,7 @@ async function delTasks(classId, classid) {
     }
 }
 
-async function delReplyTa(classId,classid) {
+async function delReplyTa(classId, classid) {
     let serverData = {}
     let item = ''
 
