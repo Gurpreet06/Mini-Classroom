@@ -1,4 +1,4 @@
-//Shadow DOM Spinner
+//Shadow DOM 
 let InputHTML = `
 <template id='usrData'>
 <div class="drawerSide" id="drawerSide">
