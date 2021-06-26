@@ -192,8 +192,21 @@ async function answerUsrdata(request, response) {
         })
     }
 
+    else if (data.type == 'getClassAssignMents') {
+        let getData = `SELECT * FROM assign_task where 	class_Id = '${data.classId}'`
+
+        Connection.query(getData, (err, rows) => {
+            if (err) {
+                response.json({ status: 'ko', result: 'Database error' })
+                console.log(err)
+            } else {
+                response.json({ status: 'ok', result: rows })
+            }
+        })
+    }
+
     else if (data.type == 'addClassTask') {
-        let getData = `INSERT INTO class_meassges(class_Id, message_uniqueId, message_sender_email, message_sender_id, message_sender, 	message,Time,message_status) values('${data.classId}', '${data.message_uniqueId}', '${data.message_sender_email}', '${data.message_sender_id}',  '${data.message_sender}', '${data.message}', '${data.Time}','Orignal')`
+        let getData = `INSERT INTO class_meassges(class_Id, message_uniqueId, message_sender_email, message_sender_id, message_sender, 	message,deadline_Time,Time,message_status) values('${data.classId}', '${data.message_uniqueId}', '${data.message_sender_email}', '${data.message_sender_id}',  '${data.message_sender}', '${data.message}', '', '${data.Time}','Orignal')`
 
         Connection.query(getData, (err, rows) => {
             if (err) {
@@ -273,7 +286,7 @@ async function answerUsrdata(request, response) {
     }
 
     else if (data.type == 'createAssignTask') {
-        let getData = `INSERT INTO assign_task(class_id,assign_uniqueId,message_sender_id,message_sender_name,descripcion,deadline_Time,Time, message_status) values('${data.classId}','${data.assign_uniqueId}','${data.message_sender_id}','${data.message_sender_name}','${data.descripcion}','${data.deadline_Time}', '${data.Time}', '${data.message_status}')`
+        let getData = `INSERT INTO class_meassges(class_Id, message_uniqueId, message_sender_email, message_sender_id, message_sender, 	message,deadline_Time,Time,message_status) values('${data.classId}', '${data.assign_uniqueId}', '${data.message_sender_email}', '${data.message_sender_id}',  '${data.message_sender_name}', '${data.descripcion}', '${data.deadline_Time}', '${data.Time}','${data.message_status}')`
 
         Connection.query(getData, (err, rows) => {
             if (err) {

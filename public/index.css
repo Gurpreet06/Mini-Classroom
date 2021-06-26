@@ -585,6 +585,7 @@ textarea {
 .commentLoads {
   display: flex;
   justify-content: space-between;
+  padding: 20px;
 }
 
 .personId {

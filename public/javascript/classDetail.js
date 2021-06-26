@@ -160,26 +160,31 @@ async function sendClassTasks(evt) {
 let TasksMsgs = `
 <div class='taskMsgDetail'>
     <div>
-        <div class="commentLoads">
-            <div class="personId">
-                <img
-                    src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s40-c-fbw=1/photo.jpg">
-                <div class="personName">
-                    <h5>{{NAME}}</h5>
-                    <p>{{TIME}}</p>
-                    <iframe  name='{{personId}}' style='display:none;'></iframe>
-                </div>
-            </div>
-
-            <div class="dropdown" id='delWHO{{taskId}}'>
-                <div class="dropdown-content">
-                    <button class="downlaod" id='DelTaks' onclick='delTasks({{msgId}})'>Delete</button>
-                </div>
-                <div>
-                    <ion-icon name="ellipsis-vertical-outline"></ion-icon>
-                </div>
+    <div class="daedLineDiv">
+    <div class="commentLoads">
+        <div class="personId">
+            <img
+                src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s40-c-fbw=1/photo.jpg">
+            <div class="personName">
+                <h5>{{NAME}}</h5>
+                <p>{{TIME}}</p>
+                <iframe name='{{personId}}' style='display:none;'></iframe>
             </div>
         </div>
+
+        <div class="dropdown" id='delWHO{{taskId}}'>
+            <div class="dropdown-content">
+                <button class="downlaod" id='DelTaks' onclick='delTasks({{msgId}})'>Delete</button>
+            </div>
+            <div>
+                <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+            </div>
+        </div>
+    </div>
+    <div>
+        <p class="deadLine">{{Deadline: dead}}</p>
+    </div>
+</div>
         <div>
             <p class="commentText">{{MESSAGE}}</p>
         </div>
@@ -233,61 +238,6 @@ let replyTasks = `
     </div>
 `
 
-let assignTasks = `  <div class='taskMsgDetail'>
-<div>
-    <div class="daedLineDiv">
-        <div class="commentLoads">
-            <div class="personId">
-                <img
-                    src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s40-c-fbw=1/photo.jpg">
-                <div class="personName">
-                    <h5>{{NAME}}</h5>
-                    <p>{{TIME}}</p>
-                    <iframe name='{{personId}}' style='display:none;'></iframe>
-                </div>
-            </div>
-
-            <div class="dropdown" id='delWHO{{taskId}}'>
-                <div class="dropdown-content">
-                    <button class="downlaod" id='DelTaks' onclick='delTasks(msgId)'>Delete</button>
-                </div>
-                <div>
-                    <ion-icon name="ellipsis-vertical-outline"></ion-icon>
-                </div>
-            </div>
-        </div>
-        <div>
-            <p class="deadLine">Deadline:</p>
-        </div>
-    </div>
-
-    <div>
-        <p class="commentText">{{MESSAGE}}</p>
-    </div>
-
-    <div>
-        <section class="form signup" id='replyTasksHere{{msgId}}' style='display: none;'>
-            <form> </form>
-        </section>
-    </div>
-
-
-    <form autocomplete="off">
-        <div class="field input" style="display: flex;">
-            <textarea type="text" id="formMsg" name="user" placeholder="Reply to {{MsgOwner}}" cols="300"
-                rows="2"></textarea>
-            <ion-icon name="send-outline" class="sendMsgBtn"
-                onclick="querySendMsg(event, this.nextElementSibling.innerText, this.parentElement.firstElementChild.value)">
-            </ion-icon>
-            <div style='display:none;'>{{msgId}}</div>
-        </div>
-    </form>
-</div>
-
-<div class='seeComments' id='a{{msgId}}' style='display:none;'>Hide Comments..</div>
-<div class='seeComments' id='b{{msgId}}' onclick='queryGetMsg(this.id)'>See Comments on this tasks..</div>
-</div>`
-
 async function getClassTasks() {
     let reflec = document.querySelector("#commentLoad")
     let html = ''
@@ -310,17 +260,28 @@ async function getClassTasks() {
         let rst = serverData.result
         for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
             item = rst[cnt]
-            if (item.message_status == 'Orignal') {
-                html = html + template
-                    .replaceAll('{{NAME}}', item.message_sender)
-                    .replaceAll('{{TIME}}', item.Time)
-                    .replaceAll('{{MESSAGE}}', item.message)
-                    .replaceAll('{{personId}}', item.message_sender_id)
-                    .replaceAll('{{taskId}}', item.id)
-                    .replaceAll('{{msgId}}', item.message_uniqueId)
-                    .replaceAll('{{MsgOwner}}', item.message_sender)
-
-
+            if (item.message_status == 'Orignal' || item.message_status == 'AssignMent') {
+                if (item.message_status == 'AssignMent') {
+                    html = html + template
+                        .replaceAll('{{NAME}}', item.message_sender)
+                        .replaceAll('{{TIME}}', item.Time)
+                        .replaceAll('{{MESSAGE}}', item.message)
+                        .replaceAll('{{personId}}', item.message_sender_id)
+                        .replaceAll('{{taskId}}', item.id)
+                        .replaceAll('{{msgId}}', item.message_uniqueId)
+                        .replaceAll('{{MsgOwner}}', item.message_sender)
+                        .replaceAll('{{Deadline: dead}}', 'Deadline: ' + item.deadline_Time)
+                } else {
+                    html = html + template
+                        .replaceAll('{{NAME}}', item.message_sender)
+                        .replaceAll('{{TIME}}', item.Time)
+                        .replaceAll('{{MESSAGE}}', item.message)
+                        .replaceAll('{{personId}}', item.message_sender_id)
+                        .replaceAll('{{taskId}}', item.id)
+                        .replaceAll('{{msgId}}', item.message_uniqueId)
+                        .replaceAll('{{MsgOwner}}', item.message_sender)
+                        .replaceAll('{{Deadline: dead}}', '')
+                }
                 //Asignar datos
                 reflec.innerHTML = html
             }
@@ -347,6 +308,7 @@ async function getClassTasks() {
         console.log(serverData)
     }
 }
+
 
 async function delTasks(classId) {
     let serverData = {}
@@ -814,7 +776,7 @@ let createTasksClass = `  <div class="drawerSide" id="drawerSide">
                             <!-- Flex child -->
                             <div class="defText elm80">
                                 <!-- Text -->
-                                Task created successfully
+                                Assignment created successfully
                             </div>
                         </div>
                     </div>
@@ -885,6 +847,7 @@ async function sendAssignTask(evt) {
         classId: posId,
         assign_uniqueId: getRandomId(),
         message_sender_id: getCookie('usrId'),
+        message_sender_email: getCookie('identiy'),
         message_sender_name: getCookie('usrName'),
         descripcion: formDescAssign.value,
         deadline_Time: formTimeAssign.value,
