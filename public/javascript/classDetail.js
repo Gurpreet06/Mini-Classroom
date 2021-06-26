@@ -31,8 +31,8 @@ let temps = ` <header>
 <div>
     <div class="dropdown">
         <div class="dropdown-content">
-            <button class="downlaod" onclick="setDrawer('createClass', true)">Add a message</button>
-            <button class="downlaod"onclick="setDrawer('createTask', true)">Create Task</button>
+            <button class="downlaod" onclick="setDrawer('createClass', true)">Create Task</button>
+            <button class="downlaod"onclick="setDrawer('createTask', true)">Create Assignment</button>
         </div>
     <div>
     <ion-icon name="add-outline" class="menuBtn" style="font-size: 19px;"></ion-icon>
@@ -156,7 +156,6 @@ async function sendClassTasks(evt) {
     await showElement('formTaskBtn')
 
 }
-
 
 let TasksMsgs = `
 <div class='taskMsgDetail'>
@@ -710,24 +709,27 @@ let createTasksClass = `  <div class="drawerSide" id="drawerSide">
     <section class="form signup" style="height: 500px;overflow: auto;width: 550px;">
         <form>
             <div>
-                <header>Create a Task</header>
+                <header>Create a Assignment</header>
             </div>
                 <div class="field input" style='flex-direction: column;align-items: baseline;'>
-                    <label>Task Name</label>
-                    <input type="text" id="formName" placeholder="Task Name" onkeyup="checkForm()">
+                    <label>Assignment Name</label>
+                    <input type="text" id="formNameAssign" placeholder="Task Name" onkeyup="checkAssignmentId()">
                 </div>
                 <div class="field input" style="flex-direction: column;align-items: initial;">
-                    <label>Task descripcion</label>
-                    <textarea id="formTaskMsg" placeholder="Task Descripcion"
-                        onkeyup="checkTaskForm()" cols="30" rows="10" style='height: 100px;'></textarea>
+                    <label>Assignment descripcion</label>
+                    <textarea id="formDescAssign" placeholder="Assignment Descripcion"
+                        onkeyup="checkAssignmentId()" cols="30" rows="10" style='height: 100px;'></textarea>
+                </div>
+                <div class="field input" style='flex-direction: column;align-items: baseline;' >
+                    <label>Submit Date</label>
+                    <input type="date" id="formTimeAssign" onkeyup="checkAssignmentId()">
                 </div>
                 <div class="field input" style='flex-direction: column;align-items: baseline;'>
-                    <label>Submit Date</label>
-                    <input type="time" name="" id="">
+                    <label>Points</label>
+                    <input type="number" id="formPointAssign" placeholder="100/100" onkeyup="checkAssignmentId()">
                 </div>
-
                 <div class="field button" id="boxButton">
-                    <input type="submit" id="formTaskBtn" onclick="sendClassTasks(event)" disabled="true"
+                    <input type="submit" id="formAssignBtn" onclick="sendClassTasks(event)" disabled="true"
                         name="submit" value="Create Now">
                 </div>
                 <div id="boxSpinner1" class="defDiv elmBoxSpinner">
@@ -783,3 +785,30 @@ let createTasksClass = `  <div class="drawerSide" id="drawerSide">
 
 let createClassTask = document.getElementById('createTask')
 createClassTask.innerHTML = createTasksClass
+
+async function checkAssignmentId() {
+    let formNameAssign = document.getElementById('formNameAssign')
+    let formDescAssign = document.getElementById('formDescAssign')
+    let formTimeAssign = document.getElementById('formTimeAssign')
+    let formPointAssign = document.getElementById('formPointAssign')
+    let formAssignBtn = document.getElementById('formAssignBtn')
+
+    let validName = true
+    let validDesc = true
+    let validTime = true
+    let validPoint = true
+
+
+
+    if (formNameAssign.value == '') validName = false
+    if (formDescAssign.value == '') validDesc = false
+    if (formTimeAssign.value == '') validTime = false
+    if (formPointAssign.value == '') validPoint = false
+
+
+    if (validName && validDesc && validTime && validPoint) {
+        formAssignBtn.removeAttribute('disabled')
+    } else {
+        formAssignBtn.setAttribute('disabled', 'true')
+    }
+}
