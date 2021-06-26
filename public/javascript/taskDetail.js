@@ -1,4 +1,4 @@
-window.addEventListener('load', () => { getTaskDetail(), personCheck() })
+window.addEventListener('load', () => { getTaskDetail() })
 let refCode = document.URL
 let urlIds = refCode.lastIndexOf('#class')
 let posIds = refCode.substring(urlIds + 7)
@@ -57,15 +57,15 @@ let tempTask = `    <div id="middleSection">
                             onclick="querySendMsg(event, this.nextElementSibling.innerText, this.parentElement.firstElementChild.value)">
                         </ion-icon>
                         <div style='display:none;'>{{msgId}}</div>
-                        <div style='display:none;' id='classid'>{{classId}}</div>
                     </div>
                 </form>
             </div>
 
             <div class='commentBtns'>
                 <div class='seeComments' id='a{{msgId}}' style='display:none;'>Hide Comments..</div>
-                <div class='seeComments' id='b{{msgId}}' onclick='queryGetMsg(this.id)'>See Comments on
+                <div class='seeComments' id='b{{msgId}}' onclick='queryGetMsg(this.id, this.nextElementSibling.innerText)'>See Comments on
                     this tasks..</div>
+                    <div style='display:none;' id='classid'>{{classId}}</div>
             </div>
         </div>
 
@@ -105,10 +105,37 @@ let tempTask = `    <div id="middleSection">
 </section>
 </div>`
 
+let replyTasks = `
+    <div style="margin-top: 26px;">
+        <div class="commentLoads">
+            <div class="personId">
+                <img
+                    src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s40-c-fbw=1/photo.jpg">
+                <div class="personName">
+                    <h5>{{NAME}}</h5>
+                    <p>{{TIME}}</p>
+                    <iframe name='{{personId}}' style='display:none;'></iframe>
+                </div>
+            </div>
+
+            <div class="dropdown" id='delReplyTasks{{taskId}}'>
+                <div class="dropdown-content">
+                    <button class="downlaod" onclick='delReplyTa({{taskId}})'>Delete</button>
+                </div>
+                <div>
+                    <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p class="commentText">{{MESSAGE}}</p>
+        </div>
+    </div>
+`
+
 
 async function getTaskDetail() {
     let reflec = document.querySelector("#taskManager")
-    let delteTask = document.querySelector('#delteTask')
     let html = ''
     let item = ''
     let serverData = {}
@@ -160,10 +187,10 @@ async function getTaskDetail() {
                 reflec.innerHTML = html
             }
 
-            if(item.message_status == 'Orignal' || item.message_status == 'Reply'){
+            if (item.message_status == 'Orignal' || item.message_status == 'Reply') {
                 let workList = document.querySelector('#workList')
                 workList.style.display = 'none'
-            }else{
+            } else {
                 let workList = document.querySelector('#workList')
                 workList.style.display = 'flex'
             }
@@ -173,13 +200,16 @@ async function getTaskDetail() {
     }
 }
 
-async function personCheck() {
-    let delteTask = document.querySelector('#delteTask')
+async function queryGetMsg(msgId, classid) {
+    let indexofId = msgId.indexOf('b')
+    let posID = msgId.substring(indexofId + 1)
+    let html = ''
+    let item = ''
     let serverData = {}
 
     let obj = {
-        type: 'getClassList',
-        classCode: '',
+        type: 'getReplyMsg',
+        classId: classid
     }
 
     try {
@@ -188,12 +218,76 @@ async function personCheck() {
         console.error(err)
     }
 
+    //Datos desde html
+    let template = replyTasks
 
     if (serverData.status == 'ok') {
         let rst = serverData.result
+        for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
+            item = rst[cnt]
+            let reflec = document.querySelector('#replyTasksHere' + item.message_uniqueId)
+            let ShowComments = document.querySelector('#b' + item.message_uniqueId)
+            let hideComments = document.querySelector('#a' + item.message_uniqueId)
+            if (posID == item.message_uniqueId && item.message_status == 'Reply') {
+                reflec.style.display = 'block'
+                html = html + template
+                    .replaceAll('{{NAME}}', item.message_sender)
+                    .replaceAll('{{TIME}}', item.Time)
+                    .replaceAll('{{MESSAGE}}', item.message)
+                    .replaceAll('{{personId}}', item.message_sender_id)
+                    .replaceAll('{{taskId}}', item.id)
+                    .replaceAll('{{msgId}}', item.message_uniqueId)
+                    .replaceAll('{{MsgOwner}}', item.message_sender)
+                ShowComments.style.opacity = 0
+                hideComments.style.display = 'block'
+                //Asignar datos
+                reflec.innerHTML = '<header class="Persontitle">Comments.</header>' + html
+                hideComments.addEventListener('click', () => {
+                    reflec.style.display = 'none'
+                    ShowComments.style.display = 'block'
+                    ShowComments.style.opacity = 1
+                    hideComments.style.display = 'none'
+                })
+            }
+
+            setInterval(() => {
+                let results = serverData.result
+                for (let cnt = 0; cnt < results.length; cnt = cnt + 1) {
+                    item = results[cnt]
+                    if (item.message_status == 'Reply') {
+                        if (item.message_sender_id == getCookie('usrId') && getCookie('usrId') != null && item.message_status == 'Reply') {
+                            let delReplyTas = document.querySelector('#delReplyTasks' + item.id)
+                            delReplyTas.style.display = 'flex'
+                        } else {
+                            let delReplyTas = document.querySelector('#delReplyTasks' + item.id)
+                            delReplyTas.style.display = 'none'
+                        }
+                    }
+                }
+            }, 10);
+
+
+            if (posID == item.message_uniqueId && item.message_status != 'Reply') {
+                let reflecs = document.querySelector('#replyTasksHere' + posID)
+                let ShowComment = document.querySelector('#b' + posID)
+                let hideComment = document.querySelector('#a' + posID)
+                reflecs.style.display = 'flex'
+                reflecs.style.flexDirection = 'column'
+                reflecs.innerHTML = '<header class="Persontitle">No Comments Founds.</header> <br> <div class="seeComments">Be first to Comment here..</div>'
+                ShowComment.style.opacity = 0
+                hideComment.style.display = 'block'
+                hideComment.addEventListener('click', () => {
+                    reflecs.style.display = 'none'
+                    ShowComment.style.display = 'block'
+                    ShowComment.style.opacity = 1
+                    hideComment.style.display = 'none'
+                })
+            }
+        }
     } else {
         console.log(serverData)
     }
+
 }
 
 async function locationSend() {
@@ -225,7 +319,3 @@ async function queryServer(url, obj) {
         req.send(JSON.stringify(obj))
     })
 }
-
-setInterval(() => {
-    getTaskDetail()
-}, 1500);
