@@ -784,7 +784,7 @@ let createTasksClass = `  <div class="drawerSide" id="drawerSide">
                     <input type="number" id="formPointAssign" placeholder="100/100" onkeyup="checkAssignmentId()">
                 </div>
                 <div class="field button" id="boxButton">
-                    <input type="submit" id="formAssignBtn" onclick="sendClassTasks(event)" disabled="true"
+                    <input type="submit" id="formAssignBtn" onclick="sendAssignTask(event)" disabled="true"
                         name="submit" value="Create Now">
                 </div>
                 <div id="boxSpinnerAssign" class="defDiv elmBoxSpinner">
@@ -866,4 +866,61 @@ async function checkAssignmentId() {
     } else {
         formAssignBtn.setAttribute('disabled', 'true')
     }
+}
+
+
+
+async function sendAssignTask(evt) {
+    evt.preventDefault()
+    let formNameAssign = document.getElementById('formNameAssign')
+    let formDescAssign = document.getElementById('formDescAssign')
+    let formTimeAssign = document.getElementById('formTimeAssign')
+    let formPointAssign = document.getElementById('formPointAssign')
+    let todayDate = `${date + ' ' + n}`
+    let serverData = {}
+
+
+    let obj = {
+        type: 'createAssignTask',
+        classId: posId,
+        assign_uniqueId: getRandomId(),
+        message_sender_id: getCookie('usrId'),
+        message_sender_name: getCookie('usrName'),
+        descripcion: formDescAssign.value,
+        deadline_Time: formTimeAssign.value,
+        Time: todayDate,
+        message_status: 'AssignMent'
+    }
+
+
+    await hideElement('formAssignBtn')
+    await showElement('boxSpinnerAssign')
+
+    await wait(1000)
+    try {
+        serverData = await queryServer('/queryusr', obj)
+    } catch (err) {
+        console.error(err)
+    }
+
+    await wait(2000)
+
+    await hideElement('boxSpinnerAssign')
+
+    if (serverData.status == 'ok') {
+        formNameAssign.value = ''
+        formDescAssign.value = ''
+        formTimeAssign.value = ''
+        formPointAssign.value = ''
+        await showElement('boxOkAssign')
+        await wait(1500)
+        await hideElement('boxOkAssign')
+        location.reload()
+    } else {
+        console.log(serverData)
+        await showElement('boxErrorAssign')
+        await wait(3000)
+        await hideElement('boxErrorAssign')
+    }
+    await showElement('formAssignBtn')
 }

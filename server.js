@@ -271,6 +271,19 @@ async function answerUsrdata(request, response) {
             }
         })
     }
+
+    else if (data.type == 'createAssignTask') {
+        let getData = `INSERT INTO assign_task(class_id,assign_uniqueId,message_sender_id,message_sender_name,descripcion,deadline_Time,Time, message_status) values('${data.classId}','${data.assign_uniqueId}','${data.message_sender_id}','${data.message_sender_name}','${data.descripcion}','${data.deadline_Time}', '${data.Time}', '${data.message_status}')`
+
+        Connection.query(getData, (err, rows) => {
+            if (err) {
+                response.json({ status: 'ko', result: 'Database error' })
+                console.log(err)
+            } else {
+                response.json({ status: 'ok', result: rows })
+            }
+        })
+    }
 }
 
 // Authentication section
