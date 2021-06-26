@@ -633,3 +633,74 @@ function getRandomId() {
     let a = parseInt(Math.floor(Math.random() * multiplier) + 1)
     return a
 }
+
+let createMessage = `
+<div class="drawerSide" id="drawerSide">
+                        <div class="wrapper">
+                            <section class="form signup" style="height: 500px;overflow: auto;width: 550px;">
+                                <form>
+                                    <div>
+                                        <header>Comment Something</header>
+                                    </div>
+                                    <div class="usrAcc">
+                                        <div class="field input" style="flex-direction: column;align-items: initial;">
+                                            <textarea id="formTaskMsg" placeholder="Put Your Text Here"
+                                                onkeyup="checkTaskForm()" cols="30" rows="10"></textarea>
+                                        </div>
+                                        <div class="field button" id="boxButton">
+                                            <input type="submit" id="formTaskBtn" onclick="sendClassTasks(event)"
+                                                disabled="true" name="submit" value="Post Now">
+                                        </div>
+                                        <div id="boxSpinner1" class="defDiv elmBoxSpinner">
+                                            <!-- Div - boxSpinner -->
+                                            <div class="defDivFlex elm71">
+                                                <!-- Flex -->
+                                                <div class="defDivFlexChild">
+                                                    <!-- Flex child -->
+                                                    <div class="defDiv elm73">
+                                                        <!-- Div -->
+                                                        <div class="waitSpinner">
+                                                            <!-- Wait spinner -->
+                                                            <svg viewBox="0 0 50 50">
+                                                                <!-- Spinner main -->
+                                                                <circle cx="25" cy="25" r="20" />
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="boxOk1" class="defDiv elmBoxOk" style="display: none;">
+                                            <!-- Div - boxOk -->
+                                            <div class="defDivFlex elm78">
+                                                <!-- Flex -->
+                                                <div class="defDivFlexChild">
+                                                    <!-- Flex child -->
+                                                    <div class="defText elm80">
+                                                        <!-- Text -->
+                                                        Task created successfully
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="boxError1" class="defDiv elmBoxError">
+                                            <!-- Div - boxError -->
+                                            <div class="defDivFlex elm82">
+                                                <!-- Flex -->
+                                                <div class="defDivFlexChild">
+                                                    <!-- Flex child -->
+                                                    <div class="defText elm84">
+                                                        <!-- Text -->
+                                                        Connection Error
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+`
+let createClass = document.getElementById('createClass')
+createClass.innerHTML = createMessage
