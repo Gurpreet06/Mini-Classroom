@@ -513,7 +513,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 20px;
-  background-image: url(https://gstatic.com/classroom/themes/Physics.jpg);
+  background-image: url(./images/webImages/Physics.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   border-top-right-radius: 7px;

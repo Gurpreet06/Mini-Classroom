@@ -75,7 +75,7 @@ async function getPersonClass() {
 }
 
 function urlBackgrd() {
-    let backUrl = ['https://www.gstatic.com/classroom/themes/img_learnlanguage.jpg', 'https://www.gstatic.com/classroom/themes/img_graduation.jpg', 'https://www.gstatic.com/classroom/themes/img_read.jpg', 'https://www.gstatic.com/classroom/themes/Writing.jpg', 'https://www.gstatic.com/classroom/themes/Physics.jpg']
+    let backUrl = ['https://www.gstatic.com/classroom/themes/img_learnlanguage.jpg', 'https://www.gstatic.com/classroom/themes/img_graduation.jpg', 'https://www.gstatic.com/classroom/themes/img_read.jpg', 'https://www.gstatic.com/classroom/themes/Writing.jpg', './images/webImages/Physics.jpg']
     let backUrls = ''
     let classDivAl = document.querySelectorAll('#randomUrlchng')
 
