@@ -372,9 +372,6 @@ async function delReplyTa(classId) {
     let serverData = {}
     let item = ''
 
-
-    console.log(classId)
-
     let obj = {
         type: 'getClassTasks',
         classId: posId,
@@ -544,9 +541,6 @@ async function queryGetMsg(msgId) {
 }
 
 async function delReplyTasks(replymsgId) {
-    let refFormClassCode = document.URL
-    let urlId = refFormClassCode.lastIndexOf('#class')
-    let posId = refFormClassCode.substring(urlId + 7)
     let serverData = {}
     let item = ''
 

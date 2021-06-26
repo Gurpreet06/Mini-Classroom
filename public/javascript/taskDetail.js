@@ -2,6 +2,22 @@ window.addEventListener('load', () => { getTaskDetail() })
 let refCode = document.URL
 let urlIds = refCode.lastIndexOf('#class')
 let posIds = refCode.substring(urlIds + 7)
+var today = new Date();
+var month = new Array();
+month[0] = "January";
+month[1] = "February";
+month[2] = "March";
+month[3] = "April";
+month[4] = "May";
+month[5] = "June";
+month[6] = "July";
+month[7] = "August";
+month[8] = "September";
+month[9] = "October";
+month[10] = "November";
+month[11] = "December";
+var n = month[today.getMonth()];
+var date = today.getDate();
 
 let tempTask = `    <div id="middleSection">
 <section class="form signup" style="overflow: auto;">
@@ -27,7 +43,9 @@ let tempTask = `    <div id="middleSection">
                         <div class="dropdown" id='delteTask'>
                             <div class="dropdown-content">
                                 <button class="downlaod" id='DelTaks'
-                                    onclick='delTasks({{msgId}})'>Delete</button>
+                                    onclick='delTasks({{msgId}},this.nextElementSibling.innerText )'>Delete</button>
+                        <div style='display:none;' id='classid'>{{classId}}</div>
+
                             </div>
                             <div>
                                 <ion-icon name="ellipsis-vertical-outline"></ion-icon>
@@ -54,8 +72,9 @@ let tempTask = `    <div id="middleSection">
                         <textarea type="text" id="formMsg" name="user"
                             placeholder="Reply to {{MsgOwner}}" cols="300" rows="2"></textarea>
                         <ion-icon name="send-outline" class="sendMsgBtn"
-                            onclick="querySendMsg(event, this.nextElementSibling.innerText, this.parentElement.firstElementChild.value)">
+                            onclick="querySendMsg(event, this.nextElementSibling.nextElementSibling.innerText, this.parentElement.firstElementChild.value, this.nextElementSibling.innerText)">
                         </ion-icon>
+                        <div style='display:none;' id='classid'>{{classId}}</div>
                         <div style='display:none;'>{{msgId}}</div>
                     </div>
                 </form>
@@ -120,7 +139,8 @@ let replyTasks = `
 
             <div class="dropdown" id='delReplyTasks{{taskId}}'>
                 <div class="dropdown-content">
-                    <button class="downlaod" onclick='delReplyTa({{taskId}})'>Delete</button>
+                    <button class="downlaod" onclick='delReplyTa({{taskId}}, this.nextElementSibling.innerText)'>Delete</button>
+                    <div style='display:none;'>{{classId}}</div>
                 </div>
                 <div>
                     <ion-icon name="ellipsis-vertical-outline"></ion-icon>
@@ -199,6 +219,119 @@ async function getTaskDetail() {
         console.log(serverData)
     }
 }
+async function querySendMsg(evt, msgId, msg,classid) {
+    let refFormIcon = msg
+    let todayDate = `${date + ' ' + n}`
+
+    evt.preventDefault(); // Stop page to reload onclick in sumbit button
+    let obj = {
+        type: 'replyToTasks',
+        msg: refFormIcon,
+        class_Id: classid,
+        task_Id: msgId,
+        Current_Time: todayDate,
+        replyer_Name: getCookie('usrName'),
+        replyer_Email: getCookie('identiy'),
+        replyer_Id: getCookie('usrId')
+    }
+
+    try {
+        serverData = await queryServer('/queryusr', obj)
+    } catch (err) {
+        console.error(err)
+    }
+
+    if (serverData.status == 'ok') {
+        refFormIcon.value = ''
+        location.reload()
+    } else {
+        console.log(serverData)
+    }
+}
+
+async function delTasks(classId, classid) {
+    let serverData = {}
+    let item = ''
+
+
+    let obj = {
+        type: 'getClassTasks',
+        classId: classid,
+    }
+
+    try {
+        serverData = await queryServer('/queryusr', obj)
+    } catch (err) {
+        console.error(err)
+    }
+    let rst = serverData.result
+    if (serverData.status == 'ok') {
+        for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
+            item = rst[cnt]
+            let obj = {
+                type: 'delTasks',
+                msgId: classId
+            }
+
+            if (item.message_sender_id == getCookie('usrId') && getCookie('usrId') != null) {
+                try {
+                    serverData = await queryServer('/queryusr', obj)
+                } catch (err) {
+                    console.error(err)
+                }
+
+                if (serverData.status == 'ok') {
+                    location.reload()
+                }
+            } else {
+                let delWHO = document.querySelector('#delWHO' + item.id)
+                delWHO.style.display = 'none'
+            }
+        }
+    } else {
+        console.log(serverData)
+    }
+}
+
+async function delReplyTa(classId,classid) {
+    let serverData = {}
+    let item = ''
+
+    let obj = {
+        type: 'getClassTasks',
+        classId: classid,
+    }
+
+    try {
+        serverData = await queryServer('/queryusr', obj)
+    } catch (err) {
+        console.error(err)
+    }
+    let rst = serverData.result
+    if (serverData.status == 'ok') {
+        for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
+            item = rst[cnt]
+            let obj = {
+                type: 'delReplyTasks',
+                msgId: classId
+            }
+
+            if (item.message_sender_id == getCookie('usrId') && getCookie('usrId') != null) {
+                try {
+                    serverData = await queryServer('/queryusr', obj)
+                } catch (err) {
+                    console.error(err)
+                }
+
+                if (serverData.status == 'ok') {
+                    location.reload()
+                }
+            }
+        }
+    } else {
+        console.log(serverData)
+    }
+}
 
 async function queryGetMsg(msgId, classid) {
     let indexofId = msgId.indexOf('b')
@@ -238,6 +371,7 @@ async function queryGetMsg(msgId, classid) {
                     .replaceAll('{{taskId}}', item.id)
                     .replaceAll('{{msgId}}', item.message_uniqueId)
                     .replaceAll('{{MsgOwner}}', item.message_sender)
+                    .replaceAll('{{classId}}', item.class_Id)
                 ShowComments.style.opacity = 0
                 hideComments.style.display = 'block'
                 //Asignar datos
