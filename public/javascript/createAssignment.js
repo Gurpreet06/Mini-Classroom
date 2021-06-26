@@ -2,25 +2,23 @@
 
 async function sendClassTasks(evt) {
     evt.preventDefault()
-    let taskMessage = document.getElementById('formTaskMsg')
+    let formNameAssign = document.getElementById('formNameAssign')
+    let formDescAssign = document.getElementById('formDescAssign')
+    let formTimeAssign = document.getElementById('formTimeAssign')
+    let formPointAssign = document.getElementById('formPointAssign')
     let todayDate = `${date + ' ' + n}`
     let serverData = {}
 
 
     let obj = {
-        type: 'addClassTask',
+        type: 'createAssignTask',
         classId: posId,
-        message_uniqueId: getRandomId(),
-        message_sender: getCookie('usrName'),
-        message_sender_email: getCookie('identiy'),
-        message_sender_id: getCookie('usrId'),
-        message: taskMessage.value,
-        Time: todayDate
+
     }
 
 
-    await hideElement('formTaskBtn')
-    await showElement('boxSpinner1')
+    await hideElement('formAssignBtn')
+    await showElement('boxSpinnerAssign')
 
     await wait(1000)
     try {
@@ -31,20 +29,22 @@ async function sendClassTasks(evt) {
 
     await wait(2000)
 
-    await hideElement('boxSpinner1')
+    await hideElement('boxSpinnerAssign')
 
     if (serverData.status == 'ok') {
-        taskMessage.value = ''
-        await showElement('boxOk1')
+        formNameAssign.value = ''
+        formDescAssign.value = ''
+        formTimeAssign.value = ''
+        formPointAssign.value = ''
+        await showElement('boxOkAssign')
         await wait(1500)
-        await hideElement('boxOk1')
+        await hideElement('boxOkAssign')
         location.reload()
     } else {
         console.log(serverData)
-        await showElement('boxError1')
+        await showElement('boxErrorAssign')
         await wait(3000)
-        await hideElement('boxError1')
+        await hideElement('boxErrorAssign')
     }
-    await showElement('formTaskBtn')
-
+    await showElement('formAssignBtn')
 }

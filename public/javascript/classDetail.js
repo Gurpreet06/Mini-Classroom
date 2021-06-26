@@ -732,7 +732,7 @@ let createTasksClass = `  <div class="drawerSide" id="drawerSide">
                     <input type="submit" id="formAssignBtn" onclick="sendClassTasks(event)" disabled="true"
                         name="submit" value="Create Now">
                 </div>
-                <div id="boxSpinner1" class="defDiv elmBoxSpinner">
+                <div id="boxSpinnerAssign" class="defDiv elmBoxSpinner">
                     <!-- Div - boxSpinner -->
                     <div class="defDivFlex elm71">
                         <!-- Flex -->
@@ -751,7 +751,7 @@ let createTasksClass = `  <div class="drawerSide" id="drawerSide">
                         </div>
                     </div>
                 </div>
-                <div id="boxOk1" class="defDiv elmBoxOk" style="display: none;">
+                <div id="boxOkAssign" class="defDiv elmBoxOk" style="display: none;">
                     <!-- Div - boxOk -->
                     <div class="defDivFlex elm78">
                         <!-- Flex -->
@@ -764,7 +764,7 @@ let createTasksClass = `  <div class="drawerSide" id="drawerSide">
                         </div>
                     </div>
                 </div>
-                <div id="boxError1" class="defDiv elmBoxError">
+                <div id="boxErrorAssign" class="defDiv elmBoxError">
                     <!-- Div - boxError -->
                     <div class="defDivFlex elm82">
                         <!-- Flex -->
