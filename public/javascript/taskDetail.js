@@ -44,7 +44,7 @@ let tempTask = `    <div id="middleSection">
                             <div class="dropdown-content">
                                 <button class="downlaod" id='DelTaks'
                                     onclick='delTasks({{msgId}},this.nextElementSibling.innerText )'>Delete</button>
-                        <div style='display:none;' id='classid'>{{classId}}</div>
+                                <div style='display:none;' id='classid'>{{classId}}</div>
 
                             </div>
                             <div>
@@ -207,13 +207,28 @@ async function getTaskDetail() {
                 reflec.innerHTML = html
             }
 
-            if (item.message_status == 'Orignal') {
-                let workList = document.querySelector('#workList')
-                workList.style.display = 'none'
-            } else {
+            if (item.message_status == 'AssignMent') {
                 let workList = document.querySelector('#workList')
                 workList.style.display = 'flex'
+            } else {
+                let workList = document.querySelector('#workList')
+                workList.style.display = 'none'
             }
+            console.log(item)
+
+            setInterval(() => {
+                for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
+                    item = rst[cnt]
+                    if (item.message_sender_id == getCookie('usrId') && getCookie('usrId') != null) {
+                        let delWHO = document.getElementById('delteTask')
+                        delWHO.style.display = 'flex'
+                    } else {
+                        let delWHO = document.getElementById('delteTask')
+                        delWHO.style.display = 'none'
+                    }
+                }
+            }, 10);
+     
         }
     } else {
         console.log(serverData)
