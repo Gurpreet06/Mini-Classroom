@@ -133,14 +133,30 @@ async function answerUsrdata(request, response) {
 
     else if (data.type == 'cancelSubscription') {
         let getData = ``
+        let sortGetData = ``
         if (data.person_Status == 'Teacher') {
             getData = `delete from peoples where class_unique_id = ${data.class_Code}`
         } else {
             getData = `delete from peoples where class_unique_id = ${data.class_Code} AND person_uniqueId = ${data.person_Id}`
         }
 
+        if (data.person_Status == 'Teacher') {
+            sortGetData = `delete from class_meassges where class_Id = ${data.class_Code}`
+        } else {
+            sortGetData = `delete from class_meassges where class_Id = ${data.class_Code} AND message_sender_id = ${data.person_Id}`
+        }
+
 
         Connection.query(getData, (err, rows) => {
+            if (err) {
+                response.json({ status: 'ko', result: 'Database error' })
+                console.log(err)
+            } else {
+                response.json({ status: 'ok', result: rows })
+            }
+        })
+
+        Connection.query(sortGetData, (err, rows) => {
             if (err) {
                 response.json({ status: 'ko', result: 'Database error' })
                 console.log(err)
