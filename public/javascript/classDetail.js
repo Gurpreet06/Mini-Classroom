@@ -208,10 +208,14 @@ let TasksMsgs = `
     <div class='commentBtns'>
         <div class='seeComments' id='a{{msgId}}' style='display:none;'>Hide Comments..</div>
         <div class='seeComments' id='b{{msgId}}' onclick='queryGetMsg(this.id)'>See Comments on this tasks..</div>
-        <a href='./index.html'><div class='seeComments' onclick=''>View More..</div></a>
+        <a><div class='seeComments' onclick='redirectTask({{msgId}})'>View More..</div></a>
     </div>
 </div>
 `
+
+async function redirectTask(classId) {
+    window.location = `/taskDetail.html#class=${classId}`
+}
 
 let replyTasks = `
     <div style="margin-top: 26px;">
