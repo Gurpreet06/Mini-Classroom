@@ -13,12 +13,11 @@ let tempTask = `    <div id="middleSection">
                         <div class="personId">
                         <a onclick='locationSend()'>
                             <ion-icon name="arrow-back-outline"></ion-icon>
-                            <img src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s40-c-fbw=1/photo.jpg">
-                        </a>
+                           </a>
                             
                             <div class="personName">
-                                <form>
-                                    <header class="Persontitle">{{TaskNAME}}</header>
+                                <form style='margin: 0;'>
+                                    <header class="Persontitle" style='border: none;'>{{TaskNAME}}</header>
                                 </form>
                                 <p>{{TeacherName}} {{TIME}}</p>
                                 <iframe name='{{personId}}' style='display:none;'></iframe>

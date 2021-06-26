@@ -600,7 +600,7 @@ textarea {
   align-items: center;
 }
 
-.personId > a > img {
+.personId > img {
   border-radius: 20px;
   margin-left: 20px;
 }
