@@ -11,8 +11,11 @@ let tempTask = `    <div id="middleSection">
                 <div class="daedLineDiv">
                     <div class="commentLoads">
                         <div class="personId">
-                            <img
-                                src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s40-c-fbw=1/photo.jpg">
+                        <a onclick='locationSend()'>
+                            <ion-icon name="arrow-back-outline"></ion-icon>
+                            <img src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s40-c-fbw=1/photo.jpg">
+                        </a>
+                            
                             <div class="personName">
                                 <form>
                                     <header class="Persontitle">{{TaskNAME}}</header>
@@ -25,7 +28,7 @@ let tempTask = `    <div id="middleSection">
                         <div class="dropdown" id='delWHO{{taskId}}'>
                             <div class="dropdown-content">
                                 <button class="downlaod" id='DelTaks'
-                                    onclick='delTasks(msgId)'>Delete</button>
+                                    onclick='delTasks({{msgId}})'>Delete</button>
                             </div>
                             <div>
                                 <ion-icon name="ellipsis-vertical-outline"></ion-icon>
@@ -37,11 +40,7 @@ let tempTask = `    <div id="middleSection">
                     </div>
                 </div>
                 <div style="display: flex;">
-                    <p class="commentText">{{MESSAGE}} Lorem ipsum dolor sit, amet consectetur
-                        adipisicing
-                        elit. Maiores reiciendis soluta, vel, assumenda nisi at dolores perspiciatis
-                        quidem
-                        voluptas nemo molestiae autem illum unde ad sint quae iste est eos. </p>
+                    <p class="commentText">{{MESSAGE}} </p>
                 </div>
 
                 <div>
@@ -132,7 +131,8 @@ async function getTaskDetail() {
             if (item.message_status == 'Orignal' || item.message_status == 'AssignMent') {
                 if (item.message_status == 'AssignMent') {
                     html = html + template
-                        .replaceAll('{{NAME}}', item.message_sender)
+                        .replaceAll('{{TeacherName}}', item.message_sender)
+                        .replaceAll('{{TaskNAME}}', item.Assign_Name)
                         .replaceAll('{{TIME}}', item.Time)
                         .replaceAll('{{MESSAGE}}', item.message)
                         .replaceAll('{{personId}}', item.message_sender_id)
@@ -168,6 +168,10 @@ async function getTaskDetail() {
     } else {
         console.log(serverData)
     }
+}
+
+async function locationSend(){
+    history.back()
 }
 
 async function queryServer(url, obj) {

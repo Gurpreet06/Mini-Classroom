@@ -593,8 +593,16 @@ textarea {
   align-items: center;
 }
 
-.personId > img {
+.personId > a {
+  cursor: pointer;
+  font-size: 29px;
+  display: flex;
+  align-items: center;
+}
+
+.personId > a > img {
   border-radius: 20px;
+  margin-left: 20px;
 }
 
 .personName {
