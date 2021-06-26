@@ -112,6 +112,13 @@ textarea {
   padding: 0 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
+  outline: none;
+}
+
+.form form .input textarea::placeholder-shown ~ label {
+  padding: 20px;
+  font-size: 16px;
+  top: 50px;
 }
 
 .form form .input > input:valid ~ div {
@@ -440,6 +447,7 @@ textarea {
   display: flex;
   align-items: center;
   cursor: pointer;
+  color: black;
 }
 
 .dropdown-content {
@@ -672,4 +680,14 @@ textarea {
 
 .noTaskFounds > header {
   margin-left: 25px;
+}
+
+.daedLineDiv {
+  color: #174ea6;
+  border-bottom: 0.0625rem solid #174ea6;
+}
+
+.deadLine {
+  text-align: end;
+  color: black;
 }

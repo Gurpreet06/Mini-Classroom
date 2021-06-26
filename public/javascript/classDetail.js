@@ -233,6 +233,61 @@ let replyTasks = `
     </div>
 `
 
+let assignTasks = `  <div class='taskMsgDetail'>
+<div>
+    <div class="daedLineDiv">
+        <div class="commentLoads">
+            <div class="personId">
+                <img
+                    src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s40-c-fbw=1/photo.jpg">
+                <div class="personName">
+                    <h5>{{NAME}}</h5>
+                    <p>{{TIME}}</p>
+                    <iframe name='{{personId}}' style='display:none;'></iframe>
+                </div>
+            </div>
+
+            <div class="dropdown" id='delWHO{{taskId}}'>
+                <div class="dropdown-content">
+                    <button class="downlaod" id='DelTaks' onclick='delTasks(msgId)'>Delete</button>
+                </div>
+                <div>
+                    <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p class="deadLine">Deadline:</p>
+        </div>
+    </div>
+
+    <div>
+        <p class="commentText">{{MESSAGE}}</p>
+    </div>
+
+    <div>
+        <section class="form signup" id='replyTasksHere{{msgId}}' style='display: none;'>
+            <form> </form>
+        </section>
+    </div>
+
+
+    <form autocomplete="off">
+        <div class="field input" style="display: flex;">
+            <textarea type="text" id="formMsg" name="user" placeholder="Reply to {{MsgOwner}}" cols="300"
+                rows="2"></textarea>
+            <ion-icon name="send-outline" class="sendMsgBtn"
+                onclick="querySendMsg(event, this.nextElementSibling.innerText, this.parentElement.firstElementChild.value)">
+            </ion-icon>
+            <div style='display:none;'>{{msgId}}</div>
+        </div>
+    </form>
+</div>
+
+<div class='seeComments' id='a{{msgId}}' style='display:none;'>Hide Comments..</div>
+<div class='seeComments' id='b{{msgId}}' onclick='queryGetMsg(this.id)'>See Comments on this tasks..</div>
+</div>`
+
 async function getClassTasks() {
     let reflec = document.querySelector("#commentLoad")
     let html = ''
