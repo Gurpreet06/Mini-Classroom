@@ -141,3 +141,165 @@ function getRandomId() {
     let a = parseInt(Math.floor(Math.random() * multiplier) + 1)
     return a
 }
+
+let createClasses = `   <div class="drawerSide" id="drawerSide">
+<!-- Drawer side -->
+<div class="wrapper">
+    <section class="form signup" style="height: 500px;overflow: auto;width: 550px;">
+        <form autocomplete="off">
+            <div>
+                <header>Create Class</header>
+            </div>
+            <div class="usrAcc">
+                <div class="field input">
+                    <label>Class Name</label>
+                    <input type="text" id="formName" placeholder="Class Name"
+                        onkeyup="checkForm()">
+                </div>
+                <div class="field input">
+                    <label>Section Name</label>
+                    <input type="text" id="formSection" placeholder="Section Name"
+                        onkeyup="checkForm()">
+                </div>
+                <div class="field input">
+                    <label>Material</label>
+                    <input type="text" id="formMaterial" placeholder="Material"
+                        onkeyup="checkForm()">
+                </div>
+                <div class="field input">
+                    <label>Descripcion</label>
+                    <input type="text" id="formDesc" placeholder="Descripcion"
+                        onkeyup="checkForm()">
+                </div>
+                <div class="field button" id="boxButton">
+                    <input type="submit" id="fromBtn" onclick="createClass(event)"
+                        disabled="true" name="submit" value="Create Now">
+                </div>
+                <div id="boxSpinner" class="defDiv elmBoxSpinner">
+                    <!-- Div - boxSpinner -->
+                    <div class="defDivFlex elm71">
+                        <!-- Flex -->
+                        <div class="defDivFlexChild">
+                            <!-- Flex child -->
+                            <div class="defDiv elm73">
+                                <!-- Div -->
+                                <div class="waitSpinner">
+                                    <!-- Wait spinner -->
+                                    <svg viewBox="0 0 50 50">
+                                        <!-- Spinner main -->
+                                        <circle cx="25" cy="25" r="20" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="boxOk" class="defDiv elmBoxOk" style="display: none;">
+                    <!-- Div - boxOk -->
+                    <div class="defDivFlex elm78">
+                        <!-- Flex -->
+                        <div class="defDivFlexChild">
+                            <!-- Flex child -->
+                            <div class="defText elm80">
+                                <!-- Text -->
+                                Class created successfully
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="boxError" class="defDiv elmBoxError">
+                    <!-- Div - boxError -->
+                    <div class="defDivFlex elm82">
+                        <!-- Flex -->
+                        <div class="defDivFlexChild">
+                            <!-- Flex child -->
+                            <div class="defText elm84">
+                                <!-- Text -->
+                                Connection Error
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</div>
+</div>`
+let createClasss = document.getElementById('createClass')
+createClasss.innerHTML = createClasses
+
+let joinClassTemp = `  <div class="drawerSide" id="drawerSide">
+<!-- Drawer side -->
+<div class="wrapper">
+    <section class="form signup" style="height: 500px;overflow: auto;width: 550px;">
+        <form autocomplete="off">
+            <div id="formSide">
+                <div>
+                    <header>Join Class</header>
+                </div>
+                <div class="usrAcc">
+                    <div class="field input">
+                        <label>Enter Class Code</label>
+                        <input type="text" id="formClassCode" placeholder="Class Code"
+                            pattern="\\d*" onkeyup="checkFromCode()">
+                        <div>The letters are not allowed</div>
+                    </div>
+                    <div class="field button" id="boxButton">
+                        <input type="submit" id="formCodeBtn" onclick="classDetail(event)"
+                            disabled="true" name="submit" value="Check Class">
+                    </div>
+                    <div id="boxSpinners" class="defDiv elmBoxSpinner">
+                        <!-- Div - boxSpinner -->
+                        <div class="defDivFlex elm71">
+                            <!-- Flex -->
+                            <div class="defDivFlexChild">
+                                <!-- Flex child -->
+                                <div class="defDiv elm73">
+                                    <!-- Div -->
+                                    <div class="waitSpinner">
+                                        <!-- Wait spinner -->
+                                        <svg viewBox="0 0 50 50">
+                                            <!-- Spinner main -->
+                                            <circle cx="25" cy="25" r="20" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="boxOks" class="defDiv elmBoxOk" style="display: none;">
+                        <!-- Div - boxOk -->
+                        <div class="defDivFlex elm78">
+                            <!-- Flex -->
+                            <div class="defDivFlexChild">
+                                <!-- Flex child -->
+                                <div class="defText elm80">
+                                    <!-- Text -->
+                                    Class created successfully
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="boxErrors" class="defDiv elmBoxError">
+                        <!-- Div - boxError -->
+                        <div class="defDivFlex elm82">
+                            <!-- Flex -->
+                            <div class="defDivFlexChild">
+                                <!-- Flex child -->
+                                <div class="defText elm84">
+                                    <!-- Text -->
+                                    No class found! please check (Class Code).
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="classInfor"> </div>
+        </form>
+    </section>
+</div>
+</div>`
+let JoinClasss = document.getElementById('joinClass')
+JoinClasss.innerHTML = joinClassTemp
