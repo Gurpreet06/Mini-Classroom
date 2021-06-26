@@ -668,3 +668,14 @@ body {
 .seeComments:hover {
   text-decoration: underline;
 }
+
+.noTaskFounds {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.noTaskFounds > header {
+  margin-left: 25px;
+}

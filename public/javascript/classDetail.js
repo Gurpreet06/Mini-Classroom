@@ -29,8 +29,14 @@ let temps = ` <header>
     <h5 class="menuBtn" onclick="setDrawer('PersonsDetails', true)">Persons</h5>
 </div>
 <div>
-    <ion-icon name="add-outline" class="menuBtn" style="font-size: 19px;"
-        onclick="setDrawer('createClass', true)"></ion-icon>
+    <div class="dropdown">
+        <div class="dropdown-content">
+            <button class="downlaod" onclick="setDrawer('createClass', true)">Create Task</button>
+        </div>
+    <div>
+    <ion-icon name="add-outline" class="menuBtn" style="font-size: 19px;"></ion-icon>
+</div>
+</div>
 </div>
 </div>
 `
@@ -263,6 +269,13 @@ async function getClassTasks() {
                 //Asignar datos
                 reflec.innerHTML = html
             }
+        }
+        if(serverData.result.length == 0){
+            reflec.innerHTML = `
+            <div class="noTaskFounds">
+                <img src="./images/webImages/NoData.svg" width="10%">
+                <header class="Persontitle">No Task Founds.</header>
+            </div>`
         }
 
         for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
