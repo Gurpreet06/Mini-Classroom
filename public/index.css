@@ -692,3 +692,8 @@ textarea {
   text-align: end;
   color: black;
 }
+
+.commentBtns{
+  display: flex;
+  justify-content: space-around;
+}

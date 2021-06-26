@@ -205,8 +205,11 @@ let TasksMsgs = `
         </form>
     </div> 
 
-    <div class='seeComments' id='a{{msgId}}' style='display:none;'>Hide Comments..</div>
-    <div class='seeComments' id='b{{msgId}}' onclick='queryGetMsg(this.id)'>See Comments on this tasks..</div>
+    <div class='commentBtns'>
+        <div class='seeComments' id='a{{msgId}}' style='display:none;'>Hide Comments..</div>
+        <div class='seeComments' id='b{{msgId}}' onclick='queryGetMsg(this.id)'>See Comments on this tasks..</div>
+        <a href='./index.html'><div class='seeComments' onclick=''>View More..</div></a>
+    </div>
 </div>
 `
 
@@ -528,22 +531,6 @@ async function queryGetMsg(msgId) {
     }
 
 }
-
-/*
-    let results = serverData.result
-                    for (let cnt = 0; cnt < results.length; cnt = cnt + 1) {
-                        item = results[cnt]
-                        let delReplys = document.querySelector('#delReplyTasks' + item.id)
-                        console.log(delReplys)
-                        /* if (item.message_sender_id == getCookie('usrId') && getCookie('usrId') != null && item.message_status == 'Reply') {
-                             let delReplys = document.querySelector('#delReplys' + item.id)
-                             delReplys.style.display = 'flex'
-                         } else {
-                             let delReplys = document.querySelector('#delReplys' + item.id)
-                             delReplys.style.display = 'none'
-                         }
-                        }
-*/
 
 async function delReplyTasks(replymsgId) {
     let refFormClassCode = document.URL
