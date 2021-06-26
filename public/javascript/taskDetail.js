@@ -1,3 +1,8 @@
+window.addEventListener('load', () => { getTaskDetail() })
+let refFormClassCode = document.URL
+let urlId = refFormClassCode.lastIndexOf('#class')
+let posId = refFormClassCode.substring(urlId + 7)
+
 let tempTask = `    <div id="middleSection">
 <section class="form signup" style="overflow: auto;">
     <div id='loadComments'>
@@ -103,14 +108,14 @@ let tempTask = `    <div id="middleSection">
 
 
 async function getTaskDetail() {
-    let reflec = document.querySelector("#commentLoad")
+    let reflec = document.querySelector("#taskManager")
     let html = ''
     let item = ''
     let serverData = {}
 
     let obj = {
-        type: 'getClassTasks',
-        classId: posId
+        type: 'getDatailClass',
+        msgId: posId
     }
 
     try {
@@ -119,7 +124,7 @@ async function getTaskDetail() {
         console.error(err)
     }
     //Datos desde html
-    let template = TasksMsgs
+    let template = tempTask
     if (serverData.status == 'ok') {
         let rst = serverData.result
         for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
@@ -150,6 +155,8 @@ async function getTaskDetail() {
                 reflec.innerHTML = html
             }
         }
+
+        console.log(serverData)
         if (serverData.result.length == 0) {
             reflec.innerHTML = `
             <div class="noTaskFounds">
@@ -158,17 +165,33 @@ async function getTaskDetail() {
             </div>`
         }
 
-        for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
-            item = rst[cnt]
-            if (item.message_sender_id == getCookie('usrId') && getCookie('usrId') != null) {
-                let delWHO = document.querySelector('#delWHO' + item.id)
-                delWHO.style.display = 'flex'
-            } else {
-                let delWHO = document.querySelector('#delWHO' + item.id)
-                delWHO.style.display = 'none'
-            }
-        }
     } else {
         console.log(serverData)
     }
+}
+
+async function queryServer(url, obj) {
+    return new Promise((resolve, reject) => {
+        let req = new XMLHttpRequest()
+        req.onreadystatechange = (res) => {
+            let responseObj = null
+            if (req.readyState === 4) {
+                try {
+                    responseObj = JSON.parse(req.responseText)
+                } catch (e) {
+                    console.log(e, req.responseText)
+                    return reject('Parsing response to JSON')
+                }
+                if (req.status >= 200 && req.status < 300) {
+                    return resolve(responseObj)
+                } else if (req.status >= 400) {
+                    return reject('Unauthorized')
+                } else {
+                    return reject(responseObj)
+                }
+            }
+        }
+        req.open('POST', url, true)
+        req.send(JSON.stringify(obj))
+    })
 }

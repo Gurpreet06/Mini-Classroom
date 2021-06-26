@@ -841,6 +841,7 @@ async function sendAssignTask(evt) {
         message_sender_email: getCookie('identiy'),
         message_sender_name: getCookie('usrName'),
         descripcion: formDescAssign.value,
+        Name: formNameAssign.value,
         deadline_Time: formTimeAssign.value,
         Time: todayDate,
         message_status: 'AssignMent'
