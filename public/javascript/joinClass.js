@@ -125,16 +125,15 @@ async function classDetail(evt) {
 
     if (serverData.status == 'ok') {
         refFormClassCode.value = ''
-        let rst = serverData.result
-        for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
-            item = rst[cnt]
+        let rst = serverData.result[0]
+            item = rst
             html = html + template
                 .replaceAll('{{name}}', item.class_name)
                 .replaceAll('{{Material}}', item.class_material)
                 .replaceAll('{{Section}}', item.class_Section)
                 .replaceAll('{{Descripcion}}', item.class_Desc)
                 .replaceAll('{{classTeacher}}', item.class_Teacher)
-        }
+        console.log(rst)
 
         //Asignar datos
         classInfor.innerHTML = html
