@@ -194,7 +194,7 @@ let TasksMsgs = `
 
         <form autocomplete="off">
             <div class="field input">
-                <input type="text" id="formMsg" name="user" placeholder="Reply to {{MsgOwner}}">
+                <textarea type="text" id="formMsg" name="user" placeholder="Reply to {{MsgOwner}}" cols="300" rows="2"></textarea>
                 <ion-icon name="send-outline" class="sendMsgBtn" onclick="querySendMsg(event, this.nextElementSibling.innerText, this.parentElement.firstElementChild.value)"></ion-icon>
                 <div style='display:none;'>{{msgId}}</div>
             </div>
@@ -293,10 +293,6 @@ async function getClassTasks() {
         console.log(serverData)
     }
 }
-
-setInterval(() => {
-    getClassTasks()
-}, 100);
 
 async function delTasks(classId) {
     let serverData = {}
