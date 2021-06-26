@@ -32,7 +32,7 @@ let temps = ` <header>
     <div class="dropdown">
         <div class="dropdown-content">
             <button class="downlaod" onclick="setDrawer('createClass', true)">Add a message</button>
-            <button class="downlaod">Create Task</button>
+            <button class="downlaod"onclick="setDrawer('createTask', true)">Create Task</button>
         </div>
     <div>
     <ion-icon name="add-outline" class="menuBtn" style="font-size: 19px;"></ion-icon>
@@ -645,7 +645,7 @@ let createMessage = `
                                     <div class="usrAcc">
                                         <div class="field input" style="flex-direction: column;align-items: initial;">
                                             <textarea id="formTaskMsg" placeholder="Put Your Text Here"
-                                                onkeyup="checkTaskForm()" cols="30" rows="10"></textarea>
+                                                onkeyup="checkTaskForm()" cols="30" rows="10" style='height: 100px;'></textarea>
                                         </div>
                                         <div class="field button" id="boxButton">
                                             <input type="submit" id="formTaskBtn" onclick="sendClassTasks(event)"
@@ -704,3 +704,82 @@ let createMessage = `
 `
 let createClass = document.getElementById('createClass')
 createClass.innerHTML = createMessage
+
+let createTasksClass = `  <div class="drawerSide" id="drawerSide">
+<div class="wrapper">
+    <section class="form signup" style="height: 500px;overflow: auto;width: 550px;">
+        <form>
+            <div>
+                <header>Create a Task</header>
+            </div>
+                <div class="field input" style='flex-direction: column;align-items: baseline;'>
+                    <label>Task Name</label>
+                    <input type="text" id="formName" placeholder="Task Name" onkeyup="checkForm()">
+                </div>
+                <div class="field input" style="flex-direction: column;align-items: initial;">
+                    <label>Task descripcion</label>
+                    <textarea id="formTaskMsg" placeholder="Task Descripcion"
+                        onkeyup="checkTaskForm()" cols="30" rows="10" style='height: 100px;'></textarea>
+                </div>
+                <div class="field input" style='flex-direction: column;align-items: baseline;'>
+                    <label>Submit Date</label>
+                    <input type="time" name="" id="">
+                </div>
+
+                <div class="field button" id="boxButton">
+                    <input type="submit" id="formTaskBtn" onclick="sendClassTasks(event)" disabled="true"
+                        name="submit" value="Create Now">
+                </div>
+                <div id="boxSpinner1" class="defDiv elmBoxSpinner">
+                    <!-- Div - boxSpinner -->
+                    <div class="defDivFlex elm71">
+                        <!-- Flex -->
+                        <div class="defDivFlexChild">
+                            <!-- Flex child -->
+                            <div class="defDiv elm73">
+                                <!-- Div -->
+                                <div class="waitSpinner">
+                                    <!-- Wait spinner -->
+                                    <svg viewBox="0 0 50 50">
+                                        <!-- Spinner main -->
+                                        <circle cx="25" cy="25" r="20" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="boxOk1" class="defDiv elmBoxOk" style="display: none;">
+                    <!-- Div - boxOk -->
+                    <div class="defDivFlex elm78">
+                        <!-- Flex -->
+                        <div class="defDivFlexChild">
+                            <!-- Flex child -->
+                            <div class="defText elm80">
+                                <!-- Text -->
+                                Task created successfully
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="boxError1" class="defDiv elmBoxError">
+                    <!-- Div - boxError -->
+                    <div class="defDivFlex elm82">
+                        <!-- Flex -->
+                        <div class="defDivFlexChild">
+                            <!-- Flex child -->
+                            <div class="defText elm84">
+                                <!-- Text -->
+                                Connection Error
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</div>
+</div>`
+
+let createClassTask = document.getElementById('createTask')
+createClassTask.innerHTML = createTasksClass
