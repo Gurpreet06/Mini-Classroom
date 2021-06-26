@@ -20,17 +20,18 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `class_meassges` (
   `id` int NOT NULL,
+  `Assign_Name` varchar(1000) NOT NULL,
   `class_Id` varchar(1000) NOT NULL,
   `message_uniqueId` varchar(1000) NOT NULL,
   `message_sender_email` varchar(1000) NOT NULL,
   `message_sender_id` varchar(1000) NOT NULL,
   `message_sender` varchar(1000) NOT NULL,
-  `message` varchar(1000) NOT NULL,
+  `message` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `deadline_Time` varchar(1000) NOT NULL,
   `Time` varchar(1000) NOT NULL,
   `message_status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `peoples`
