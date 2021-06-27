@@ -311,7 +311,7 @@ async function answerUsrdata(request, response) {
         })
     }
 
-
+    // Upload students Tasks
     else if (data.type == 'sendUrl') {
         app.post('/taskDetail.html', function (req, res) {
             let sampleFile; // Input Name
@@ -335,6 +335,21 @@ async function answerUsrdata(request, response) {
     else if (data.type == 'getUploadFiles') {
         let getData = `SELECT * FROM file_uploads where message_Id = '${data.messageId}' AND sender_Id = '${data.sender_Id}'`
 
+        Connection.query(getData, (err, rows) => {
+            if (err) {
+                response.json({ status: 'ko', result: 'Database error' })
+                console.log(err)
+            } else {
+                response.json({ status: 'ok', result: rows })
+            }
+        })
+    }
+
+    else if (data.type == 'delFiles') {
+        fileNames = data.names
+        deleteDir('public/images/studentsTask/' + fileNames)
+
+        let getData = `delete from file_uploads where file_uniqueId = '${data.fileId}'`
         Connection.query(getData, (err, rows) => {
             if (err) {
                 response.json({ status: 'ko', result: 'Database error' })
@@ -384,8 +399,25 @@ app.post('/index.html', function (req, res) {
     res.redirect('/index.html');
 });
 
-// Upload students Tasks
+// Download Files and Folders
+function downloadFiles(FiledirName) {
+    downFile = FiledirName
+}
 
+app.get('/download', function (req, res) {
+    let joinSting = '/public/upldedFiles/' + downFile
+    res.download(__dirname + `${joinSting}`)
+})
+
+// Delete files
+function deleteDir(dirName) {
+    try {
+        fs.rmSync(`${dirName}`, { recursive: true });
+        console.log(`${dirName} is deleted!`);
+    } catch (err) {
+        console.error(`Error while deleting ${dirName}`);
+    }
+}
 
 
 // Transforma la petició 'POST' en un objecte de dades

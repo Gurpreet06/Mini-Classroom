@@ -110,14 +110,13 @@ let tempTask = `    <div id="middleSection">
 </div>`
 
 let uploadFile = `
-<header class="Persontitle">Your Work</header>
 <div class="listFiles">
     <div class="dropdown">
         <div class="dropdown-content">
             <button class="downlaod"
                 onclick='get_Name(this.parentElement.parentElement.parentElement.lastElementChild.innerHTML)'>Download</button>
-            <button class="downlaod"
-                onclick="delFileName(this.parentElement.parentElement.parentElement.lastElementChild.innerHTML)">
+            <button class="downlaod" id='aa'
+                onclick="delFileName(this.parentElement.parentElement.parentElement.lastElementChild.innerHTML, {{fileId}})">
                 Delete</button>
         </div>
         <div>
@@ -454,17 +453,20 @@ async function sendUrl() {
     let podIs = a.substring(indexs)
 
     let serverData = {}
+    let obj = {}
 
-    let obj = {
-        type: 'sendUrl',
-        classId: podIs,
-        message_uniqueId: posIds,
-        file_uniqueId: getRandomId(),
-        file_Name: posUrl,
-        file_Path: '/images/studentsTask/' + posUrl,
-        sender_Name: getCookie('usrName'),
-        sender_Id: getCookie('usrId'),
-        Time: todayDate,
+    if (posUrl != '') {
+        obj = {
+            type: 'sendUrl',
+            classId: podIs,
+            message_uniqueId: posIds,
+            file_uniqueId: getRandomId(),
+            file_Name: posUrl,
+            file_Path: '/images/studentsTask/' + posUrl,
+            sender_Name: getCookie('usrName'),
+            sender_Id: getCookie('usrId'),
+            Time: todayDate,
+        }
     }
 
     try {
@@ -509,9 +511,10 @@ async function getUploadFiles() {
                 html = html + template
                     .replaceAll('{{fileNumber}}', num = num + 1)
                     .replaceAll('{{fileName}}', item.file_Name)
+                    .replaceAll('{{fileId}}', item.file_uniqueId)
             }
         }
-        loadFiles.innerHTML = html
+        loadFiles.innerHTML = '<header class="Persontitle">Your Work</header>' + html
 
         if (serverData.result.length == 0) {
             loadFiles.style.textAlign = 'center'
@@ -522,6 +525,63 @@ async function getUploadFiles() {
     }
 }
 
+function get_Name(innerName) {
+    let lastInde = innerName.indexOf('.')
+    let subst = innerName.substring(lastInde + 1)
+    downloadFiles(subst.trim())
+}
+
+async function downloadFiles(dirname) {
+    let serverData = undefined
+
+    let obj = {
+        type: 'fileList',
+        names: dirname,
+    }
+
+    try {
+        serverData = await queryServer('/query', obj)
+    } catch (err) {
+        console.error(err)
+    }
+
+    if (serverData.status == 'ok') {
+        console.log('ok')
+    } else {
+        console.log(serverData)
+    }
+}
+
+function delFileName(innerName, fileId) {
+    let lastInde = innerName.indexOf('.')
+    let subst = innerName.substring(lastInde + 1)
+    DelteFiles(subst.trim(), fileId)
+}
+
+
+async function DelteFiles(dirname, fileUni) {
+    let serverData = undefined
+
+    let obj = {
+        type: 'delFiles',
+        names: dirname,
+        fileId: fileUni
+    }
+
+    console.log(dirname)
+    try {
+        serverData = await queryServer('/queryusr', obj)
+    } catch (err) {
+        console.error(err)
+    }
+
+    if (serverData.status == 'ok') {
+        console.log('ok')
+        location.reload()
+    } else {
+        console.log(serverData)
+    }
+}
 
 
 async function locationSend() {
