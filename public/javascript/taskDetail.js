@@ -97,26 +97,25 @@ let tempTask = `    <div id="middleSection">
 
 </section>
 </div>
-<div >
-    <div class="wrapper" style="max-width: 400px;margin-top: 14px;" id='workList'>
-    <section class="form signup">
-        <form action="/taskDetail.html" method="POST" enctype="multipart/form-data">
-            <header class="Persontitle">Add your Work</header>
-            <section class="addYourWork">
-                <div class="field image">
-                    <input type="file" class="file input-File" name="sampleFile" id="refFileName" required>
-                </div>
-                <input type="submit" id="yourWorkUplod" onclick='sendUrl()' name="submit" value="Upload Now">
+<div>
+            <div class="wrapper" style="max-width: 400px;margin-top: 14px;" id='workList'>
+            <section class="form signup">
+                <form action="/taskDetail.html" method="POST" enctype="multipart/form-data">
+                    <header class="Persontitle">Add your Work</header>
+                    <section class="addYourWork">
+                        <div class="field image">
+                            <input type="file" class="file input-File" name="sampleFile" id="refFileName" required>
+                        </div>
+                        <input type="submit" id="yourWorkUplod" onclick='sendUrl()' name="submit" value="Upload Now">
+                    </section>
+                </form>
+                <form class="workList" id='loadFiles' action="/downloadUpFile" method="GET" enctype="multipart/form-data"> </form>
             </section>
-        </form>
-        <form class="workList" id='loadFiles' action="/downloadUpFile" method="GET" enctype="multipart/form-data"> </form>
-    </section>
-    </div>
-</div>
-
-<div class="wrapper" style="max-width: 400px;margin-top: 14px;display: none;" id='showListWork'>
-    <section class="form signup">
-        <form action="/taskDetail.html" method="POST" enctype="multipart/form-data" id='manageWork'>
+            </div>
+        <div class="wrapper" style="max-width: 400px;margin-top: 14px;display: none;" id='showListWork'>
+            <section class="form signup">
+                <form action="/taskDetail.html" method="POST" enctype="multipart/form-data" id='manageWork'>
+        </div>
 </div>
 `
 
@@ -181,7 +180,7 @@ let assignMent_Detail = `
                     <ion-icon name="ellipsis-vertical-outline"></ion-icon>
                 </div>
             </div>
-            <h4>{{fileNumber}}. {{fileName}}</h4>
+            <h4>{{fileNumber}}. {{SenderName}}   {{fileName}}</h4>
         </div>`
 
 
@@ -573,6 +572,7 @@ async function getUploadFiles() {
                     .replaceAll('{{fileNumber}}', num = num + 1)
                     .replaceAll('{{fileName}}', item.file_Name)
                     .replaceAll('{{fileId}}', item.file_uniqueId)
+                    .replaceAll('{{SenderName}}', item.sender_Name)
             }
         }
 
@@ -583,9 +583,7 @@ async function getUploadFiles() {
         }
 
         if (serverData1.result[0].person_status == 'Teacher') {
-            let workList = document.querySelector('#workList')
             let showListWork = document.getElementById('showListWork')
-            workList.style.display = 'none'
             showListWork.style.display = 'flex'
             let rst = serverData2.result
             let countNum = 0
@@ -595,12 +593,11 @@ async function getUploadFiles() {
                     .replaceAll('{{fileNumber}}', countNum = countNum + 1)
                     .replaceAll('{{fileName}}', item.file_Name)
                     .replaceAll('{{fileId}}', item.file_uniqueId)
+                    .replaceAll('{{SenderName}}', item.sender_Name)
                 manageWork.innerHTML = '<header class="Persontitle">Assignment Details</header>' + ht
             }
         } else {
-            let workList = document.querySelector('#workList')
             let showListWork = document.getElementById('showListWork')
-            workList.style.display = 'flex'
             showListWork.style.display = 'none'
             loadFiles.innerHTML = '<header class="Persontitle">Your Work</header>' + html
         }
