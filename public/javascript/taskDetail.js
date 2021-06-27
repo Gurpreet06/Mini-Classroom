@@ -90,8 +90,6 @@ let tempTask = `    <div id="middleSection">
                 <div class='seeComments' id='b{{msgId}}' onclick='queryGetMsg(this.id, this.nextElementSibling.innerText)'>See Comments on
                     this tasks..</div>
                     <div style='display:none;' id='classid'>{{classId}}</div>
-
-                    <div class='seeComments' onclick="setDrawer('assignDetailList', true)">Check AssignMent Detail..</div>
             </div>
         </div>
     </div>
@@ -112,9 +110,19 @@ let tempTask = `    <div id="middleSection">
                 <form class="workList" id='loadFiles' action="/downloadUpFile" method="GET" enctype="multipart/form-data"> </form>
             </section>
             </div>
+
+            <div class="wrapper" style="max-width: 400px;margin-top: 14px;display: none;" id='showListWork'>
+                    <section class="form signup">
+                        <form>
+                        <header class="Persontitle" style='cursor: pointer;' onclick="setDrawer('assignDetailList', true)">Assignment Details</header>
+                         </form> 
+                    </section>
+                </div>
+
+
         <div id="assignDetailList" class="drawer" onclick="setDrawer('assignDetailList', false, event)"> 
             <div class="drawerSide" id="drawerSide">
-                <div class="wrapper" style="max-width: 400px;margin-top: 14px;display: none;" id='showListWork'>
+                <div class="wrapper" style="max-width: 530px;margin-top: 14px;">
                     <section class="form signup">
                         <form id='manageWork'> </form> 
                     </section>
@@ -607,7 +615,7 @@ async function getUploadFiles() {
                     .replaceAll('{{fileName}}', item.file_Name)
                     .replaceAll('{{fileId}}', item.file_uniqueId)
                     .replaceAll('{{SenderName}}', item.sender_Name)
-                manageWork.innerHTML = '<header class="Persontitle">Assignment Details</header> <br>  <div style="display: flex;justify-content: space-around;"><div>No.</div> <div>Student Name</div> <div>File Name</div> </div>' + ht
+                manageWork.innerHTML = '<header class="Persontitle">Assignment Details</header> <br>  <div style="display: flex;justify-content: space-between;"><div>No.</div> <div>Student Name</div> <div style="margin-right: 101px;">File Name</div> </div>' + ht
             }
         } else {
             let showListWork = document.getElementById('showListWork')
