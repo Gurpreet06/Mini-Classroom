@@ -119,12 +119,6 @@ async function checkUsrClass() {
 
     if (serverData.status == 'ok') {
         let results = serverData.result
-        for (let cnt = 0; cnt < results.length; cnt = cnt + 1) {
-            let item = results[cnt]
-            if (item.person_uniqueId != getCookie('usrId')) {
-                // location.href = './noCLass.html'
-            }
-        }
         if (serverData.result.length == 0) {
             showTask.style.display = 'none'
             reflec.innerHTML = `
