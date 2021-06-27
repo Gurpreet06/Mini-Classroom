@@ -107,7 +107,7 @@ let tempTask = `    <div id="middleSection">
                         <input type="submit" id="yourWorkUplod" onclick='sendUrl()' name="submit" value="Upload Now">
                     </section>
                 </form>
-                <form class="workList" id='loadFiles' action="/downloadUpFile" method="GET" enctype="multipart/form-data"> </form>
+                <form class="workList" id='loadFiles' action="/downloadUpFile" method="GET" enctype="multipart/form-data" > </form>
             </section>
             </div>
 
@@ -124,7 +124,7 @@ let tempTask = `    <div id="middleSection">
             <div class="drawerSide" id="drawerSide">
                 <div class="wrapper" style="max-width: 530px;margin-top: 14px;">
                     <section class="form signup">
-                        <form id='manageWork'> </form> 
+                        <form id='manageWork' action="/downloadUpFile" method="GET" enctype="multipart/form-data"> </form> 
                     </section>
                 </div>
             </div>
@@ -136,9 +136,8 @@ let uploadFile = `
 <div class="listFiles">
     <div class="dropdown">
         <div class="dropdown-content">
+            <button class="downlaod" onclick='get_Name(this.parentElement.parentElement.parentElement.lastElementChild.innerHTML)'>Download</button>
             <button class="downlaod"
-                onclick='get_Name(this.parentElement.parentElement.parentElement.lastElementChild.innerHTML)'>Download</button>
-            <button class="downlaod" id='aa'
                 onclick="delFileName(this.parentElement.parentElement.parentElement.lastElementChild.innerHTML, {{fileId}})">
                 Delete</button>
         </div>
@@ -596,6 +595,7 @@ async function getUploadFiles() {
                     .replaceAll('{{SenderName}}', item.sender_Name)
             }
         }
+        loadFiles.innerHTML = '<header class="Persontitle">Your Work</header>' + html
 
 
         if (serverData.result.length == 0) {
@@ -620,7 +620,6 @@ async function getUploadFiles() {
         } else {
             let showListWork = document.getElementById('showListWork')
             showListWork.style.display = 'none'
-            loadFiles.innerHTML = '<header class="Persontitle">Your Work</header>' + html
         }
     } else {
         console.log(serverData)

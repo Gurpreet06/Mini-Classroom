@@ -438,13 +438,13 @@ app.post('/index.html', function (req, res) {
 // Download Files and Folders
 function downloadFiles(FiledirName) {
     downFile = FiledirName
-    console.log(FiledirName)
 }
 
 app.get('/downloadUpFile', function (req, res) {
     let joinSting = '/public/images/studentsTask/' + downFile
     res.download(__dirname + `${joinSting}`)
-    console.log(joinSting)
+    
+    console.log(downFile, 'fdfffffffffffffffffffffffffffffff')
 })
 
 // Delete files
