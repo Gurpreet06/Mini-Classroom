@@ -14,7 +14,7 @@ let publicFolder = './public'
 // connect to mysql dataBase
 const Connection = mysql.createConnection({
     host: '',
-    user: '',
+    user: 'root',
     password: '',
     database: 'mini_classroom'
 })
@@ -310,6 +310,17 @@ async function answerUsrdata(request, response) {
             }
         })
     }
+
+
+    else if (data.type == 'sendUrl') {
+        app.post('/taskDetail.html', function (req, res) {
+            let sampleFile; // Input Name
+            sampleFile = req.files.sampleFile;
+            let uploadPath = __dirname + '/public/images/studentsTask/' + sampleFile.name;
+            sampleFile.mv(uploadPath)
+            res.redirect('/taskDetail.html' + data.classId);
+        });
+    }
 }
 
 // Authentication section
@@ -349,6 +360,9 @@ app.post('/index.html', function (req, res) {
     sampleFile.mv(uploadPath)
     res.redirect('/index.html');
 });
+
+// Upload students Tasks
+
 
 
 // Transforma la petició 'POST' en un objecte de dades

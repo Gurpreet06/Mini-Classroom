@@ -94,16 +94,16 @@ let tempTask = `    <div id="middleSection">
 </div>
 <div class="wrapper" style="max-width: 400px;margin-top: 14px;" id='workList'>
 <section class="form signup">
-    <form>
+    <form action="/taskDetail.html" method="POST" enctype="multipart/form-data">
         <header class="Persontitle">Add your Work</header>
         <section class="addYourWork">
             <div class="field image">
                 <input type="file" class="file input-File" name="sampleFile" id="photoForm" required>
             </div>
-            <input type="submit" id="yourWorkUplod" name="submit" value="Upload Now">
+            <input type="submit" id="yourWorkUplod" onclick='sendUrl()' name="submit" value="Upload Now">
         </section>
     </form>
-    <form action="/download" method="get" enctype="multipart/form-data" class="workList" >
+    <form class="workList" >
         <header class="Persontitle">Your Work</header>
         <div class="listFiles">
             <div class="dropdown">
@@ -214,7 +214,6 @@ async function getTaskDetail() {
                 let workList = document.querySelector('#workList')
                 workList.style.display = 'none'
             }
-            console.log(item)
 
             setInterval(() => {
                 for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
@@ -437,6 +436,31 @@ async function queryGetMsg(msgId, classid) {
         console.log(serverData)
     }
 
+}
+
+async function sendUrl() {
+    let a = document.URL
+    let indexs = a.indexOf('#class')
+    let podIs = a.substring(indexs)
+
+    let serverData = {}
+
+    let obj = {
+        type: 'sendUrl',
+        classId: podIs,
+    }
+
+    try {
+        serverData = await queryServer('/queryusr', obj)
+    } catch (err) {
+        console.error(err)
+    }
+
+
+    if (serverData.status == 'ok') {
+    } else {
+        console.log(serverData)
+    }
 }
 
 async function locationSend() {

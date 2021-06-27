@@ -64,7 +64,7 @@ async function createClass(evt) {
         refFormDesc.value = ''
         checkForm()
         await showElement('boxOk')
-        await wait(500)
+        await wait(300)
         location.reload()
         await hideElement('boxOk')
     } else {
