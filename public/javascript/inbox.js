@@ -130,7 +130,7 @@ async function cancelSubscription(evt, classCodes, personStatus) {
 }
 
 async function urlChangd(classId) {
-    window.location = `/classDetail.html#class=${classId}`
+    window.location = `/classDetail.html?class=${classId}`
 }
 
 async function queryServer(url, obj) {

@@ -1,6 +1,6 @@
 window.addEventListener('load', () => { getClassDetails(), getClassTasks() })
 let refFormClassCode = document.URL
-let urlId = refFormClassCode.lastIndexOf('#class')
+let urlId = refFormClassCode.lastIndexOf('?class')
 let posId = refFormClassCode.substring(urlId + 7)
 var today = new Date();
 var month = new Array();
@@ -54,6 +54,7 @@ let secondTemplate = `
 async function getClassDetails() {
     let reflec = document.querySelector("#upperInfoMenu")
     let reFlec = document.querySelector("#phtMaterial")
+    let fullPageDiv = document.getElementById('fullPageDiv')
     let html = ''
     let ht = ''
     let item = ''
@@ -93,7 +94,17 @@ async function getClassDetails() {
             console.log(results[cnt])
             let item = results[cnt]
             if (item.person_uniqueId != getCookie('usrId')) {
-                location.href = './classes.html'
+                fullPageDiv.innerHTML = `
+                        <div class="noTaskFounds">
+                    <img src="./images/webImages/NoData.svg" width="10%">
+                    <div style="margin-left: 35px;">
+                        <header class="Persontitle">You do not have permissions in this class..</header>
+                        <a href="./classes.html">
+                            <div class="seeComments">Back to home page...</div>
+                        </a>
+                    </div>
+                </div>
+                `
             }
         }
     } else {
@@ -118,7 +129,6 @@ async function checkUsrClass() {
     }
 
     if (serverData.status == 'ok') {
-        let results = serverData.result
         if (serverData.result.length == 0) {
             showTask.style.display = 'none'
             reflec.innerHTML = `
