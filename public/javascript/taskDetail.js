@@ -515,10 +515,14 @@ async function sendUrl() {
 async function getUploadFiles() {
     let loadFiles = document.getElementById('loadFiles')
     let classid = document.getElementById('classid')
+    let manageWork = document.getElementById('manageWork')
     let html = ''
     let item = ''
+    let ht = ''
+    let it = ''
     let serverData = {}
     let serverData1 = {}
+    let serverData2 = {}
 
 
     let obj = {
@@ -533,6 +537,11 @@ async function getUploadFiles() {
         person_uniqueId: getCookie('usrId')
     }
 
+    let obj3 = {
+        type: 'getAllUpldFiles',
+        messageId: posIds,
+    }
+
     try {
         serverData = await queryServer('/queryusr', obj)
     } catch (err) {
@@ -545,7 +554,14 @@ async function getUploadFiles() {
         console.error(err)
     }
 
+    try {
+        serverData2 = await queryServer('/queryusr', obj3)
+    } catch (err) {
+        console.error(err)
+    }
+
     let template = uploadFile
+    let TempAssign = assignMent_Detail
     let num = 0
 
     if (serverData.status == 'ok') {
@@ -559,17 +575,27 @@ async function getUploadFiles() {
                     .replaceAll('{{fileId}}', item.file_uniqueId)
             }
         }
-        
+
 
         if (serverData.result.length == 0) {
             loadFiles.style.textAlign = 'center'
             loadFiles.innerHTML = '<div class="seeComments">You have not submitted anything...</div>'
         }
 
-        if(serverData1.result[0].person_status == 'Teacher'){
+        if (serverData1.result[0].person_status == 'Teacher') {
             let workList = document.querySelector('#workList')
             workList.style.display = 'none'
-        }else{
+            let rst = serverData2.result
+            let countNum = 0
+            for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
+                it = rst[cnt]
+                ht = ht + TempAssign
+                    .replaceAll('{{fileNumber}}', countNum = countNum + 1)
+                    .replaceAll('{{fileName}}', item.file_Name)
+                    .replaceAll('{{fileId}}', item.file_uniqueId)
+                manageWork.innerHTML = ht
+            }
+        } else {
             loadFiles.innerHTML = '<header class="Persontitle">Your Work</header>' + html
         }
     } else {
