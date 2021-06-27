@@ -300,6 +300,7 @@ async function delTasks(classId, classid) {
 
                 if (serverData.status == 'ok') {
                     location.reload()
+                    history.back()
                 }
             } else {
                 let delWHO = document.querySelector('#delWHO' + item.id)
@@ -487,7 +488,8 @@ async function getUploadFiles() {
 
     let obj = {
         type: 'getUploadFiles',
-        messageId: posIds
+        messageId: posIds,
+        sender_Id: getCookie('usrId')
     }
 
     try {
@@ -510,6 +512,11 @@ async function getUploadFiles() {
             }
         }
         loadFiles.innerHTML = html
+
+        if (serverData.result.length == 0) {
+            loadFiles.style.textAlign = 'center'
+            loadFiles.innerHTML = '<div class="seeComments">You have not submitted anything...</div>'
+        }
     } else {
         console.log(serverData)
     }

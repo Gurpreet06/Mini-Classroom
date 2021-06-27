@@ -333,7 +333,7 @@ async function answerUsrdata(request, response) {
     }
 
     else if (data.type == 'getUploadFiles') {
-        let getData = `SELECT * FROM file_uploads where message_Id = '${data.messageId}'`
+        let getData = `SELECT * FROM file_uploads where message_Id = '${data.messageId}' AND sender_Id = '${data.sender_Id}'`
 
         Connection.query(getData, (err, rows) => {
             if (err) {

@@ -40,6 +40,10 @@ Class Interface Page
 
 ![Photos](public/images/tool/Previews1.JPG)
 
+Assignment Page
+
+![Photos](public/images/tool/Preview6.JPG)
+
 Class Persons List
 
 ![Photos](public/images/tool/Previews2.JPG)
