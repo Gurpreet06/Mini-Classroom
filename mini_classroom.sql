@@ -1,8 +1,3 @@
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -29,9 +24,28 @@ CREATE TABLE `class_meassges` (
   `message` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `deadline_Time` varchar(1000) NOT NULL,
   `Time` varchar(1000) NOT NULL,
+  `Assign_Points` varchar(200) NOT NULL,
   `message_status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `file_uploads`
+--
+
+CREATE TABLE `file_uploads` (
+  `id` int NOT NULL,
+  `message_Id` varchar(1000) NOT NULL,
+  `file_uniqueId` varchar(1000) NOT NULL,
+  `file_Name` varchar(1000) NOT NULL,
+  `file_Path` varchar(1000) NOT NULL,
+  `sender_Name` varchar(1000) NOT NULL,
+  `sender_Id` varchar(1000) NOT NULL,
+  `Time` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `peoples`
@@ -78,6 +92,12 @@ ALTER TABLE `class_meassges`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `file_uploads`
+--
+ALTER TABLE `file_uploads`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `peoples`
 --
 ALTER TABLE `peoples`
@@ -97,6 +117,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `class_meassges`
 --
 ALTER TABLE `class_meassges`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `file_uploads`
+--
+ALTER TABLE `file_uploads`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
