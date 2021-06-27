@@ -15,7 +15,7 @@ let publicFolder = './public'
 // connect to mysql dataBase
 const Connection = mysql.createConnection({
     host: '',
-    user: '',
+    user: 'root',
     password: '',
     database: 'mini_classroom'
 })
@@ -386,8 +386,6 @@ app.post('/login.html', (req, res) => {
             rst = { status: 'ok' }
             console.log(results)
             await wait(1400)
-            await wait(1400)
-
             res.redirect('/classes.html');
         }
     })

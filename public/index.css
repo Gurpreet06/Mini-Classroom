@@ -698,6 +698,7 @@ textarea {
 
 .deadLine {
   color: black;
+  text-align: end;
 }
 
 .commentBtns {
