@@ -112,9 +112,13 @@ let tempTask = `    <div id="middleSection">
                 <form class="workList" id='loadFiles' action="/downloadUpFile" method="GET" enctype="multipart/form-data"> </form>
             </section>
             </div>
+
+
         <div class="wrapper" style="max-width: 400px;margin-top: 14px;display: none;" id='showListWork'>
             <section class="form signup">
                 <form action="/taskDetail.html" method="POST" enctype="multipart/form-data" id='manageWork'>
+                   </form> 
+                </section>
         </div>
 </div>
 `
@@ -180,7 +184,15 @@ let assignMent_Detail = `
                     <ion-icon name="ellipsis-vertical-outline"></ion-icon>
                 </div>
             </div>
-            <h4>{{fileNumber}}. {{SenderName}}   {{fileName}}</h4>
+            <div>
+                <h5>{{fileName}}.</h5>
+            </div>
+            <div>
+                <h5>{{SenderName}}.</h5>
+            </div>
+            <div>
+                <h5>{{fileNumber}}.</h5>
+            </div>
         </div>`
 
 
@@ -594,7 +606,7 @@ async function getUploadFiles() {
                     .replaceAll('{{fileName}}', item.file_Name)
                     .replaceAll('{{fileId}}', item.file_uniqueId)
                     .replaceAll('{{SenderName}}', item.sender_Name)
-                manageWork.innerHTML = '<header class="Persontitle">Assignment Details</header>' + ht
+                manageWork.innerHTML = '<header class="Persontitle">Assignment Details</header> <br>  <div style="display: flex;justify-content: space-around;"><div>No.</div> <div>Student Name</div> <div>File Name</div> </div>' + ht
             }
         } else {
             let showListWork = document.getElementById('showListWork')
