@@ -15,7 +15,7 @@ let publicFolder = './public'
 // connect to mysql dataBase
 const Connection = mysql.createConnection({
     host: '',
-    user: 'root',
+    user: '',
     password: '',
     database: 'mini_classroom'
 })
@@ -443,7 +443,7 @@ function downloadFiles(FiledirName) {
 app.get('/downloadUpFile', function (req, res) {
     let joinSting = '/public/images/studentsTask/' + downFile
     res.download(__dirname + `${joinSting}`)
-    
+
     console.log(downFile, 'fdfffffffffffffffffffffffffffffff')
 })
 
