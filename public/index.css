@@ -326,7 +326,8 @@ textarea {
 #createClass,
 #joinClass,
 #PersonsDetails,
-#createTask {
+#createTask,
+#assignDetailList {
   display: none;
   background-color: rgb(100, 100, 100, 0.75);
   backdrop-filter: blur(2px) saturate(200%);
@@ -411,6 +412,25 @@ textarea {
 }
 
 #createTask > #drawerSide > div {
+  max-width: 510px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+#assignDetailList > .drawerSide {
+  background-color: white;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transform: translate3d(-251px, 0, 0);
+  transition: transform 0.3s ease;
+  width: 550px;
+  display: flex;
+  align-items: center;
+}
+
+#assignDetailList > #drawerSide > div {
   max-width: 510px;
   margin-left: auto;
   margin-right: auto;

@@ -90,11 +90,11 @@ let tempTask = `    <div id="middleSection">
                 <div class='seeComments' id='b{{msgId}}' onclick='queryGetMsg(this.id, this.nextElementSibling.innerText)'>See Comments on
                     this tasks..</div>
                     <div style='display:none;' id='classid'>{{classId}}</div>
+
+                    <div class='seeComments' onclick="setDrawer('assignDetailList', true)">Check AssignMent Detail..</div>
             </div>
         </div>
-
     </div>
-
 </section>
 </div>
 <div>
@@ -112,13 +112,14 @@ let tempTask = `    <div id="middleSection">
                 <form class="workList" id='loadFiles' action="/downloadUpFile" method="GET" enctype="multipart/form-data"> </form>
             </section>
             </div>
-
-
-        <div class="wrapper" style="max-width: 400px;margin-top: 14px;display: none;" id='showListWork'>
-            <section class="form signup">
-                <form action="/taskDetail.html" method="POST" enctype="multipart/form-data" id='manageWork'>
-                   </form> 
-                </section>
+        <div id="assignDetailList" class="drawer" onclick="setDrawer('assignDetailList', false, event)"> 
+            <div class="drawerSide" id="drawerSide">
+                <div class="wrapper" style="max-width: 400px;margin-top: 14px;display: none;" id='showListWork'>
+                    <section class="form signup">
+                        <form id='manageWork'> </form> 
+                    </section>
+                </div>
+            </div>
         </div>
 </div>
 `
@@ -728,6 +729,3 @@ setTimeout(() => {
     getUploadFiles()
 }, 100);
 
-setInterval(() => {
-    getUploadFiles()
-}, 1000);
