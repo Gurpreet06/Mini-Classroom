@@ -98,7 +98,7 @@ let tempTask = `    <div id="middleSection">
         <header class="Persontitle">Add your Work</header>
         <section class="addYourWork">
             <div class="field image">
-                <input type="file" class="file input-File" name="sampleFile" id="photoForm" required>
+                <input type="file" class="file input-File" name="sampleFile" id="refFileName" required>
             </div>
             <input type="submit" id="yourWorkUplod" onclick='sendUrl()' name="submit" value="Upload Now">
         </section>
@@ -439,6 +439,11 @@ async function queryGetMsg(msgId, classid) {
 }
 
 async function sendUrl() {
+    let refFileName = document.getElementById('refFileName')
+    let todayDate = `${date + ' ' + n}`
+    let url = refFileName.value
+    let indexUrl = url.lastIndexOf('\\')
+    let posUrl = url.substring(indexUrl + 1)
     let a = document.URL
     let indexs = a.indexOf('#class')
     let podIs = a.substring(indexs)
@@ -448,6 +453,13 @@ async function sendUrl() {
     let obj = {
         type: 'sendUrl',
         classId: podIs,
+        message_uniqueId: posIds,
+        file_uniqueId: getRandomId(),
+        file_Name: posUrl,
+        file_Path: '/images/studentsTask/' + posUrl,
+        sender_Name: getCookie('usrName'),
+        sender_Id: getCookie('usrId'),
+        Time: todayDate,
     }
 
     try {
@@ -502,4 +514,10 @@ async function queryServer(url, obj) {
         req.open('POST', url, true)
         req.send(JSON.stringify(obj))
     })
+}
+
+function getRandomId() {
+    let multiplier = 1000000000000000
+    let a = parseInt(Math.floor(Math.random() * multiplier) + 1)
+    return a
 }

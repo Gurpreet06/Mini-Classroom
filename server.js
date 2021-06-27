@@ -320,6 +320,16 @@ async function answerUsrdata(request, response) {
             sampleFile.mv(uploadPath)
             res.redirect('/taskDetail.html' + data.classId);
         });
+        let getData = `INSERT INTO file_uploads(message_Id,file_uniqueId,file_Name,file_Path,sender_Name,sender_Id,Time) values('${data.message_uniqueId}','${data.file_uniqueId}', '${data.file_Name}', '${data.file_Path}', '${data.sender_Name}',  '${data.sender_Id}', '${data.Time}')`
+
+        Connection.query(getData, (err, rows) => {
+            if (err) {
+                response.json({ status: 'ko', result: 'Database error' })
+                console.log(err)
+            } else {
+                response.json({ status: 'ok', result: rows })
+            }
+        })
     }
 }
 
