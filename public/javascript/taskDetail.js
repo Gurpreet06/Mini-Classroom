@@ -600,7 +600,7 @@ async function getUploadFiles() {
 
         if (serverData.result.length == 0) {
             loadFiles.style.textAlign = 'center'
-            loadFiles.innerHTML = '<div class="seeComments">You have not submitted anything...</div>'
+            loadFiles.innerHTML = '<div class="seeComments">You have not submitted anything yet...</div>'
         }
 
         if (serverData1.result[0].person_status == 'Teacher') {
@@ -617,6 +617,10 @@ async function getUploadFiles() {
                     .replaceAll('{{SenderName}}', item.sender_Name)
                 manageWork.innerHTML = '<header class="Persontitle">Assignment Details</header> <br>  <div style="display: flex;justify-content: space-between;"><div>No.</div> <div>Student Name</div> <div style="margin-right: 101px;">File Name</div> </div>' + ht
             }
+
+           if(rst.length == 0){
+            manageWork.innerHTML = '<header class="Persontitle" style="font-size: 25px;">No one has submitted anything yet!</header>'
+           }
         } else {
             let showListWork = document.getElementById('showListWork')
             showListWork.style.display = 'none'
@@ -736,3 +740,6 @@ setTimeout(() => {
     getUploadFiles()
 }, 100);
 
+setInterval(() => {
+    getUploadFiles()
+}, 1000);
