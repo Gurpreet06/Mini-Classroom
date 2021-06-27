@@ -2,6 +2,7 @@ let express = require('express')
 const md5 = require('md5')
 const upload = require('express-fileupload')
 const mysql = require('mysql2')
+const { join } = require('path')
 http = require('http')
 
 
@@ -359,6 +360,12 @@ async function answerUsrdata(request, response) {
             }
         })
     }
+
+    else if (data.type == 'DownFiles') {
+        rst = { status: 'ok' }
+        fileNames = data.names
+        downloadFiles(fileNames)
+    }
 }
 
 // Authentication section
@@ -402,11 +409,13 @@ app.post('/index.html', function (req, res) {
 // Download Files and Folders
 function downloadFiles(FiledirName) {
     downFile = FiledirName
+    console.log(FiledirName)
 }
 
-app.get('/download', function (req, res) {
-    let joinSting = '/public/upldedFiles/' + downFile
+app.get('/downloadUpFile', function (req, res) {
+    let joinSting = '/public/images/studentsTask/' + downFile
     res.download(__dirname + `${joinSting}`)
+    console.log(joinSting)
 })
 
 // Delete files

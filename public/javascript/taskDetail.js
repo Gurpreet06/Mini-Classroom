@@ -103,9 +103,7 @@ let tempTask = `    <div id="middleSection">
             <input type="submit" id="yourWorkUplod" onclick='sendUrl()' name="submit" value="Upload Now">
         </section>
     </form>
-    <form class="workList" id='loadFiles'>
-      
-    </form>
+    <form class="workList" id='loadFiles' action="/downloadUpFile" method="GET" enctype="multipart/form-data"> </form>
 </section>
 </div>`
 
@@ -535,12 +533,12 @@ async function downloadFiles(dirname) {
     let serverData = undefined
 
     let obj = {
-        type: 'fileList',
+        type: 'DownFiles',
         names: dirname,
     }
 
     try {
-        serverData = await queryServer('/query', obj)
+        serverData = await queryServer('/queryusr', obj)
     } catch (err) {
         console.error(err)
     }
