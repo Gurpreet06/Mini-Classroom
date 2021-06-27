@@ -739,7 +739,7 @@ let createTasksClass = `  <div class="drawerSide" id="drawerSide">
                 </div>
                 <div class="field input" style='flex-direction: column;align-items: baseline;'>
                     <label>Points</label>
-                    <input type="number" id="formPointAssign" placeholder="100/100" onkeyup="checkAssignmentId()">
+                    <input type="number" id="formPointAssign" placeholder="100" onkeyup="checkAssignmentId()">
                 </div>
                 <div class="field button" id="boxButton">
                     <input type="submit" id="formAssignBtn" onclick="sendAssignTask(event)" disabled="true"
@@ -816,7 +816,7 @@ async function checkAssignmentId() {
     if (formNameAssign.value == '') validName = false
     if (formDescAssign.value == '') validDesc = false
     if (formTimeAssign.value == '') validTime = false
-    if (formPointAssign.value == '') validPoint = false
+    if (formPointAssign.value == '' || formPointAssign.value.length > 3 || formPointAssign.value > 100) validPoint = false
 
 
     if (validName && validDesc && validTime && validPoint) {

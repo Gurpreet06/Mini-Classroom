@@ -697,7 +697,6 @@ textarea {
 }
 
 .deadLine {
-  text-align: end;
   color: black;
 }
 
@@ -757,4 +756,10 @@ textarea {
   min-height: 15px;
   overflow: hidden;
   width: 360px;
+}
+
+
+.PointDeadLine{
+  display: flex;
+  justify-content: space-between;
 }

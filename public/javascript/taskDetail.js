@@ -52,8 +52,13 @@ let tempTask = `    <div id="middleSection">
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <p class="deadLine">{{Deadline: dead}}</p>
+                    <div class='PointDeadLine'>
+                        <div>
+                            <p class="deadLine">100/100</p>
+                        </div>
+                        <div>
+                            <p class="deadLine">{{Deadline: dead}}</p>
+                        </div>
                     </div>
                 </div>
                 <div style="display: flex;">
