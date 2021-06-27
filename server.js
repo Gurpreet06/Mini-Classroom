@@ -15,7 +15,7 @@ let publicFolder = './public'
 // connect to mysql dataBase
 const Connection = mysql.createConnection({
     host: '',
-    user: '',
+    user: 'root',
     password: '',
     database: 'mini_classroom'
 })
@@ -104,6 +104,23 @@ async function answerUsrdata(request, response) {
 
     else if (data.type == 'JoinClass') {
         let getData = `SELECT * FROM peoples where 	class_unique_id = '${data.classCode}'`
+
+        Connection.query(getData, (err, rows) => {
+            if (err) {
+                response.json({ status: 'ko', result: 'Database error' })
+                console.log(err)
+            } else {
+                if (rows.length == 0) {
+                    response.json({ status: 'ko', result: 'Database error' })
+                } else {
+                    response.json({ status: 'ok', result: rows })
+                }
+            }
+        })
+    }
+
+    else if (data.type == 'getClassInfo') {
+        let getData = `SELECT * FROM peoples where 	class_unique_id = '${data.classCode}' AND person_uniqueId = '${data.person_uniqueId}'`
 
         Connection.query(getData, (err, rows) => {
             if (err) {

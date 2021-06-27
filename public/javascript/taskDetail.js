@@ -97,20 +97,23 @@ let tempTask = `    <div id="middleSection">
 
 </section>
 </div>
-<div class="wrapper" style="max-width: 400px;margin-top: 14px;" id='workList'>
-<section class="form signup">
-    <form action="/taskDetail.html" method="POST" enctype="multipart/form-data">
-        <header class="Persontitle">Add your Work</header>
-        <section class="addYourWork">
-            <div class="field image">
-                <input type="file" class="file input-File" name="sampleFile" id="refFileName" required>
-            </div>
-            <input type="submit" id="yourWorkUplod" onclick='sendUrl()' name="submit" value="Upload Now">
-        </section>
-    </form>
-    <form class="workList" id='loadFiles' action="/downloadUpFile" method="GET" enctype="multipart/form-data"> </form>
-</section>
-</div>`
+<div id='manageWork'>
+    <div class="wrapper" style="max-width: 400px;margin-top: 14px;" id='workList'>
+    <section class="form signup">
+        <form action="/taskDetail.html" method="POST" enctype="multipart/form-data">
+            <header class="Persontitle">Add your Work</header>
+            <section class="addYourWork">
+                <div class="field image">
+                    <input type="file" class="file input-File" name="sampleFile" id="refFileName" required>
+                </div>
+                <input type="submit" id="yourWorkUplod" onclick='sendUrl()' name="submit" value="Upload Now">
+            </section>
+        </form>
+        <form class="workList" id='loadFiles' action="/downloadUpFile" method="GET" enctype="multipart/form-data"> </form>
+    </section>
+    </div>
+</div>
+`
 
 let uploadFile = `
 <div class="listFiles">
@@ -158,6 +161,28 @@ let replyTasks = `
         </div>
     </div>
 `
+
+let assignMent_Detail = `<div class="wrapper" style="max-width: 400px;margin-top: 14px;" id='workList'>
+<section class="form signup">
+    <form action="/taskDetail.html" method="POST" enctype="multipart/form-data">
+        <div class="listFiles">
+            <div class="dropdown">
+                <div class="dropdown-content">
+                    <button class="downlaod"
+                        onclick='get_Name(this.parentElement.parentElement.parentElement.lastElementChild.innerHTML)'>Download</button>
+                    <button class="downlaod"
+                        onclick="delFileName(this.parentElement.parentElement.parentElement.lastElementChild.innerHTML, fileId)">
+                        Delete</button>
+                </div>
+                <div>
+                    <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                </div>
+            </div>
+            <h4>{{fileNumber}}. {{fileName}}</h4>
+        </div>
+    </form>
+</section>
+</div>`
 
 
 async function getTaskDetail() {
@@ -489,9 +514,12 @@ async function sendUrl() {
 
 async function getUploadFiles() {
     let loadFiles = document.getElementById('loadFiles')
+    let classid = document.getElementById('classid')
     let html = ''
     let item = ''
     let serverData = {}
+    let serverData1 = {}
+
 
     let obj = {
         type: 'getUploadFiles',
@@ -499,8 +527,20 @@ async function getUploadFiles() {
         sender_Id: getCookie('usrId')
     }
 
+    let obj2 = {
+        type: 'getClassInfo',
+        classCode: classid.innerHTML,
+        person_uniqueId: getCookie('usrId')
+    }
+
     try {
         serverData = await queryServer('/queryusr', obj)
+    } catch (err) {
+        console.error(err)
+    }
+
+    try {
+        serverData1 = await queryServer('/queryusr', obj2)
     } catch (err) {
         console.error(err)
     }
@@ -519,11 +559,18 @@ async function getUploadFiles() {
                     .replaceAll('{{fileId}}', item.file_uniqueId)
             }
         }
-        loadFiles.innerHTML = '<header class="Persontitle">Your Work</header>' + html
+        
 
         if (serverData.result.length == 0) {
             loadFiles.style.textAlign = 'center'
             loadFiles.innerHTML = '<div class="seeComments">You have not submitted anything...</div>'
+        }
+
+        if(serverData1.result[0].person_status == 'Teacher'){
+            let workList = document.querySelector('#workList')
+            workList.style.display = 'none'
+        }else{
+            loadFiles.innerHTML = '<header class="Persontitle">Your Work</header>' + html
         }
     } else {
         console.log(serverData)
