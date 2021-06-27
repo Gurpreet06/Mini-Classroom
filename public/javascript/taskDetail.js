@@ -1,4 +1,4 @@
-window.addEventListener('load', () => { getTaskDetail() })
+window.addEventListener('load', () => { getTaskDetail(), getUploadFiles() })
 let refCode = document.URL
 let urlIds = refCode.lastIndexOf('#class')
 let posIds = refCode.substring(urlIds + 7)
@@ -103,26 +103,30 @@ let tempTask = `    <div id="middleSection">
             <input type="submit" id="yourWorkUplod" onclick='sendUrl()' name="submit" value="Upload Now">
         </section>
     </form>
-    <form class="workList" >
-        <header class="Persontitle">Your Work</header>
-        <div class="listFiles">
-            <div class="dropdown">
-                <div class="dropdown-content">
-                    <button class="downlaod"
-                        onclick='get_Name(this.parentElement.parentElement.parentElement.lastElementChild.innerHTML)'>Download</button>
-                    <button class="downlaod"
-                        onclick="delFileName(this.parentElement.parentElement.parentElement.lastElementChild.innerHTML)">
-                        Delete</button>
-                </div>
-                <div>
-                    <ion-icon name="ellipsis-vertical-outline"></ion-icon>
-                </div>
-            </div>
-            <h4>{{fileNumber}}. {{fileName}}</h4>
-        </div>
+    <form class="workList" id='loadFiles'>
+      
     </form>
 </section>
 </div>`
+
+let uploadFile = `
+<header class="Persontitle">Your Work</header>
+<div class="listFiles">
+    <div class="dropdown">
+        <div class="dropdown-content">
+            <button class="downlaod"
+                onclick='get_Name(this.parentElement.parentElement.parentElement.lastElementChild.innerHTML)'>Download</button>
+            <button class="downlaod"
+                onclick="delFileName(this.parentElement.parentElement.parentElement.lastElementChild.innerHTML)">
+                Delete</button>
+        </div>
+        <div>
+            <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+        </div>
+    </div>
+    <h4>{{fileNumber}}. {{fileName}}</h4>
+</div>
+`
 
 let replyTasks = `
     <div style="margin-top: 26px;">
@@ -475,6 +479,44 @@ async function sendUrl() {
     }
 }
 
+async function getUploadFiles() {
+    let loadFiles = document.getElementById('loadFiles')
+    let html = ''
+    let item = ''
+    let serverData = {}
+
+    let obj = {
+        type: 'getUploadFiles',
+        messageId: posIds
+    }
+
+    try {
+        serverData = await queryServer('/queryusr', obj)
+    } catch (err) {
+        console.error(err)
+    }
+
+    let template = uploadFile
+    let num = 0
+
+    if (serverData.status == 'ok') {
+        let results = serverData.result
+        for (let cnt = 0; cnt < results.length; cnt = cnt + 1) {
+            item = results[cnt]
+            if (item.sender_Id == getCookie('usrId') && item.sender_Name == getCookie('usrName')) {
+                html = html + template
+                    .replaceAll('{{fileNumber}}', num = num + 1)
+                    .replaceAll('{{fileName}}', item.file_Name)
+            }
+        }
+        loadFiles.innerHTML = html
+    } else {
+        console.log(serverData)
+    }
+}
+
+
+
 async function locationSend() {
     history.back()
 }
@@ -521,3 +563,7 @@ function getRandomId() {
     let a = parseInt(Math.floor(Math.random() * multiplier) + 1)
     return a
 }
+
+setInterval(() => {
+    getUploadFiles()
+}, 1500);
