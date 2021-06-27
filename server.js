@@ -15,7 +15,7 @@ let publicFolder = './public'
 // connect to mysql dataBase
 const Connection = mysql.createConnection({
     host: '',
-    user: '',
+    user: 'root',
     password: '',
     database: 'mini_classroom'
 })
@@ -198,7 +198,7 @@ async function answerUsrdata(request, response) {
     }
 
     else if (data.type == 'getClassTasks') {
-        let getData = `SELECT * FROM class_meassges where 	class_Id = '${data.classId}'`
+        let getData = `SELECT * FROM class_meassges where class_Id = '${data.classId}'`
 
         Connection.query(getData, (err, rows) => {
             if (err) {

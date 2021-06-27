@@ -87,10 +87,66 @@ async function getClassDetails() {
         //Asignar datos
         reflec.innerHTML = html
         reFlec.innerHTML = ht
+
+        let results = serverData.result
+        for (let cnt = 0; cnt < results.length; cnt = cnt + 1) {
+            console.log(results[cnt])
+            let item = results[cnt]
+            if (item.person_uniqueId != getCookie('usrId')) {
+                location.href = './classes.html'
+            }
+        }
     } else {
         console.log(serverData)
     }
 }
+
+async function checkUsrClass() {
+    let reflec = document.querySelector("#commentLoad")
+    let showTask = document.getElementById('showTask')
+    let serverData = {}
+
+    let obj = {
+        type: 'getClassDetails',
+        classId: posId
+    }
+
+    try {
+        serverData = await queryServer('/queryusr', obj)
+    } catch (err) {
+        console.error(err)
+    }
+
+    if (serverData.status == 'ok') {
+        let results = serverData.result
+        for (let cnt = 0; cnt < results.length; cnt = cnt + 1) {
+            let item = results[cnt]
+            if (item.person_uniqueId != getCookie('usrId')) {
+                // location.href = './noCLass.html'
+            }
+        }
+        if (serverData.result.length == 0) {
+            showTask.style.display = 'none'
+            reflec.innerHTML = `
+            <div class="noTaskFounds">
+            <img src="./images/webImages/NoData.svg" width="10%">
+            <div style="margin-left: 35px;">
+                <header class="Persontitle">No Class Founds.</header>
+                <a href="./classes.html">
+                    <div class="seeComments">Back to home page...</div>
+                </a>
+            </div>
+        </div>`
+        }
+
+    } else {
+        console.log(serverData)
+    }
+}
+
+setInterval(() => {
+    checkUsrClass()
+}, 10);
 
 async function checkTaskForm() {
     let taskMessage = document.getElementById('formTaskMsg')
@@ -322,6 +378,8 @@ async function getClassTasks() {
         console.log(serverData)
     }
 }
+
+
 
 
 async function delTasks(classId) {
