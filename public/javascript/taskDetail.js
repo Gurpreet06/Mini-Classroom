@@ -1,4 +1,4 @@
-window.addEventListener('load', () => { getTaskDetail(), getUploadFiles() })
+window.addEventListener('load', () => { getTaskDetail() })
 let refCode = document.URL
 let urlIds = refCode.lastIndexOf('#class')
 let posIds = refCode.substring(urlIds + 7)
@@ -563,6 +563,10 @@ function getRandomId() {
     let a = parseInt(Math.floor(Math.random() * multiplier) + 1)
     return a
 }
+
+setTimeout(() => {
+    getUploadFiles()
+}, 100);
 
 setInterval(() => {
     getUploadFiles()
