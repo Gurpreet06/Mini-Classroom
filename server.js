@@ -220,7 +220,7 @@ async function answerUsrdata(request, response) {
     }
 
     else if (data.type == 'addClassTask') {
-        let getData = `INSERT INTO class_meassges(Assign_Name,class_Id, message_uniqueId, message_sender_email, message_sender_id, message_sender, 	message,deadline_Time,Time,message_status) values('${data.Assign_Name}','${data.classId}', '${data.message_uniqueId}', '${data.message_sender_email}', '${data.message_sender_id}',  '${data.message_sender}', '${data.message}', '', '${data.Time}','Orignal')`
+        let getData = `INSERT INTO class_meassges(Assign_Name,class_Id, message_uniqueId, message_sender_email, message_sender_id, message_sender, 	message,deadline_Time,Time,Assign_Points,message_status) values('${data.Assign_Name}','${data.classId}', '${data.message_uniqueId}', '${data.message_sender_email}', '${data.message_sender_id}',  '${data.message_sender}', '${data.message}', '', '${data.Time}','','Orignal')`
 
         Connection.query(getData, (err, rows) => {
             if (err) {
@@ -260,7 +260,7 @@ async function answerUsrdata(request, response) {
 
 
     else if (data.type == 'replyToTasks') {
-        let getData = `INSERT INTO class_meassges(Assign_Name,class_Id, message_uniqueId, message_sender_email, message_sender_id, message_sender, 	message,deadline_Time,Time,message_status) values('','${data.class_Id}', '${data.task_Id}', '${data.replyer_Email}', '${data.replyer_Id}',  '${data.replyer_Name}', '${data.msg}','', '${data.Current_Time}','Reply')`
+        let getData = `INSERT INTO class_meassges(Assign_Name,class_Id, message_uniqueId, message_sender_email, message_sender_id, message_sender, 	message,deadline_Time,Time,Assign_Points,message_status) values('','${data.class_Id}', '${data.task_Id}', '${data.replyer_Email}', '${data.replyer_Id}',  '${data.replyer_Name}', '${data.msg}','', '${data.Current_Time}', '', 'Reply')`
 
         Connection.query(getData, (err, rows) => {
             if (err) {
@@ -300,7 +300,7 @@ async function answerUsrdata(request, response) {
     }
 
     else if (data.type == 'createAssignTask') {
-        let getData = `INSERT INTO class_meassges(Assign_Name,class_Id, message_uniqueId, message_sender_email, message_sender_id, message_sender, 	message,deadline_Time,Time,message_status) values('${data.Name}','${data.classId}', '${data.assign_uniqueId}', '${data.message_sender_email}', '${data.message_sender_id}',  '${data.message_sender_name}', '${data.descripcion}', '${data.deadline_Time}', '${data.Time}','${data.message_status}')`
+        let getData = `INSERT INTO class_meassges(Assign_Name,class_Id, message_uniqueId, message_sender_email, message_sender_id, message_sender, 	message,deadline_Time,Time,Assign_Points,message_status) values('${data.Name}','${data.classId}', '${data.assign_uniqueId}', '${data.message_sender_email}', '${data.message_sender_id}',  '${data.message_sender_name}', '${data.descripcion}', '${data.deadline_Time}', '${data.Time}', '${data.Assign_Points}', '${data.message_status}')`
 
         Connection.query(getData, (err, rows) => {
             if (err) {

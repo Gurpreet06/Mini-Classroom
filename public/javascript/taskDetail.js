@@ -54,7 +54,7 @@ let tempTask = `    <div id="middleSection">
                     </div>
                     <div class='PointDeadLine'>
                         <div>
-                            <p class="deadLine">100/100</p>
+                            <p class="deadLine">{{Point/100}}</p>
                         </div>
                         <div>
                             <p class="deadLine">{{Deadline: dead}}</p>
@@ -195,6 +195,7 @@ async function getTaskDetail() {
                         .replaceAll('{{MsgOwner}}', item.message_sender)
                         .replaceAll('{{Deadline: dead}}', 'Deadline: ' + item.deadline_Time)
                         .replaceAll('{{classId}}', item.class_Id)
+                        .replaceAll('{{Point/100}}', item.Assign_Points + '/100')
                 } else {
                     html = html + template
                         .replaceAll('{{NAME}}', item.message_sender)
@@ -208,6 +209,7 @@ async function getTaskDetail() {
                         .replaceAll('{{MsgOwner}}', item.message_sender)
                         .replaceAll('{{Deadline: dead}}', '')
                         .replaceAll('{{classId}}', item.class_Id)
+                        .replaceAll('{{Point/100}}', '')
                 }
                 //Asignar datos
                 reflec.innerHTML = html

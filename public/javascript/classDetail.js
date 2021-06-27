@@ -849,7 +849,8 @@ async function sendAssignTask(evt) {
         Name: formNameAssign.value,
         deadline_Time: formTimeAssign.value,
         Time: todayDate,
-        message_status: 'AssignMent'
+        message_status: 'AssignMent',
+        Assign_Points: formPointAssign.value
     }
 
 
