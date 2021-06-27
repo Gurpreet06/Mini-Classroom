@@ -97,7 +97,7 @@ let tempTask = `    <div id="middleSection">
 
 </section>
 </div>
-<div id='manageWork'>
+<div >
     <div class="wrapper" style="max-width: 400px;margin-top: 14px;" id='workList'>
     <section class="form signup">
         <form action="/taskDetail.html" method="POST" enctype="multipart/form-data">
@@ -112,6 +112,11 @@ let tempTask = `    <div id="middleSection">
         <form class="workList" id='loadFiles' action="/downloadUpFile" method="GET" enctype="multipart/form-data"> </form>
     </section>
     </div>
+</div>
+
+<div class="wrapper" style="max-width: 400px;margin-top: 14px;display: none;" id='showListWork'>
+    <section class="form signup">
+        <form action="/taskDetail.html" method="POST" enctype="multipart/form-data" id='manageWork'>
 </div>
 `
 
@@ -162,9 +167,7 @@ let replyTasks = `
     </div>
 `
 
-let assignMent_Detail = `<div class="wrapper" style="max-width: 400px;margin-top: 14px;" id='workList'>
-<section class="form signup">
-    <form action="/taskDetail.html" method="POST" enctype="multipart/form-data">
+let assignMent_Detail = `
         <div class="listFiles">
             <div class="dropdown">
                 <div class="dropdown-content">
@@ -179,10 +182,7 @@ let assignMent_Detail = `<div class="wrapper" style="max-width: 400px;margin-top
                 </div>
             </div>
             <h4>{{fileNumber}}. {{fileName}}</h4>
-        </div>
-    </form>
-</section>
-</div>`
+        </div>`
 
 
 async function getTaskDetail() {
@@ -584,7 +584,9 @@ async function getUploadFiles() {
 
         if (serverData1.result[0].person_status == 'Teacher') {
             let workList = document.querySelector('#workList')
+            let showListWork = document.getElementById('showListWork')
             workList.style.display = 'none'
+            showListWork.style.display = 'flex'
             let rst = serverData2.result
             let countNum = 0
             for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
@@ -593,9 +595,13 @@ async function getUploadFiles() {
                     .replaceAll('{{fileNumber}}', countNum = countNum + 1)
                     .replaceAll('{{fileName}}', item.file_Name)
                     .replaceAll('{{fileId}}', item.file_uniqueId)
-                manageWork.innerHTML = ht
+                manageWork.innerHTML = '<header class="Persontitle">Assignment Details</header>' + ht
             }
         } else {
+            let workList = document.querySelector('#workList')
+            let showListWork = document.getElementById('showListWork')
+            workList.style.display = 'flex'
+            showListWork.style.display = 'none'
             loadFiles.innerHTML = '<header class="Persontitle">Your Work</header>' + html
         }
     } else {
@@ -715,4 +721,4 @@ setTimeout(() => {
 
 setInterval(() => {
     getUploadFiles()
-}, 1500);
+}, 1000);
