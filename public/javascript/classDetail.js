@@ -50,9 +50,6 @@ let secondTemplate = `
 <div>Teacher Name: {{TeacherName}}</div>
 </div>
 `
-setInterval(() => {
-    getClassDetails()
-}, 1000);
 
 async function getClassDetails() {
     let reflec = document.querySelector("#upperInfoMenu")
@@ -93,7 +90,7 @@ async function getClassDetails() {
 
         for (let cnt = 0; cnt < serverData.result.length; cnt = cnt + 1) {
             let item = serverData.result[cnt]
-            if (item.person_uniqueId != getCookie('usrId') ) {
+            if (item.person_uniqueId != getCookie('usrId')) {
                 fullPageDiv.style.display = 'block'
                 fullPageDiv.innerHTML = `
                         <div class="noTaskFounds">
@@ -106,7 +103,6 @@ async function getClassDetails() {
                     </div>
                 </div>
                 `
-
                 hideFws.style.display = 'none'
             } else {
                 reflec.innerHTML = html
@@ -115,7 +111,9 @@ async function getClassDetails() {
                 hideFws.style.display = 'block'
                 getClassTasks()
             }
+            console.log(item)
         }
+
     } else {
         console.log(serverData)
     }
