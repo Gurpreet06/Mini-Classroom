@@ -1,5 +1,6 @@
 let express = require('express')
 const md5 = require('md5')
+const fs = require('fs')
 const upload = require('express-fileupload')
 const mysql = require('mysql2')
 const { join } = require('path')
@@ -15,7 +16,7 @@ let publicFolder = './public'
 // connect to mysql dataBase
 const Connection = mysql.createConnection({
     host: '',
-    user: '',
+    user: 'root',
     password: '',
     database: 'mini_classroom'
 })
@@ -379,7 +380,14 @@ async function answerUsrdata(request, response) {
 
     else if (data.type == 'delFiles') {
         fileNames = data.names
-        deleteDir('public/images/studentsTask/' + fileNames)
+
+        let filePath = 'public/images/studentsTask/' + fileNames
+        try {
+            fs.unlinkSync(filePath)
+            //file removed
+        } catch (err) {
+            console.error(err)
+        }
 
         let getData = `delete from file_uploads where file_uniqueId = '${data.fileId}'`
         Connection.query(getData, (err, rows) => {
@@ -392,10 +400,14 @@ async function answerUsrdata(request, response) {
         })
     }
 
+    // Download Files and Folders
     else if (data.type == 'DownFiles') {
         rst = { status: 'ok' }
         fileNames = data.names
-        downloadFiles(fileNames)
+        app.get('/downloadUpFile', function (req, res) {
+            let joinSting = '/public/images/studentsTask/' + fileNames
+            res.download(__dirname + `${joinSting}`)
+        })
     }
 }
 
@@ -434,18 +446,6 @@ app.post('/index.html', function (req, res) {
     sampleFile.mv(uploadPath)
     res.redirect('/index.html');
 });
-
-// Download Files and Folders
-function downloadFiles(FiledirName) {
-    downFile = FiledirName
-}
-
-app.get('/downloadUpFile', function (req, res) {
-    let joinSting = '/public/images/studentsTask/' + downFile
-    res.download(__dirname + `${joinSting}`)
-
-    console.log(downFile, 'fdfffffffffffffffffffffffffffffff')
-})
 
 // Delete files
 function deleteDir(dirName) {

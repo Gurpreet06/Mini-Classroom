@@ -107,7 +107,7 @@ let tempTask = `    <div id="middleSection">
                         <input type="submit" id="yourWorkUplod" onclick='sendUrl()' name="submit" value="Upload Now">
                     </section>
                 </form>
-                <form class="workList" id='loadFiles' action="/downloadUpFile" method="GET" enctype="multipart/form-data" > </form>
+                <form class="workList" id='loadFiles' action="/downloadUpFile" method="GET" enctype="multipart/form-data"> </form>
             </section>
             </div>
 
@@ -124,7 +124,7 @@ let tempTask = `    <div id="middleSection">
             <div class="drawerSide" id="drawerSide">
                 <div class="wrapper" style="max-width: 530px;margin-top: 14px;">
                     <section class="form signup">
-                        <form id='manageWork' action="/downloadUpFile" method="GET" enctype="multipart/form-data"> </form> 
+                        <form id='manageWork' action="/downloadUpFile" method="GET" enctype="multipart/form-data" > </form> 
                     </section>
                 </div>
             </div>
@@ -618,9 +618,9 @@ async function getUploadFiles() {
                 manageWork.innerHTML = '<header class="Persontitle">Assignment Details</header> <br>  <div style="display: flex;justify-content: space-between;"><div>No.</div> <div>Student Name</div> <div style="margin-right: 101px;">File Name</div> </div>' + ht
             }
 
-           if(rst.length == 0){
-            manageWork.innerHTML = '<header class="Persontitle" style="font-size: 25px;">No one has submitted anything yet!</header>'
-           }
+            if (rst.length == 0) {
+                manageWork.innerHTML = '<header class="Persontitle" style="font-size: 25px;">No one has submitted anything yet!</header>'
+            }
         } else {
             let showListWork = document.getElementById('showListWork')
             showListWork.style.display = 'none'
@@ -740,6 +740,3 @@ setTimeout(() => {
     getUploadFiles()
 }, 100);
 
-setInterval(() => {
-    getUploadFiles()
-}, 1000);
