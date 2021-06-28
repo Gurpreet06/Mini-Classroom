@@ -263,6 +263,19 @@ async function answerUsrdata(request, response) {
         })
     }
 
+    else if (data.type == 'getDetail') {
+        let getData = `SELECT * FROM peoples where 	class_unique_id = '${data.classId}' AND person_uniqueId = '${data.personId}'`
+
+        Connection.query(getData, (err, rows) => {
+            if (err) {
+                response.json({ status: 'ko', result: 'Database error' })
+                console.log(err)
+            } else {
+                response.json({ status: 'ok', result: rows })
+            }
+        })
+    }
+
     else if (data.type == 'delTasks') {
         let getData = `delete from class_meassges where message_uniqueId = ${data.msgId}`
 

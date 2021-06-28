@@ -60,6 +60,7 @@ async function getClassDetails() {
     let ht = ''
     let item = ''
     let serverData = {}
+    let serverData1 = {}
 
 
     let obj = {
@@ -67,11 +68,27 @@ async function getClassDetails() {
         classId: posId
     }
 
+    let obj1 = {
+        type: 'getDetail',
+        classId: posId,
+        personId: getCookie('usrId')
+    }
+
     try {
         serverData = await queryServer('/queryusr', obj)
     } catch (err) {
         console.error(err)
     }
+
+    try {
+        serverData1 = await queryServer('/queryusr', obj1)
+    } catch (err) {
+        console.error(err)
+    }
+
+
+
+
     //Datos desde html
     let template = temps
     let temp1 = secondTemplate
@@ -88,9 +105,8 @@ async function getClassDetails() {
             .replaceAll('{{TeacherName}}', item.class_Teacher)
 
 
-        for (let cnt = 0; cnt < serverData.result.length; cnt = cnt + 1) {
-            let item = serverData.result[cnt]
-            if (item.person_uniqueId != getCookie('usrId')) {
+            console.log()
+            if (serverData1.result.length == 0) {
                 fullPageDiv.style.display = 'block'
                 fullPageDiv.innerHTML = `
                         <div class="noTaskFounds">
@@ -103,6 +119,7 @@ async function getClassDetails() {
                     </div>
                 </div>
                 `
+                console.log('Person not refise', item)
                 hideFws.style.display = 'none'
             } else {
                 reflec.innerHTML = html
@@ -111,8 +128,6 @@ async function getClassDetails() {
                 hideFws.style.display = 'block'
                 getClassTasks()
             }
-            console.log(item)
-        }
 
     } else {
         console.log(serverData)
