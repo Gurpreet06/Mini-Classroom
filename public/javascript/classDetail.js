@@ -91,10 +91,10 @@ async function getClassDetails() {
             .replaceAll('{{TeacherName}}', item.class_Teacher)
 
 
-        let results = serverData.result
-        for (let cnt = 0; cnt < results.length; cnt = cnt + 1) {
-            let item = results[cnt]
-            if (item.person_uniqueId != getCookie('usrId') && posId == item.class_unique_id) {
+        for (let cnt = 0; cnt < serverData.result.length; cnt = cnt + 1) {
+            let item = serverData.result[cnt]
+            if (item.person_uniqueId != getCookie('usrId') ) {
+                fullPageDiv.style.display = 'block'
                 fullPageDiv.innerHTML = `
                         <div class="noTaskFounds">
                     <img src="./images/webImages/NoData.svg" width="10%">
@@ -106,6 +106,7 @@ async function getClassDetails() {
                     </div>
                 </div>
                 `
+
                 hideFws.style.display = 'none'
             } else {
                 reflec.innerHTML = html
@@ -114,8 +115,6 @@ async function getClassDetails() {
                 hideFws.style.display = 'block'
                 getClassTasks()
             }
-
-            console.log(item)
         }
     } else {
         console.log(serverData)
@@ -152,7 +151,7 @@ async function checkUsrClass() {
                 </a> 
             </div>
         </div>`
-        middleSection.style.display = 'block'
+            middleSection.style.display = 'block'
         }
 
     } else {
