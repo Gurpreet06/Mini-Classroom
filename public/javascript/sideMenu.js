@@ -185,6 +185,7 @@ class SideMenu extends HTMLElement {
     let tempClassId = this.shadow.querySelector("#tempClassId")
     let reflec = this.shadow.querySelector("#listClases")
     let drawerSide = this.shadow.querySelector('#drawerSide')
+    let getInitailName = ''
     let html = ''
     let item = ''
     let ht = ''
@@ -215,10 +216,16 @@ class SideMenu extends HTMLElement {
       let rst = serverData.result
       for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
         item = rst[cnt]
+        if (item.class_name.charAt(0) == ' ') {
+          getInitailName = item.class_name.charAt(1)
+        } else {
+          getInitailName = item.class_name.charAt(0)
+        }
+
         html = html + template
           .replaceAll('{{className}}', item.class_name)
           .replaceAll('{{classCode}}', item.class_unique_id)
-          .replaceAll('{{classIntailName}}', item.class_name.charAt(0))
+          .replaceAll('{{classIntailName}}', getInitailName)
           .replaceAll('{{backColors}}', colors)
 
 
