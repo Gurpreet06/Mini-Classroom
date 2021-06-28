@@ -377,14 +377,13 @@ async function answerUsrdata(request, response) {
         })
     }
 
-
+    // Delete files
     else if (data.type == 'delFiles') {
         fileNames = data.names
 
         let filePath = 'public/images/studentsTask/' + fileNames
         try {
             fs.unlinkSync(filePath)
-            //file removed
         } catch (err) {
             console.error(err)
         }
@@ -446,16 +445,6 @@ app.post('/index.html', function (req, res) {
     sampleFile.mv(uploadPath)
     res.redirect('/index.html');
 });
-
-// Delete files
-function deleteDir(dirName) {
-    try {
-        fs.rmSync(`${dirName}`, { recursive: true });
-        console.log(`${dirName} is deleted!`);
-    } catch (err) {
-        console.error(`Error while deleting ${dirName}`);
-    }
-}
 
 
 // Transforma la petició 'POST' en un objecte de dades
