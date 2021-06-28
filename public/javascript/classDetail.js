@@ -1,4 +1,4 @@
-window.addEventListener('load', () => { getClassDetails(),checkStatus() })
+window.addEventListener('load', () => { getClassDetails(), checkStatus() })
 let refFormClassCode = document.URL
 let urlId = refFormClassCode.lastIndexOf('?class')
 let posId = refFormClassCode.substring(urlId + 7)
