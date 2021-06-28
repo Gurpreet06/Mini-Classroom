@@ -125,6 +125,7 @@ async function getClassDetails() {
 async function checkUsrClass() {
     let reflec = document.querySelector("#commentLoad")
     let showTask = document.getElementById('showTask')
+    let middleSection = document.getElementById('middleSection')
     let serverData = {}
 
     let obj = {
@@ -148,9 +149,10 @@ async function checkUsrClass() {
                 <header class="Persontitle">No Class Founds.</header>
                 <a href="./classes.html">
                     <div class="seeComments">Back to home page...</div>
-                </a>
+                </a> 
             </div>
         </div>`
+        middleSection.style.display = 'block'
         }
 
     } else {
@@ -160,7 +162,7 @@ async function checkUsrClass() {
 
 setInterval(() => {
     checkUsrClass()
-}, 10);
+}, 100);
 
 async function checkTaskForm() {
     let taskMessage = document.getElementById('formTaskMsg')
