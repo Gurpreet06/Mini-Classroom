@@ -1,4 +1,4 @@
-window.addEventListener('load', () => { getClassDetails(), getClassTasks() })
+window.addEventListener('load', () => { getClassDetails() })
 let refFormClassCode = document.URL
 let urlId = refFormClassCode.lastIndexOf('?class')
 let posId = refFormClassCode.substring(urlId + 7)
@@ -52,7 +52,7 @@ let secondTemplate = `
 `
 setInterval(() => {
     getClassDetails()
-}, 100);
+}, 1000);
 
 async function getClassDetails() {
     let reflec = document.querySelector("#upperInfoMenu")
@@ -112,6 +112,7 @@ async function getClassDetails() {
                 reFlec.innerHTML = ht
                 fullPageDiv.style.display = 'none'
                 hideFws.style.display = 'block'
+                getClassTasks()
             }
 
             console.log(item)
