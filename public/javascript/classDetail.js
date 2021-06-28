@@ -1,4 +1,4 @@
-window.addEventListener('load', () => { getClassDetails() })
+window.addEventListener('load', () => { getClassDetails(),checkStatus() })
 let refFormClassCode = document.URL
 let urlId = refFormClassCode.lastIndexOf('?class')
 let posId = refFormClassCode.substring(urlId + 7)
@@ -28,15 +28,7 @@ let temps = ` <header>
 <div>
     <h5 class="menuBtn" onclick="setDrawer('PersonsDetails', true)">Persons</h5>
 </div>
-<div>
-    <div class="dropdown">
-        <div class="dropdown-content">
-            <button class="downlaod" onclick="setDrawer('createClass', true)">Create Task</button>
-            <button class="downlaod"onclick="setDrawer('createTask', true)">Create Assignment</button>
-        </div>
-    <div>
-    <ion-icon name="add-outline" class="menuBtn" style="font-size: 19px;"></ion-icon>
-</div>
+<div id='TempT'> </div>
 </div>
 </div>
 </div>
@@ -49,6 +41,16 @@ let secondTemplate = `
 <div>Class Code: {{classCode}}</div>
 <div>Teacher Name: {{TeacherName}}</div>
 </div>
+`
+
+let tempTLoad = `
+<div class="dropdown">
+<div class="dropdown-content">
+    <button class="downlaod" onclick="setDrawer('createClass', true)">Create Task</button>
+    <button class="downlaod"onclick="setDrawer('createTask', true)">Create Assignment</button>
+</div>
+<div>
+<ion-icon name="add-outline" class="menuBtn" style="font-size: 19px;"></ion-icon>
 `
 
 async function getClassDetails() {
@@ -105,10 +107,9 @@ async function getClassDetails() {
             .replaceAll('{{TeacherName}}', item.class_Teacher)
 
 
-            console.log()
-            if (serverData1.result.length == 0) {
-                fullPageDiv.style.display = 'block'
-                fullPageDiv.innerHTML = `
+        if (serverData1.result.length == 0) {
+            fullPageDiv.style.display = 'block'
+            fullPageDiv.innerHTML = `
                         <div class="noTaskFounds">
                     <img src="./images/webImages/NoData.svg" width="10%">
                     <div style="margin-left: 35px;">
@@ -119,19 +120,46 @@ async function getClassDetails() {
                     </div>
                 </div>
                 `
-                console.log('Person not refise', item)
-                hideFws.style.display = 'none'
-            } else {
-                reflec.innerHTML = html
-                reFlec.innerHTML = ht
-                fullPageDiv.style.display = 'none'
-                hideFws.style.display = 'block'
-                getClassTasks()
-            }
+            console.log('Person not refise', item)
+            hideFws.style.display = 'none'
+        } else {
+            reflec.innerHTML = html
+            reFlec.innerHTML = ht
+            fullPageDiv.style.display = 'none'
+            hideFws.style.display = 'block'
+            getClassTasks()
+        }
 
     } else {
         console.log(serverData)
     }
+}
+
+setInterval(() => {
+    checkStatus()
+}, 1500);
+
+async function checkStatus() {
+    let TempT = document.getElementById('TempT')
+    let serverData1 = {}
+
+
+    let obj1 = {
+        type: 'getDetail',
+        classId: posId,
+        personId: getCookie('usrId')
+    }
+
+    try {
+        serverData1 = await queryServer('/queryusr', obj1)
+    } catch (err) {
+        console.error(err)
+    }
+
+    if (serverData1.result[0].person_status == 'Teacher') {
+        TempT.innerHTML = tempTLoad
+    }
+
 }
 
 async function checkUsrClass() {
