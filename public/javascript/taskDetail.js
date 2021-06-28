@@ -137,9 +137,9 @@ let uploadFile = `
     <div class="dropdown">
         <div class="dropdown-content">
             <button class="downlaod" onclick='get_Name(this.parentElement.parentElement.parentElement.lastElementChild.innerHTML)'>Download</button>
-            <button class="downlaod"
+            <div class="downlaod"
                 onclick="delFileName(this.parentElement.parentElement.parentElement.lastElementChild.innerHTML, {{fileId}})">
-                Delete</button>
+                Delete</div>
         </div>
         <div>
             <ion-icon name="ellipsis-vertical-outline"></ion-icon>
@@ -742,5 +742,5 @@ setTimeout(() => {
 
 setInterval(() => {
     getUploadFiles()
-}, 1000);
+}, 1500);
 
