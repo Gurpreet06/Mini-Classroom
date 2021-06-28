@@ -20,7 +20,7 @@ async function getClassPersons() {
     let refTeachers = document.querySelector("#ClassTeachersLists")
     let refStudents = document.querySelector("#ClassStudentsLists")
     let refFormClassCode = document.URL
-    let urlId = refFormClassCode.lastIndexOf('#class')
+    let urlId = refFormClassCode.lastIndexOf('?class')
     let posId = refFormClassCode.substring(urlId + 7)
     let html = ''
     let ht = ''
