@@ -50,11 +50,15 @@ let secondTemplate = `
 <div>Teacher Name: {{TeacherName}}</div>
 </div>
 `
+setInterval(() => {
+    getClassDetails()
+}, 100);
 
 async function getClassDetails() {
     let reflec = document.querySelector("#upperInfoMenu")
     let reFlec = document.querySelector("#phtMaterial")
     let fullPageDiv = document.getElementById('fullPageDiv')
+    let hideFws = document.getElementById('hideFws')
     let html = ''
     let ht = ''
     let item = ''
@@ -85,15 +89,12 @@ async function getClassDetails() {
             .replaceAll('{{Material}}', item.class_material)
             .replaceAll('{{classCode}}', item.class_unique_id)
             .replaceAll('{{TeacherName}}', item.class_Teacher)
-        //Asignar datos
-        reflec.innerHTML = html
-        reFlec.innerHTML = ht
+
 
         let results = serverData.result
         for (let cnt = 0; cnt < results.length; cnt = cnt + 1) {
-            console.log(results[cnt])
             let item = results[cnt]
-            if (item.person_uniqueId != getCookie('usrId')) {
+            if (item.person_uniqueId != getCookie('usrId') && posId == item.class_unique_id) {
                 fullPageDiv.innerHTML = `
                         <div class="noTaskFounds">
                     <img src="./images/webImages/NoData.svg" width="10%">
@@ -105,7 +106,15 @@ async function getClassDetails() {
                     </div>
                 </div>
                 `
+                hideFws.style.display = 'none'
+            } else {
+                reflec.innerHTML = html
+                reFlec.innerHTML = ht
+                fullPageDiv.style.display = 'none'
+                hideFws.style.display = 'block'
             }
+
+            console.log(item)
         }
     } else {
         console.log(serverData)
