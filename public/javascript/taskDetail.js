@@ -563,8 +563,8 @@ async function getUploadFiles() {
     }
 
     let obj4 = {
-        type: 'getClassTasks',
-        classId: posId
+        type: 'getDatailClass',
+        msgId: posIds
     }
 
     try {
@@ -616,23 +616,21 @@ async function getUploadFiles() {
             loadFiles.innerHTML = '<div class="seeComments">You have not submitted anything yet...</div>'
         }
 
-
-        console.log(serverData4)
-
         if (serverData1.result[0].person_status == 'Teacher') {
-
-            let showListWork = document.getElementById('showListWork')
-            showListWork.style.display = 'flex'
-            let rst = serverData2.result
-            let countNum = 0
-            for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
-                it = rst[cnt]
-                ht = ht + TempAssign
-                    .replaceAll('{{fileNumber}}', countNum = countNum + 1)
-                    .replaceAll('{{fileName}}', item.file_Name)
-                    .replaceAll('{{fileId}}', item.file_uniqueId)
-                    .replaceAll('{{SenderName}}', item.sender_Name)
-                manageWork.innerHTML = '<header class="Persontitle">Assignment Details</header> <br>  <div style="display: flex;justify-content: space-between;"><div>No.</div> <div>Student Name</div> <div style="margin-right: 101px;">File Name</div> </div>' + ht
+            if (serverData4.result[0].message_status == "AssignMent") {
+                let showListWork = document.getElementById('showListWork')
+                showListWork.style.display = 'flex'
+                let rst = serverData2.result
+                let countNum = 0
+                for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
+                    it = rst[cnt]
+                    ht = ht + TempAssign
+                        .replaceAll('{{fileNumber}}', countNum = countNum + 1)
+                        .replaceAll('{{fileName}}', item.file_Name)
+                        .replaceAll('{{fileId}}', item.file_uniqueId)
+                        .replaceAll('{{SenderName}}', item.sender_Name)
+                    manageWork.innerHTML = '<header class="Persontitle">Assignment Details</header> <br>  <div style="display: flex;justify-content: space-between;"><div>No.</div> <div>Student Name</div> <div style="margin-right: 101px;">File Name</div> </div>' + ht
+                }
             }
 
             if (rst.length == 0) {
