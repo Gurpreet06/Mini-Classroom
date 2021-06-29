@@ -1,4 +1,4 @@
-window.addEventListener('load', () => { getClassDetails(), checkStatus() })
+window.addEventListener('load', () => { getClassDetails(), checkStatus(), checkUsrClass() })
 let refFormClassCode = document.URL
 let urlId = refFormClassCode.lastIndexOf('?class')
 let posId = refFormClassCode.substring(urlId + 7)
@@ -189,7 +189,7 @@ async function checkUsrClass() {
                 <header class="Persontitle">No Class Founds.</header>
                 <a href="./classes.html">
                     <div class="seeComments">Back to home page...</div>
-                </a> 
+                </a>
             </div>
         </div>`
             middleSection.style.display = 'block'
@@ -202,7 +202,7 @@ async function checkUsrClass() {
 
 setInterval(() => {
     checkUsrClass()
-}, 100);
+}, 700);
 
 async function checkTaskForm() {
     let taskMessage = document.getElementById('formTaskMsg')
