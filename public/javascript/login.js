@@ -21,10 +21,10 @@ async function queryLogIn() {
     await hideElement('formButton')
     await showElement('boxSpinner')
     await wait(3000)
-    location.reload()
     await hideElement('boxSpinner')
     await showElement('boxError')
     await wait(2000)
+    await hideElement('boxError')
     await showElement('formButton')
 }
 
