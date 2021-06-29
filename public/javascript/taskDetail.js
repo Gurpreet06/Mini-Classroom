@@ -631,11 +631,12 @@ async function getUploadFiles() {
                         .replaceAll('{{SenderName}}', item.sender_Name)
                     manageWork.innerHTML = '<header class="Persontitle">Assignment Details</header> <br>  <div style="display: flex;justify-content: space-between;"><div>No.</div> <div>Student Name</div> <div style="margin-right: 101px;">File Name</div> </div>' + ht
                 }
+
+                if (rst.length == 0) {
+                    manageWork.innerHTML = '<header class="Persontitle" style="font-size: 25px;">No one has submitted anything yet!</header>'
+                }
             }
 
-            if (rst.length == 0) {
-                manageWork.innerHTML = '<header class="Persontitle" style="font-size: 25px;">No one has submitted anything yet!</header>'
-            }
         } else {
             let showListWork = document.getElementById('showListWork')
             showListWork.style.display = 'none'
