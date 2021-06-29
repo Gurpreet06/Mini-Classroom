@@ -717,7 +717,11 @@ textarea {
 }
 
 .deadLine {
-  color: black;
+  letter-spacing: .01785714em;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  color: #3c4043;
   text-align: end;
 }
 
