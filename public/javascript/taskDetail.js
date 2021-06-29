@@ -542,6 +542,7 @@ async function getUploadFiles() {
     let serverData = {}
     let serverData1 = {}
     let serverData2 = {}
+    let serverData4 = {}
 
 
     let obj = {
@@ -561,6 +562,11 @@ async function getUploadFiles() {
         messageId: posIds,
     }
 
+    let obj4 = {
+        type: 'getClassTasks',
+        classId: posId
+    }
+
     try {
         serverData = await queryServer('/queryusr', obj)
     } catch (err) {
@@ -575,6 +581,13 @@ async function getUploadFiles() {
 
     try {
         serverData2 = await queryServer('/queryusr', obj3)
+    } catch (err) {
+        console.error(err)
+    }
+
+
+    try {
+        serverData4 = await queryServer('/queryusr', obj4)
     } catch (err) {
         console.error(err)
     }
@@ -603,7 +616,11 @@ async function getUploadFiles() {
             loadFiles.innerHTML = '<div class="seeComments">You have not submitted anything yet...</div>'
         }
 
+
+        console.log(serverData4)
+
         if (serverData1.result[0].person_status == 'Teacher') {
+
             let showListWork = document.getElementById('showListWork')
             showListWork.style.display = 'flex'
             let rst = serverData2.result
