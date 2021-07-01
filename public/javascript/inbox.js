@@ -61,6 +61,7 @@ async function getPersonClass() {
                     .replaceAll('{{PersonStatus}}', item.person_status)
 
                 //Asignar datos
+                reflec.style.justifyContent = 'normal'
                 reflec.innerHTML = html
             }
         } else {
@@ -166,7 +167,7 @@ async function wait(time) {
 }
 setTimeout(() => {
     getPersonClass()
-}, 10);
+}, 30);
 
 setInterval(() => {
     urlBackgrd()

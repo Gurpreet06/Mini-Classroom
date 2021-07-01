@@ -114,7 +114,7 @@ let tempTask = `    <div id="middleSection">
             <div class="wrapper" style="max-width: 400px;margin-top: 14px;display: none;" id='showListWork'>
                     <section class="form signup">
                         <form>
-                        <header class="Persontitle" style='cursor: pointer;' onclick="setDrawer('assignDetailList', true)">Assignment Details</header>
+                        <header class="Persontitle" style='cursor: pointer;' onclick="setDrawer('assignDetailList', true)">See Assignment Details</header>
                          </form> 
                     </section>
                 </div>
@@ -183,10 +183,10 @@ let assignMent_Detail = `
             <div class="dropdown">
                 <div class="dropdown-content">
                     <button class="downlaod"
-                        onclick='get_Name(this.parentElement.parentElement.parentElement.lastElementChild.innerHTML)'>Download</button>
-                    <button class="downlaod"
-                        onclick="delFileName(this.parentElement.parentElement.parentElement.lastElementChild.innerHTML, fileId)">
-                        Delete</button>
+                        onclick='get_Name(this.parentElement.parentElement.parentElement.firstElementChild.nextElementSibling.lastElementChild.innerText)'>Download</button>
+                    <div class="downlaod" id='dehaa'
+                        onclick="delFileName(this.parentElement.parentElement.parentElement.firstElementChild.nextElementSibling.lastElementChild.innerText, fileId)">
+                        Delete</div>
                 </div>
                 <div>
                     <ion-icon name="ellipsis-vertical-outline"></ion-icon>
@@ -649,7 +649,11 @@ async function getUploadFiles() {
 function get_Name(innerName) {
     let lastInde = innerName.indexOf('.')
     let subst = innerName.substring(lastInde + 1)
-    downloadFiles(subst.trim())
+
+    console.log(innerName)
+
+    console.log(subst)
+  //  downloadFiles(subst.trim())
 }
 
 async function downloadFiles(dirname) {
