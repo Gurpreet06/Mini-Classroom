@@ -252,6 +252,8 @@ let assignMent_Detail = `
 
 async function getTaskDetail() {
     let reflec = document.querySelector("#taskManager")
+    let fullPageDiv = document.getElementById('fullPageDiv')
+    let hideFws = document.getElementById('taskManager')
     let html = ''
     let item = ''
     let serverData = {}
@@ -320,7 +322,7 @@ async function getTaskDetail() {
             }
 
             if (serverData1.result.length == 0) {
-                fullPageDiv.style.display = 'block'
+                fullPageDiv.style.display = 'flex'
                 fullPageDiv.innerHTML = `
                             <div class="noTaskFounds">
                         <img src="./images/webImages/NoData.svg" width="10%">
@@ -332,14 +334,13 @@ async function getTaskDetail() {
                         </div>
                     </div>
                     `
-                console.log('Person not refise', item)
                 hideFws.style.display = 'none'
             } else {
                 reflec.innerHTML = html
                 reFlec.innerHTML = ht
                 fullPageDiv.style.display = 'none'
                 hideFws.style.display = 'block'
-                getClassTasks()
+                //getClassTasks()
             }
 
             if (item.message_status == 'AssignMent') {

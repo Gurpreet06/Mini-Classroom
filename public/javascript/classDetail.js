@@ -120,7 +120,6 @@ async function getClassDetails() {
                     </div>
                 </div>
                 `
-            console.log('Person not refise', item)
             hideFws.style.display = 'none'
         } else {
             reflec.innerHTML = html
