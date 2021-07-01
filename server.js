@@ -198,6 +198,19 @@ async function answerUsrdata(request, response) {
         })
     }
 
+    else if (data.type == 'getClassMsgDetail') {
+        let getData = `SELECT * FROM class_meassges where message_uniqueId = '${data.classId}'`
+
+        Connection.query(getData, (err, rows) => {
+            if (err) {
+                response.json({ status: 'ko', result: 'Database error' })
+                console.log(err)
+            } else {
+                response.json({ status: 'ok', result: rows })
+            }
+        })
+    }
+
     else if (data.type == 'getClassTasks') {
         let getData = `SELECT * FROM class_meassges where class_Id = '${data.classId}'`
 

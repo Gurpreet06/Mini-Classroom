@@ -1,4 +1,4 @@
-window.addEventListener('load', () => { checkUr() })
+window.addEventListener('load', () => { checkUr(), checkUsrClass() })
 let refCode = document.URL
 let urlIds = refCode.lastIndexOf('?msg=')
 let posIds = refCode.substring(urlIds + 5)
@@ -374,6 +374,45 @@ async function getTaskDetail() {
         console.log(serverData)
     }
 }
+
+async function checkUsrClass() {
+    let reflec = document.getElementById("taskManager")
+    let serverData = {}
+
+    let obj = {
+        type: 'getClassMsgDetail',
+        classId: posIds
+    }
+
+    try {
+        serverData = await queryServer('/queryusr', obj)
+    } catch (err) {
+        console.error(err)
+    }
+
+    if (serverData.status == 'ok') {
+        if (serverData.result.length == 0) {
+            reflec.style.justifyContent = 'center'
+            reflec.style.fontSize = '25px'
+            reflec.innerHTML = `
+            <div class="noTaskFounds">
+            <img src="./images/webImages/NoData.svg" width="10%">
+            <div style="margin-left: 35px;">
+                <header class="Persontitle" style='font-weight: 600;'>No Class Founds.</header>
+                <a href="./classes.html">
+                    <div class="seeComments">Back to home page...</div>
+                </a>
+            </div>
+        </div>`
+        } else {
+            getTaskDetail()
+        }
+
+    } else {
+        console.log(serverData)
+    }
+}
+
 async function querySendMsg(evt, msgId, msg, classid) {
     let refFormIcon = msg
     let todayDate = `${date + ' ' + n}`
