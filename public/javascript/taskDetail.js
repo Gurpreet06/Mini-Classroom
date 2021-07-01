@@ -587,7 +587,6 @@ async function queryGetMsg(msgId, classid) {
                         if (item.message_sender_id == getCookie('usrId') && getCookie('usrId') != null && item.message_status == 'Reply') {
                             let delReplyTas = document.querySelector('#delReplyTasks' + item.id)
                             delReplyTas.style.display = 'flex'
-                            console.log(delReplyTas)
                         } else {
                             let delReplyTas = document.querySelector('#delReplyTasks' + item.id)
                             delReplyTas.style.display = 'none'

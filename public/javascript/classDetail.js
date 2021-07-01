@@ -127,9 +127,7 @@ async function getClassDetails() {
             fullPageDiv.style.display = 'none'
             hideFws.style.display = 'block'
             getClassTasks()
-            setInterval(() => {
-                checkStatus()
-            }, 1500);
+            checkStatus()
         }
 
     } else {
@@ -557,7 +555,7 @@ async function querySendMsg(evt, msgId, msg) {
     }
 
     if (serverData.status == 'ok') {
-      //  fabIcon.value = ''
+        //  fabIcon.value = ''
         location.reload()
     } else {
         console.log(serverData)
@@ -586,7 +584,6 @@ async function queryGetMsg(msgId) {
     let template = replyTasks
 
     if (serverData.status == 'ok') {
-        console.log(serverData)
         let rst = serverData.result
         for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
             item = rst[cnt]
