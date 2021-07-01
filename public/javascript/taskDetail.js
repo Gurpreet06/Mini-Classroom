@@ -480,7 +480,7 @@ async function delTasks(classId, classid) {
                 }
             } else {
                 let delWHO = document.querySelector('#delWHO' + item.id)
-                delWHO.style.display = 'none'
+              //  delWHO.style.display = 'none'
             }
         }
     } else {
@@ -579,7 +579,7 @@ async function queryGetMsg(msgId, classid) {
                 })
             }
 
-            setInterval(() => {
+            setTimeout(() => {
                 let results = serverData.result
                 for (let cnt = 0; cnt < results.length; cnt = cnt + 1) {
                     item = results[cnt]
@@ -587,6 +587,7 @@ async function queryGetMsg(msgId, classid) {
                         if (item.message_sender_id == getCookie('usrId') && getCookie('usrId') != null && item.message_status == 'Reply') {
                             let delReplyTas = document.querySelector('#delReplyTasks' + item.id)
                             delReplyTas.style.display = 'flex'
+                            console.log(delReplyTas)
                         } else {
                             let delReplyTas = document.querySelector('#delReplyTasks' + item.id)
                             delReplyTas.style.display = 'none'

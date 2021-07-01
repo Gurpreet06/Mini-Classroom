@@ -1,4 +1,4 @@
-window.addEventListener('load', () => { getClassDetails(), checkStatus(), checkUsrClass() })
+window.addEventListener('load', () => { getClassDetails(), checkUsrClass() })
 let refFormClassCode = document.URL
 let urlId = refFormClassCode.lastIndexOf('?class')
 let posId = refFormClassCode.substring(urlId + 7)
@@ -127,16 +127,15 @@ async function getClassDetails() {
             fullPageDiv.style.display = 'none'
             hideFws.style.display = 'block'
             getClassTasks()
+            setInterval(() => {
+                checkStatus()
+            }, 1500);
         }
 
     } else {
         console.log(serverData)
     }
 }
-
-setInterval(() => {
-    checkStatus()
-}, 1500);
 
 async function checkStatus() {
     let TempT = document.getElementById('TempT')
@@ -315,7 +314,7 @@ let TasksMsgs = `
         <form autocomplete="off">
             <div class="field input">
                 <textarea type="text" id="formMsg" name="user" placeholder="Reply to {{MsgOwner}}" cols="300" rows="2"></textarea>
-                <ion-icon name="send-outline" class="sendMsgBtn" onclick="querySendMsg(event, this.nextElementSibling.innerText, this.parentElement.firstElementChild.value, this.parentElement.firstElementChild.id)"></ion-icon>
+                <ion-icon name="send-outline" class="sendMsgBtn" onclick="querySendMsg(event, this.nextElementSibling.innerText, this.parentElement.firstElementChild.value)"></ion-icon>
                 <div style='display:none;'>{{msgId}}</div>
             </div>
         </form>
@@ -535,8 +534,7 @@ function getCookie(name) {
     return null;
 }
 
-async function querySendMsg(evt, msgId, msg, msgId) {
-    let fabIcon = document.getElementById(msgId)
+async function querySendMsg(evt, msgId, msg) {
     let refFormIcon = msg
     let todayDate = `${date + ' ' + n}`
 
@@ -617,7 +615,7 @@ async function queryGetMsg(msgId) {
                 })
             }
 
-            setInterval(() => {
+            setTimeout(() => {
                 let results = serverData.result
                 for (let cnt = 0; cnt < results.length; cnt = cnt + 1) {
                     item = results[cnt]
