@@ -106,6 +106,51 @@ let tempTask = `    <div id="middleSection">
                         </div>
                         <input type="submit" id="yourWorkUplod" onclick='sendUrl()' name="submit" value="Upload Now">
                     </section>
+        <div id="UpboxSpinner" class="defDiv elmBoxSpinner">
+          <!-- Div - boxSpinner -->
+          <div class="defDivFlex elm71">
+            <!-- Flex -->
+            <div class="defDivFlexChild">
+              <!-- Flex child -->
+              <div class="defDiv elm73">
+                <!-- Div -->
+                <div class="waitSpinner">
+                  <!-- Wait spinner -->
+                  <svg viewBox="0 0 50 50">
+                    <!-- Spinner main -->
+                    <circle cx="25" cy="25" r="20" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="UpboxOk" class="defDiv elmBoxOk" style="display: none;">
+          <!-- Div - boxOk -->
+          <div class="defDivFlex elm78">
+            <!-- Flex -->
+            <div class="defDivFlexChild">
+              <!-- Flex child -->
+              <div class="defText elm80">
+                <!-- Text -->
+                Data sent properly
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="UpboxError" class="defDiv elmBoxError">
+          <!-- Div - boxError -->
+          <div class="defDivFlex elm82">
+            <!-- Flex -->
+            <div class="defDivFlexChild">
+              <!-- Flex child -->
+              <div class="defText elm84">
+                <!-- Text -->
+                Incorrect Email or Password!
+              </div>
+            </div>
+          </div>
+        </div>
                 </form>
                 <form class="workList" id='loadFiles' action="/downloadUpFile" method="GET" enctype="multipart/form-data"> </form>
             </section>
@@ -187,6 +232,7 @@ let assignMent_Detail = `
                     <div class="downlaod" id='dehaa'
                         onclick="delAssigMent(this.parentElement.parentElement.parentElement.firstElementChild.nextElementSibling.lastElementChild.innerText, {{fileId}})">
                         Delete</div>
+                        <div class="downlaod">Return Assignment</div>
                 </div>
                 <div>
                     <ion-icon name="ellipsis-vertical-outline"></ion-icon>
@@ -518,17 +564,29 @@ async function sendUrl() {
         }
     }
 
+
+    await hideElement('yourWorkUplod')
+    await showElement('UpboxSpinner')
+
     try {
         serverData = await queryServer('/queryusr', obj)
     } catch (err) {
         console.error(err)
     }
 
+    await hideElement('UpboxSpinner')
 
     if (serverData.status == 'ok') {
+        await showElement('UpboxOk')
+        await wait(2000)
+        await hideElement('UpboxOk')
     } else {
         console.log(serverData)
+        await showElement('UpboxError')
+        await wait(3000)
+        await hideElement('UpboxError')
     }
+    await showElement('yourWorkUplod')
 }
 
 async function getUploadFiles() {
