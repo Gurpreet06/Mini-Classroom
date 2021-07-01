@@ -1,13 +1,10 @@
 window.addEventListener('load', () => { checkUr() })
 let refCode = document.URL
 let urlIds = refCode.lastIndexOf('?msg=')
-let posIds = refCode.substring(urlId + 5)
+let posIds = refCode.substring(urlIds + 5)
 let classUrlId = refCode.split('?')
 let posOne = classUrlId[1].lastIndexOf('class=')
 let classIdF = classUrlId[1].substring(posOne + 6)
-console.log(classIdF)
-
-
 var today = new Date();
 var month = new Array();
 month[0] = "January";
@@ -256,7 +253,6 @@ let assignMent_Detail = `
         </div>`
 
 
-
 async function checkUr() {
     let fullPageDiv = document.getElementById('fullPageDiv')
     let hideFws = document.getElementById('taskManager')
@@ -265,7 +261,7 @@ async function checkUr() {
 
     let obj1 = {
         type: 'getDetail',
-        //    classId: classid.innerHTML,
+        classId: classIdF,
         personId: getCookie('usrId')
     }
 
@@ -276,29 +272,25 @@ async function checkUr() {
     }
 
     if (serverData1.result.length == 0) {
-        setInterval(() => {
-            fullPageDiv.style.display = 'flex'
-            fullPageDiv.innerHTML = `
+        fullPageDiv.style.display = 'flex'
+        fullPageDiv.innerHTML = `
                                         <div class="noTaskFounds">
                                     <img src="./images/webImages/NoData.svg" width="10%">
                                     <div style="margin-left: 35px;">
                                         <header class="Persontitle">You do not have permissions in this class..</header>
-                                        <a href="./classes.html">
+                                        <a href="./classes.html" style='text-align: center;'>
                                             <div class="seeComments">Back to home page...</div>
                                         </a>
                                     </div>
                                 </div>
                                 `
-            hideFws.style.display = 'none'
-        }, 10);
-
+        hideFws.style.display = 'none'
     } else {
         fullPageDiv.style.display = 'none'
-        hideFws.style.display = 'block'
+        hideFws.style.display = 'flex'
         getTaskDetail()
     }
 }
-
 
 async function getTaskDetail() {
     let reflec = document.querySelector("#taskManager")
@@ -729,19 +721,19 @@ async function getUploadFiles() {
             if (serverData4.result[0].message_status == "AssignMent") {
                 let showListWork = document.getElementById('showListWork')
                 showListWork.style.display = 'flex'
-                let rst = serverData2.result
+                let upRst = serverData2.result
                 let countNum = 0
-                for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
-                    it = rst[cnt]
+                for (let cnt = 0; cnt < upRst.length; cnt = cnt + 1) {
+                    it = upRst[cnt]
                     ht = ht + TempAssign
                         .replaceAll('{{fileNumber}}', countNum = countNum + 1)
-                        .replaceAll('{{fileName}}', item.file_Name)
-                        .replaceAll('{{fileId}}', item.file_uniqueId)
-                        .replaceAll('{{SenderName}}', item.sender_Name)
+                        .replaceAll('{{fileName}}', it.file_Name)
+                        .replaceAll('{{fileId}}', it.file_uniqueId)
+                        .replaceAll('{{SenderName}}', it.sender_Name)
                     manageWork.innerHTML = '<header class="Persontitle">Assignment Details</header> <br>  <div style="display: flex;justify-content: space-between;"><div>No.</div> <div>Student Name</div> <div style="margin-right: 101px;">File Name</div> </div>' + ht
                 }
 
-                if (rst.length == 0) {
+                if (upRst.length == 0) {
                     manageWork.innerHTML = '<header class="Persontitle" style="font-size: 25px;">No one has submitted anything yet!</header>'
                 }
             }
