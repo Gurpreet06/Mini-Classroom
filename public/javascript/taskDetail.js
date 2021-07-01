@@ -219,6 +219,7 @@ let replyTasks = `
                     <ion-icon name="ellipsis-vertical-outline"></ion-icon>
                 </div>
             </div>
+            
         </div>
         <div>
             <p class="commentText">{{MESSAGE}}</p>
@@ -594,7 +595,6 @@ async function queryGetMsg(msgId, classid) {
                     }
                 }
             }, 10);
-
 
             if (posID == item.message_uniqueId && item.message_status != 'Reply') {
                 let reflecs = document.querySelector('#replyTasksHere' + posID)
