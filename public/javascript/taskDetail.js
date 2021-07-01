@@ -1,7 +1,13 @@
 window.addEventListener('load', () => { checkUr() })
 let refCode = document.URL
-let urlIds = refCode.lastIndexOf('?class')
-let posIds = refCode.substring(urlIds + 7)
+let urlIds = refCode.lastIndexOf('?msg=')
+let posIds = refCode.substring(urlId + 5)
+let classUrlId = refCode.split('?')
+let posOne = classUrlId[1].lastIndexOf('class=')
+let classIdF = classUrlId[1].substring(posOne + 6)
+console.log(classIdF)
+
+
 var today = new Date();
 var month = new Array();
 month[0] = "January";
@@ -269,8 +275,6 @@ async function checkUr() {
         console.error(err)
     }
 
-
-
     if (serverData1.result.length == 0) {
         setInterval(() => {
             fullPageDiv.style.display = 'flex'
@@ -285,7 +289,6 @@ async function checkUr() {
                                     </div>
                                 </div>
                                 `
-            console.log(serverData1)
             hideFws.style.display = 'none'
         }, 10);
 

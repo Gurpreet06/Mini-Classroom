@@ -324,13 +324,13 @@ let TasksMsgs = `
     <div class='commentBtns'>
         <div class='seeComments' id='a{{msgId}}' style='display:none;'>Hide Comments..</div>
         <div class='seeComments' id='b{{msgId}}' onclick='queryGetMsg(this.id)'>See Comments on this tasks..</div>
-        <a><div class='seeComments' onclick='redirectTask({{msgId}})'>View More..</div></a>
+        <a><div class='seeComments' onclick='redirectTask({{classId}},{{msgId}})'>View More..</div></a>
     </div>
 </div>
 `
 
-async function redirectTask(classId) {
-    window.location = `/taskDetail.html?class=${classId}`
+async function redirectTask(classId, msgId) {
+    window.location = `/taskDetail.html?class=${classId}?msg=${msgId}`
 }
 
 let replyTasks = `
@@ -393,6 +393,7 @@ async function getClassTasks() {
                         .replaceAll('{{personId}}', item.message_sender_id)
                         .replaceAll('{{taskId}}', item.id)
                         .replaceAll('{{msgId}}', item.message_uniqueId)
+                        .replaceAll('{{classId}}', item.class_Id)
                         .replaceAll('{{MsgOwner}}', item.message_sender)
                         .replaceAll('{{Deadline: dead}}', 'Deadline: ' + item.deadline_Time)
                 } else {
@@ -405,6 +406,7 @@ async function getClassTasks() {
                         .replaceAll('{{taskId}}', item.id)
                         .replaceAll('{{msgId}}', item.message_uniqueId)
                         .replaceAll('{{MsgOwner}}', item.message_sender)
+                        .replaceAll('{{classId}}', item.class_Id)
                         .replaceAll('{{Deadline: dead}}', '')
                 }
                 //Asignar datos
