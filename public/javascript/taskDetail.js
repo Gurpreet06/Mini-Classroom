@@ -481,7 +481,7 @@ async function delTasks(classId, classid) {
                 }
             } else {
                 let delWHO = document.querySelector('#delWHO' + item.id)
-              //  delWHO.style.display = 'none'
+                //  delWHO.style.display = 'none'
             }
         }
     } else {
