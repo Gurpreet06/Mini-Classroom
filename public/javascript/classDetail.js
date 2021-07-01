@@ -315,7 +315,7 @@ let TasksMsgs = `
         <form autocomplete="off">
             <div class="field input">
                 <textarea type="text" id="formMsg" name="user" placeholder="Reply to {{MsgOwner}}" cols="300" rows="2"></textarea>
-                <ion-icon name="send-outline" class="sendMsgBtn" onclick="querySendMsg(event, this.nextElementSibling.innerText, this.parentElement.firstElementChild.value)"></ion-icon>
+                <ion-icon name="send-outline" class="sendMsgBtn" onclick="querySendMsg(event, this.nextElementSibling.innerText, this.parentElement.firstElementChild.value, this.parentElement.firstElementChild.id)"></ion-icon>
                 <div style='display:none;'>{{msgId}}</div>
             </div>
         </form>
@@ -535,7 +535,8 @@ function getCookie(name) {
     return null;
 }
 
-async function querySendMsg(evt, msgId, msg) {
+async function querySendMsg(evt, msgId, msg, msgId) {
+    let fabIcon = document.getElementById(msgId)
     let refFormIcon = msg
     let todayDate = `${date + ' ' + n}`
 
@@ -558,7 +559,7 @@ async function querySendMsg(evt, msgId, msg) {
     }
 
     if (serverData.status == 'ok') {
-        refFormIcon.value = ''
+      //  fabIcon.value = ''
         location.reload()
     } else {
         console.log(serverData)
@@ -587,6 +588,7 @@ async function queryGetMsg(msgId) {
     let template = replyTasks
 
     if (serverData.status == 'ok') {
+        console.log(serverData)
         let rst = serverData.result
         for (let cnt = 0; cnt < rst.length; cnt = cnt + 1) {
             item = rst[cnt]
