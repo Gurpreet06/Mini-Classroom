@@ -183,7 +183,7 @@ let assignMent_Detail = `
             <div class="dropdown">
                 <div class="dropdown-content">
                     <button class="downlaod"
-                        onclick='get_Name(this.parentElement.parentElement.parentElement.firstElementChild.nextElementSibling.lastElementChild.innerText)'>Download</button>
+                        onclick='downAssigMent(this.parentElement.parentElement.parentElement.firstElementChild.nextElementSibling.lastElementChild.innerText)'>Download</button>
                     <div class="downlaod" id='dehaa'
                         onclick="delFileName(this.parentElement.parentElement.parentElement.firstElementChild.nextElementSibling.lastElementChild.innerText, fileId)">
                         Delete</div>
@@ -193,7 +193,7 @@ let assignMent_Detail = `
                 </div>
             </div>
             <div>
-                <h5>{{fileName}}.</h5>
+                <h5>{{fileName}}</h5>
             </div>
             <div>
                 <h5>{{SenderName}}.</h5>
@@ -649,12 +649,13 @@ async function getUploadFiles() {
 function get_Name(innerName) {
     let lastInde = innerName.indexOf('.')
     let subst = innerName.substring(lastInde + 1)
-
-    console.log(innerName)
-
-    console.log(subst)
-  //  downloadFiles(subst.trim())
+    downloadFiles(subst.trim())
 }
+
+function downAssigMent(innerName) {
+    downloadFiles(innerName)
+}
+
 
 async function downloadFiles(dirname) {
     let serverData = undefined
