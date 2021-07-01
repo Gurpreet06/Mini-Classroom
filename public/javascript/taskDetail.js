@@ -1,4 +1,4 @@
-window.addEventListener('load', () => { getTaskDetail() })
+window.addEventListener('load', () => { checkUr() })
 let refCode = document.URL
 let urlIds = refCode.lastIndexOf('?class')
 let posIds = refCode.substring(urlIds + 7)
@@ -79,7 +79,7 @@ let tempTask = `    <div id="middleSection">
                         <ion-icon name="send-outline" class="sendMsgBtn"
                             onclick="querySendMsg(event, this.nextElementSibling.nextElementSibling.innerText, this.parentElement.firstElementChild.value, this.nextElementSibling.innerText)">
                         </ion-icon>
-                        <div style='display:none;' id='classid'>{{classId}}</div>
+                        <div style='display:none;'>{{classId}}</div>
                         <div style='display:none;'>{{msgId}}</div>
                     </div>
                 </form>
@@ -89,7 +89,7 @@ let tempTask = `    <div id="middleSection">
                 <div class='seeComments' id='a{{msgId}}' style='display:none;'>Hide Comments..</div>
                 <div class='seeComments' id='b{{msgId}}' onclick='queryGetMsg(this.id, this.nextElementSibling.innerText)'>See Comments on
                     this tasks..</div>
-                    <div style='display:none;' id='classid'>{{classId}}</div>
+                    <div style='display:none;'>{{classId}}</div>
             </div>
         </div>
     </div>
@@ -250,34 +250,66 @@ let assignMent_Detail = `
         </div>`
 
 
-async function getTaskDetail() {
-    let reflec = document.querySelector("#taskManager")
+
+async function checkUr() {
     let fullPageDiv = document.getElementById('fullPageDiv')
     let hideFws = document.getElementById('taskManager')
+
+    let serverData1 = {}
+
+    let obj1 = {
+        type: 'getDetail',
+        //    classId: classid.innerHTML,
+        personId: getCookie('usrId')
+    }
+
+    try {
+        serverData1 = await queryServer('/queryusr', obj1)
+    } catch (err) {
+        console.error(err)
+    }
+
+
+
+    if (serverData1.result.length == 0) {
+        setInterval(() => {
+            fullPageDiv.style.display = 'flex'
+            fullPageDiv.innerHTML = `
+                                        <div class="noTaskFounds">
+                                    <img src="./images/webImages/NoData.svg" width="10%">
+                                    <div style="margin-left: 35px;">
+                                        <header class="Persontitle">You do not have permissions in this class..</header>
+                                        <a href="./classes.html">
+                                            <div class="seeComments">Back to home page...</div>
+                                        </a>
+                                    </div>
+                                </div>
+                                `
+            console.log(serverData1)
+            hideFws.style.display = 'none'
+        }, 10);
+
+    } else {
+        fullPageDiv.style.display = 'none'
+        hideFws.style.display = 'block'
+        getTaskDetail()
+    }
+}
+
+
+async function getTaskDetail() {
+    let reflec = document.querySelector("#taskManager")
     let html = ''
     let item = ''
     let serverData = {}
-    let serverData1 = {}
 
     let obj = {
         type: 'getDatailClass',
         msgId: posIds
     }
 
-    let obj1 = {
-        type: 'getDetail',
-        classId: posIds,
-        personId: getCookie('usrId')
-    }
-
     try {
         serverData = await queryServer('/queryusr', obj)
-    } catch (err) {
-        console.error(err)
-    }
-
-    try {
-        serverData1 = await queryServer('/queryusr', obj1)
     } catch (err) {
         console.error(err)
     }
@@ -319,28 +351,6 @@ async function getTaskDetail() {
                 }
                 //Asignar datos
                 reflec.innerHTML = html
-            }
-
-            if (serverData1.result.length == 0) {
-                fullPageDiv.style.display = 'flex'
-                fullPageDiv.innerHTML = `
-                            <div class="noTaskFounds">
-                        <img src="./images/webImages/NoData.svg" width="10%">
-                        <div style="margin-left: 35px;">
-                            <header class="Persontitle">You do not have permissions in this class..</header>
-                            <a href="./classes.html">
-                                <div class="seeComments">Back to home page...</div>
-                            </a>
-                        </div>
-                    </div>
-                    `
-                hideFws.style.display = 'none'
-            } else {
-                reflec.innerHTML = html
-                reFlec.innerHTML = ht
-                fullPageDiv.style.display = 'none'
-                hideFws.style.display = 'block'
-                //getClassTasks()
             }
 
             if (item.message_status == 'AssignMent') {
