@@ -345,13 +345,15 @@ async function answerUsrdata(request, response) {
 
     // Upload students Tasks
     else if (data.type == 'sendUrl') {
-        app.post('/taskDetail.html', function (req, res) {
+        app.post('/taskDetail.html', async function (req, res) {
             let sampleFile; // Input Name
             sampleFile = req.files.sampleFile;
             let uploadPath = __dirname + '/public/images/studentsTask/' + sampleFile.name;
-            sampleFile.mv(uploadPath)
+            await wait(1500)
+            await sampleFile.mv(uploadPath)
             res.redirect('/taskDetail.html' + data.classId);
         });
+
         let getData = `INSERT INTO file_uploads(message_Id,file_uniqueId,file_Name,file_Path,sender_Name,sender_Id,Time) values('${data.message_uniqueId}','${data.file_uniqueId}', '${data.file_Name}', '${data.file_Path}', '${data.sender_Name}',  '${data.sender_Id}', '${data.Time}')`
 
         Connection.query(getData, (err, rows) => {

@@ -814,6 +814,22 @@ async function queryServer(url, obj) {
     })
 }
 
+/**
+ * Hides an element
+ * @param {id} id of the element to hide
+ */
+async function hideElement(id) {
+    document.getElementById(id).style.display = 'none'
+}
+
+/**
+ * Shows an element
+ * @param {id} id of the element to show
+ */
+async function showElement(id) {
+    document.getElementById(id).style.display = 'block'
+}
+
 function getRandomId() {
     let multiplier = 1000000000000000
     let a = parseInt(Math.floor(Math.random() * multiplier) + 1)
