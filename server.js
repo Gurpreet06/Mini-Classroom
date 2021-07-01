@@ -349,7 +349,7 @@ async function answerUsrdata(request, response) {
             let sampleFile; // Input Name
             sampleFile = req.files.sampleFile;
             let uploadPath = __dirname + '/public/images/studentsTask/' + sampleFile.name;
-            await wait(1500)
+            await wait(1000)
             await sampleFile.mv(uploadPath)
             res.redirect('/taskDetail.html' + data.classId);
         });

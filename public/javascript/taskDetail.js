@@ -842,4 +842,4 @@ setTimeout(() => {
 
 setInterval(() => {
     getUploadFiles()
-}, 1500);
+}, 1900);
