@@ -490,6 +490,7 @@ textarea {
   border: none;
   font-size: 15px;
   width: 100%;
+  text-align: center;
 }
 
 .downlaod:hover {
