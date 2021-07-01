@@ -185,7 +185,7 @@ let assignMent_Detail = `
                     <button class="downlaod"
                         onclick='downAssigMent(this.parentElement.parentElement.parentElement.firstElementChild.nextElementSibling.lastElementChild.innerText)'>Download</button>
                     <div class="downlaod" id='dehaa'
-                        onclick="delFileName(this.parentElement.parentElement.parentElement.firstElementChild.nextElementSibling.lastElementChild.innerText, fileId)">
+                        onclick="delAssigMent(this.parentElement.parentElement.parentElement.firstElementChild.nextElementSibling.lastElementChild.innerText, {{fileId}})">
                         Delete</div>
                 </div>
                 <div>
@@ -682,6 +682,11 @@ function delFileName(innerName, fileId) {
     let lastInde = innerName.indexOf('.')
     let subst = innerName.substring(lastInde + 1)
     DelteFiles(subst.trim(), fileId)
+}
+
+
+function delAssigMent(innerName, fileId) {
+    DelteFiles(innerName, fileId)
 }
 
 
