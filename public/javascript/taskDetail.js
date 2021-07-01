@@ -1,6 +1,6 @@
 window.addEventListener('load', () => { getTaskDetail() })
 let refCode = document.URL
-let urlIds = refCode.lastIndexOf('#class')
+let urlIds = refCode.lastIndexOf('?class')
 let posIds = refCode.substring(urlIds + 7)
 var today = new Date();
 var month = new Array();
@@ -255,10 +255,17 @@ async function getTaskDetail() {
     let html = ''
     let item = ''
     let serverData = {}
+    let serverData1 = {}
 
     let obj = {
         type: 'getDatailClass',
         msgId: posIds
+    }
+
+    let obj1 = {
+        type: 'getDetail',
+        classId: posIds,
+        personId: getCookie('usrId')
     }
 
     try {
@@ -266,6 +273,13 @@ async function getTaskDetail() {
     } catch (err) {
         console.error(err)
     }
+
+    try {
+        serverData1 = await queryServer('/queryusr', obj1)
+    } catch (err) {
+        console.error(err)
+    }
+
     //Datos desde html
     let template = tempTask
     if (serverData.status == 'ok') {
@@ -303,6 +317,29 @@ async function getTaskDetail() {
                 }
                 //Asignar datos
                 reflec.innerHTML = html
+            }
+
+            if (serverData1.result.length == 0) {
+                fullPageDiv.style.display = 'block'
+                fullPageDiv.innerHTML = `
+                            <div class="noTaskFounds">
+                        <img src="./images/webImages/NoData.svg" width="10%">
+                        <div style="margin-left: 35px;">
+                            <header class="Persontitle">You do not have permissions in this class..</header>
+                            <a href="./classes.html">
+                                <div class="seeComments">Back to home page...</div>
+                            </a>
+                        </div>
+                    </div>
+                    `
+                console.log('Person not refise', item)
+                hideFws.style.display = 'none'
+            } else {
+                reflec.innerHTML = html
+                reFlec.innerHTML = ht
+                fullPageDiv.style.display = 'none'
+                hideFws.style.display = 'block'
+                getClassTasks()
             }
 
             if (item.message_status == 'AssignMent') {
@@ -544,7 +581,7 @@ async function sendUrl() {
     let indexUrl = url.lastIndexOf('\\')
     let posUrl = url.substring(indexUrl + 1)
     let a = document.URL
-    let indexs = a.indexOf('#class')
+    let indexs = a.indexOf('?class')
     let podIs = a.substring(indexs)
 
     let serverData = {}

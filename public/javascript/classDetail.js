@@ -331,7 +331,7 @@ let TasksMsgs = `
 `
 
 async function redirectTask(classId) {
-    window.location = `/taskDetail.html#class=${classId}`
+    window.location = `/taskDetail.html?class=${classId}`
 }
 
 let replyTasks = `
@@ -731,7 +731,7 @@ async function wait(time) {
 }
 
 async function urlChangd(classId) {
-    window.location = `/classDetail.html#class=${classId}`
+    window.location = `/classDetail.html?class=${classId}`
 }
 
 /**
