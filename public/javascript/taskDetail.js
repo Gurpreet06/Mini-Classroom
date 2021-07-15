@@ -170,7 +170,7 @@ let tempTask = `    <div id="middleSection">
 
         <div id="assignDetailList" class="drawer" onclick="setDrawer('assignDetailList', false, event)"> 
             <div class="drawerSide" id="drawerSide">
-                <div class="wrapper" style="max-width: 530px;margin-top: 14px;">
+                <div class="wrapper" style="max-width: 680px;margin-top: 14px;">
                     <section class="form signup">
                         <form id='manageWork' action="/downloadUpFile" method="GET" enctype="multipart/form-data" > </form> 
                     </section>
@@ -769,7 +769,7 @@ async function getUploadFiles() {
                         .replaceAll('{{fileName}}', it.file_Name)
                         .replaceAll('{{fileId}}', it.file_uniqueId)
                         .replaceAll('{{SenderName}}', it.sender_Name)
-                    manageWork.innerHTML = '<header class="Persontitle">Assignment Details</header> <br>  <div style="display: flex;justify-content: space-between;"><div>No.</div> <div>Student Name</div> <div style="margin-right: 101px;">File Name</div> </div>' + ht
+                    manageWork.innerHTML = '<header class="Persontitle">Assignment Details</header> <br>  <div style="display: flex;justify-content: space-between;"><div>No.</div> <div style="margin-right: 175px;">Student Name</div> <div style="margin-right: 101px;">File Name</div> </div>' + ht
                 }
 
                 if (upRst.length == 0) {

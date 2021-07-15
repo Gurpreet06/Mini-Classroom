@@ -425,7 +425,7 @@ textarea {
   overflow-y: auto;
   transform: translate3d(-251px, 0, 0);
   transition: transform 0.3s ease;
-  width: 550px;
+  width: 750px;
   display: flex;
   align-items: center;
 }
