@@ -1,5 +1,5 @@
 ## Mini Classroom
-Mini Classroom is a web application that allows us to create different types of classes like Google Classroom, where students can join classes, also they can create tasks and reply to them. This web app is built with HTML, CSS, JavaScript, NodeJs and for database, I used MySQL.
+Mini Classroom is a web application that allows us to create different types of classes like Google Classroom, where students can join classes, also they can create tasks and reply to them. This web app is created with HTML, CSS, JavaScript, NodeJs and for database, I used MySQL.
 
 ### Install node dependencies
 
