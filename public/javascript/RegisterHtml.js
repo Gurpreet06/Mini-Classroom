@@ -88,7 +88,7 @@ async function querySignUp(evt) {
             mail: refFormMail.value,
             contrasenya: refFormPass.value,
             image: '/images/usrProfilePhoto/userDefault.png',
-            id: getRandomId()
+            id: getRandomId() + randomAlphaId(9)
         }
     } else {
         obj = {
@@ -98,7 +98,7 @@ async function querySignUp(evt) {
             mail: refFormMail.value,
             contrasenya: refFormPass.value,
             image: 'images/usrProfilePhoto/' + fotoValue,
-            id: getRandomId()
+            id: getRandomId() + randomAlphaId(9)
         }
     }
 
@@ -197,7 +197,17 @@ async function wait(time) {
 }
 
 function getRandomId() {
-    let multiplier = 1000000000000000
+    let multiplier = 100000
     let a = parseInt(Math.floor(Math.random() * multiplier) + 1)
     return a
+}
+
+function randomAlphaId(length) {
+    let result = '';
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
 }

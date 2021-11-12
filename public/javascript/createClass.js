@@ -43,7 +43,7 @@ async function createClass(evt) {
         person_email: getCookie('identiy'),
         person_uniqueId: getCookie('usrId'),
         person_status: 'Teacher',
-        class_unique_id: getRandomId(),
+        class_unique_id: getRandomId() + randomAlphaId(9),
         class_Teacher: getCookie('usrName')
     }
     await hideElement('fromBtn')
@@ -137,9 +137,19 @@ async function showElement(id) {
 }
 
 function getRandomId() {
-    let multiplier = 1000000000000000
+    let multiplier = 100000
     let a = parseInt(Math.floor(Math.random() * multiplier) + 1)
     return a
+}
+
+function randomAlphaId(length) {
+    let result = '';
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
 }
 
 let createClasses = `   <div class="drawerSide" id="drawerSide">

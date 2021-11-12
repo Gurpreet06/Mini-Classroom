@@ -637,7 +637,7 @@ async function sendUrl() {
             type: 'sendUrl',
             classId: podIs,
             message_uniqueId: posIds,
-            file_uniqueId: getRandomId(),
+            file_uniqueId: getRandomId() + randomAlphaId(9),
             file_Name: posUrl,
             file_Path: '/images/studentsTask/' + posUrl,
             sender_Name: getCookie('usrName'),
@@ -913,9 +913,19 @@ async function showElement(id) {
 }
 
 function getRandomId() {
-    let multiplier = 1000000000000000
+    let multiplier = 100000
     let a = parseInt(Math.floor(Math.random() * multiplier) + 1)
     return a
+}
+
+function randomAlphaId(length) {
+    let result = '';
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
 }
 
 setTimeout(() => {

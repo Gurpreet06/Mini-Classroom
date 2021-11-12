@@ -230,7 +230,7 @@ async function sendClassTasks(evt) {
     let obj = {
         type: 'addClassTask',
         classId: posId,
-        message_uniqueId: getRandomId(),
+        message_uniqueId: getRandomId() + randomAlphaId(9),
         message_sender: getCookie('usrName'),
         message_sender_email: getCookie('identiy'),
         message_sender_id: getCookie('usrId'),
@@ -749,9 +749,19 @@ async function showElement(id) {
 }
 
 function getRandomId() {
-    let multiplier = 1000000000000000
+    let multiplier = 100000
     let a = parseInt(Math.floor(Math.random() * multiplier) + 1)
     return a
+}
+
+function randomAlphaId(length) {
+    let result = '';
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
 }
 
 let createMessage = `
@@ -953,7 +963,7 @@ async function sendAssignTask(evt) {
     let obj = {
         type: 'createAssignTask',
         classId: posId,
-        assign_uniqueId: getRandomId(),
+        assign_uniqueId: getRandomId() + randomAlphaId(9),
         message_sender_id: getCookie('usrId'),
         message_sender_email: getCookie('identiy'),
         message_sender_name: getCookie('usrName'),
