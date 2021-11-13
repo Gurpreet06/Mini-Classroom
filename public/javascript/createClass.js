@@ -251,8 +251,8 @@ let joinClassTemp = `  <div class="drawerSide" id="drawerSide">
                     <div class="field input">
                         <label>Enter Class Code</label>
                         <input type="text" id="formClassCode" placeholder="Class Code"
-                            pattern="\\d*" onkeyup="checkFromCode()">
-                        <div>The letters are not allowed</div>
+                            pattern="[a-zA-Z0-9-]" onkeyup="checkFromCode()">
+                        <div>Special letters are not allowed</div>
                     </div>
                     <div class="field button" id="boxButton">
                         <input type="submit" id="formCodeBtn" onclick="classDetail(event)"
